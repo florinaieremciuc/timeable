@@ -15,18 +15,22 @@ const randomString = () => {
 };
 
 module.exports = {
-  createUser({ username, password }) {
+  createUser({ username, password, first_name, last_name, email, phone }) {
     console.log(`Add user ${username}`);
     const { salt, hash } = saltHashPassword({ password });
-    return knex("user").insert({
+    return knex("users").insert({
       salt,
       encrypted_password: hash,
-      username
+      username,
+      first_name,
+      last_name,
+      email,
+      phone
     });
   },
   authenticate({ username, password }) {
     console.log(`Authenticating user ${username}`);
-    return knex("user")
+    return knex("users")
       .where({ username })
       .then(([user]) => {
         if (!user) return { success: false };
