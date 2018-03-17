@@ -3,7 +3,7 @@ const { saltHashPassword } = require("../store");
 exports.up = async knex => {
   const convertPassword = user => {
     const { salt, hash } = saltHashPassword(user.password);
-    return knex("user")
+    return knex("users")
       .where({ id: user.id })
       .update({
         salt,
@@ -11,19 +11,19 @@ exports.up = async knex => {
       });
   };
 
-  await knex.schema.table("user", t => {
+  await knex.schema.table("users", t => {
     t.string("salt").notNullable();
     t.string("encrypted_password").notNullable();
   });
-  const users = await knex("user");
+  const users = await knex("users");
   await Promise.all(users.map(convertPassword));
-  await knex.schema.table("user", t => {
+  await knex.schema.table("users", t => {
     t.dropColumn("password");
   });
 };
 
 exports.down = knex => {
-  return knex.schema.table("user", t => {
+  return knex.schema.table("users", t => {
     t.dropColumn("salt");
     t.dropColumn("encrypted_password");
     t.string("password").notNullable();
