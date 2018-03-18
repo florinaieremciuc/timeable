@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node .",
+    "devstart": "nodemon .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,7 +21,11 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
+    "express-validator": "^5.0.0",
     "knex": "^0.14.4",
     "mysql": "^2.15.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.14.12"
   }
 }
