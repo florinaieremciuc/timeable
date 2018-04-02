@@ -1,3 +1,20 @@
+const OrgList = document.querySelector(".organization");
+OrgList.addEventListener("onload", e => {
+  e.preventDefault();
+  get("/");
+});
+// const posts = get("/organizations");
+// console.log("...", posts);
+// console.log("...", posts.resolve());
+
+const CreateOrg = document.querySelector(".CreateOrg");
+CreateOrg.addEventListener("submit", e => {
+  e.preventDefault();
+  const name = CreateOrg.querySelector(".name").value;
+  console.log("check", name);
+  post("/organizations/create_organization", { name });
+});
+
 const CreateUser = document.querySelector(".CreateUser");
 CreateUser.addEventListener("submit", e => {
   e.preventDefault();
@@ -7,7 +24,7 @@ CreateUser.addEventListener("submit", e => {
   const last_name = CreateUser.querySelector(".lastname").value;
   const email = CreateUser.querySelector(".email").value;
   const phone = CreateUser.querySelector(".phone").value;
-  post("/createUser", {
+  post("/users/create_user", {
     username,
     password,
     first_name,
@@ -22,8 +39,7 @@ Login.addEventListener("submit", e => {
   e.preventDefault();
   const username = Login.querySelector(".username").value;
   const password = Login.querySelector(".password").value;
-  post("/login", { username, password }).then(({ status }) => {
-    console.log("ia un status AARRRGH", status);
+  post("/users/login", { username, password }).then(({ status }) => {
     if (status === 200) alert("Login success");
     else alert("Login failed");
   });
@@ -38,4 +54,11 @@ const post = (path, data) => {
     },
     body: JSON.stringify(data)
   });
+};
+
+const get = path => {
+  return window
+    .fetch(path)
+    .then(response => response)
+    .catch(err => err);
 };

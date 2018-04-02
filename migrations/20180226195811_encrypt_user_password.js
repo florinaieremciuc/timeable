@@ -1,4 +1,4 @@
-const { saltHashPassword } = require("../store");
+const { saltHashPassword } = require("../controllers/users");
 
 exports.up = async knex => {
   const convertPassword = user => {
