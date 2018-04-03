@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 
-// store
+// controllers
 const userController = require("./controllers/users");
 const organizationController = require("./controllers/organizations");
 const teamController = require("./controllers/teams");
