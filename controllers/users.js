@@ -40,18 +40,28 @@ module.exports = {
         });
         return { success: hash === user.encrypted_password };
       });
+  },
+  getAll() {
+    console.log("Get users list");
+    return knex.select().from("users");
+  },
+  getOne(id) {
+    console.log(`Get user w id ${id}`);
+    return knex("users").where("id", id);
+  },
+  update(id, name) {
+    console.log(`Updating user having id ${id} w ${name}`);
+    return knex("users")
+      .where("id", id)
+      .update({
+        username: name
+      });
+  },
+  delete(id) {
+    console.log(`Delete user w id ${id}`);
+    return knex("users")
+      .where("id", id)
+      .del();
   }
-  // updateUser({ username }) {
-  //   // update user details
-  // },
-  // deleteUser({ username }) {
-  //   // delete user
-  // },
-  // getUser({ username }) {
-  //   // get user's details
-  // },
-  // getUsers() {
-  //   // get all users - admin
-  // },
   // getTeamMembers() {}
 };

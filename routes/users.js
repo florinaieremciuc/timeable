@@ -3,6 +3,7 @@ var router = express.Router();
 
 var usersController = require("../controllers/users");
 
+/* CREATE a user */
 router.post("/create_user", (req, res) => {
   usersController
     .createUser({
@@ -16,6 +17,23 @@ router.post("/create_user", (req, res) => {
     .then(() => res.sendStatus(200));
 });
 
+/* GET all users */
+router.get("/", (req, res) => {
+  usersController
+    .getAll()
+    .then(response => console.log("response", response))
+    .catch(err => console.log("Error: ", err));
+});
+
+/* GET a user */
+router.get("/:id", (req, res) => {
+  usersController
+    .getOne(req.params.id)
+    .then(response => console.log("response", response))
+    .catch(err => console.log("Error: ", err));
+});
+
+/* LOG in */
 router.post("/login", (req, res) => {
   usersController
     .authenticate({
@@ -28,4 +46,22 @@ router.post("/login", (req, res) => {
     });
 });
 
+/* UPDATE a user */
+// router.get("/update/:id/:name", (req, res) => {
+//   usersController
+//     .update(req.params.id, req.params.name)
+//     .then(
+//       // response is gt 0 if it finds an org with the given id
+//       response => (response > 0 ? res.sendStatus(200) : res.sendStatus(404))
+//     )
+//     .catch(err => console.log("Error: ", err));
+// });
+
+/* DELETE a user */
+router.get("/delete/:id", (req, res) => {
+  usersController
+    .delete(req.params.id)
+    .then(() => res.sendStatus(200))
+    .catch(err => console.log("Error: ", err));
+});
 module.exports = router;

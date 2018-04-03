@@ -19,6 +19,7 @@ router.get("/:id", (req, res) => {
     .catch(err => console.log("Error: ", err));
 });
 
+/* CREATE an organization */
 router.post("/create_organization", (req, res) => {
   organizationsController
     .create({ name: req.body.name })
@@ -26,6 +27,7 @@ router.post("/create_organization", (req, res) => {
     .catch(err => console.log("Error: ", err));
 });
 
+/* UPDATE an organization */
 router.get("/update/:id/:name", (req, res) => {
   organizationsController
     .update(req.params.id, req.params.name)
@@ -36,15 +38,8 @@ router.get("/update/:id/:name", (req, res) => {
     .catch(err => console.log("Error: ", err));
 });
 
+/* DELETE an organization */
 router.get("/delete/:id", (req, res) => {
-  console.log("req din get", req.params, req.body);
-  organizationsController
-    .delete(req.params.id)
-    .then(() => res.sendStatus(200))
-    .catch(err => console.log("Error: ", err));
-});
-router.post("/delete/:id", (req, res) => {
-  console.log("req", req.paramsm, req.body);
   organizationsController
     .delete(req.params.id)
     .then(() => res.sendStatus(200))
