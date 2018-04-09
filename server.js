@@ -1,17 +1,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 
-// controllers
-const userController = require("./controllers/users");
-const organizationController = require("./controllers/organizations");
-const teamController = require("./controllers/teams");
-
 const app = express();
 
 // ROUTES
 const indexRoute = require("./routes/index");
 const usersRoute = require("./routes/users");
 const organizationsRoute = require("./routes/organizations");
+const teamsRoute = require("./routes/teams");
 
 app.use(express.static("public"));
 app.use(bodyParser.json());
@@ -19,6 +15,7 @@ app.use(bodyParser.json());
 // app.use("/", indexRoute);
 app.use("/users", usersRoute);
 app.use("/organizations", organizationsRoute);
+app.use("/teams", teamsRoute);
 
 app.use((error, req, res, next) => {
   if (!error) {
