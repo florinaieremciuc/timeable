@@ -1,22 +1,20 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { Container, Button } from "semantic-ui-react";
+import { Container, Button, Icon } from "semantic-ui-react";
 
-import logo from "./logo.svg";
 import "./App.css";
-
+import Dashboard from "./views/Dashboard";
+import Header from "./components/Header";
 import { isAuthenticated } from "./views/Login/reducers";
 
 class App extends Component {
   render() {
+    const { isAuthenticated } = this.props;
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to Timeable</h1>
-        </header>
-        {!this.props.isAuthenticated && (
+        <Header isAuthenticated={isAuthenticated} />
+        {isAuthenticated && (
           <Container>
             Choose an action:
             <Link to="/login">
@@ -28,6 +26,7 @@ class App extends Component {
             </Link>
           </Container>
         )}
+        <Dashboard />
       </div>
     );
   }
