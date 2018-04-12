@@ -1,12 +1,14 @@
 import React, { Component } from "react";
-import { Container } from "semantic-ui-react";
+import { Container, Divider } from "semantic-ui-react";
 
-import RegistrationForm from "./Register";
+import RegistrationForm from "./components/Register";
+import "./styles.css";
 
 let Register = () => {
   return (
-    <Container>
+    <Container className="register">
       <h1>Register</h1>
+      <Divider />
       <RegistrationForm />
     </Container>
   );
