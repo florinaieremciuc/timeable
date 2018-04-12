@@ -40,8 +40,8 @@ router.post("/login", (req, res) => {
       username: req.body.username,
       password: req.body.password
     })
-    .then(({ success }) => {
-      if (success) res.sendStatus(200);
+    .then(({ success, user }) => {
+      if (success && user) res.send({ success: success, user: user });
       else res.sendStatus(401);
     });
 });
