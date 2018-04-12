@@ -1,6 +1,12 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import { Container, Button } from "semantic-ui-react";
+
+import logo from "./logo.svg";
+import "./App.css";
+
+import { isAuthenticated } from "./views/Login/reducers";
 
 class App extends Component {
   render() {
@@ -8,14 +14,26 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">Welcome to Timeable</h1>
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        {!this.props.isAuthenticated && (
+          <Container>
+            Choose an action:
+            <Link to="/login">
+              <Button> Login </Button>
+            </Link>
+            or
+            <Link to="/new_user">
+              <Button> Register </Button>
+            </Link>
+          </Container>
+        )}
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  isAuthenticated: isAuthenticated(state.user)
+});
+export default connect(mapStateToProps)(App);
