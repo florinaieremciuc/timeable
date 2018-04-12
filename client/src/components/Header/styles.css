@@ -1,0 +1,24 @@
+.header {
+  background-color: #222;
+  height: 15vh;
+  padding: 0 10px;
+  color: #c8c8c8;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header .logo {
+  /* animation: App-logo-spin infinite 20s linear; */
+  height: 100px;
+}
+.header .icons {
+  min-width: 8%;
+  display: flex;
+  justify-content: space-between;
+}
+.header .icons i {
+  height: 0;
+  font-size: 2.5em;
+}
