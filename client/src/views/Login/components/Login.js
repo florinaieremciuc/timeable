@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Form, Input, Button } from "semantic-ui-react";
 
-import { loginAttempt } from "./actions";
+import { loginAttempt } from "../actions";
 
 class LoginForm extends React.Component {
   constructor(props) {
