@@ -20,6 +20,7 @@
   "homepage": "https://github.com/florinaieremciuc/timeable#readme",
   "dependencies": {
     "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
     "express": "^4.16.2",
     "express-validator": "^5.0.0",
     "knex": "^0.14.4",
