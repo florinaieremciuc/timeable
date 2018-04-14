@@ -1,7 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Form, Input, Button } from "semantic-ui-react";
+import { Redirect } from "react-router-dom";
 
+import { getSuccess } from "../reducers";
 import { loginAttempt } from "../actions";
 
 class LoginForm extends React.Component {
@@ -9,13 +11,16 @@ class LoginForm extends React.Component {
     super(props);
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      redirect: false
     };
     this.handleChangeUsername = this.handleChangeUsername.bind(this);
     this.handleChangePassword = this.handleChangePassword.bind(this);
     this.submit = this.submit.bind(this);
   }
-
+  componentWillReceiveProps(nextProps) {
+    nextProps.success && this.setState({ redirect: !this.state.redirect });
+  }
   handleChangeUsername(text) {
     this.setState({ username: text.target.value });
   }
@@ -24,10 +29,15 @@ class LoginForm extends React.Component {
     this.setState({ password: text.target.value });
   }
 
-  submit() {
-    this.props.loginAttempt(this.state.username, this.state.password);
+  async submit() {
+    await this.props.loginAttempt(this.state.username, this.state.password);
+    console.log("props", this.props);
   }
   render() {
+    if (this.state.redirect) {
+      return <Redirect to="/" />;
+    }
+
     return (
       <Form onSubmit={this.submit}>
         <Form.Group widths="equal">
@@ -66,5 +76,7 @@ class LoginForm extends React.Component {
     );
   }
 }
-
-export default connect(null, { loginAttempt })(LoginForm);
+const mapStateToProps = state => ({
+  success: getSuccess(state.user)
+});
+export default connect(mapStateToProps, { loginAttempt })(LoginForm);
