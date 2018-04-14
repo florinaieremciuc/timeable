@@ -6,15 +6,21 @@ import { Container, Button, Icon } from "semantic-ui-react";
 import "./App.css";
 import Dashboard from "./views/Dashboard";
 import Header from "./components/Header";
-import { isAuthenticated } from "./views/Login/reducers";
+import { isAuthenticated, getUsername } from "./views/Login/reducers";
+import { logout } from "./views/Login/actions";
+import { get } from "http";
 
 class App extends Component {
   render() {
     const { isAuthenticated } = this.props;
     return (
       <div className="App">
-        <Header isAuthenticated={isAuthenticated} />
-        {isAuthenticated && (
+        <Header
+          isAuthenticated={isAuthenticated}
+          logout={this.props.logout}
+          username={username}
+        />
+        {!isAuthenticated && (
           <Container>
             Choose an action:
             <Link to="/login">
@@ -33,6 +39,7 @@ class App extends Component {
 }
 
 const mapStateToProps = state => ({
-  isAuthenticated: isAuthenticated(state.user)
+  isAuthenticated: isAuthenticated(state.user),
+  username: getUsername(state.user)
 });
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, { logout })(App);
