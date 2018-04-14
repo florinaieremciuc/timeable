@@ -1,11 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { Loader } from "semantic-ui-react";
 
 import "./index.css";
 import registerServiceWorker from "./registerServiceWorker";
-import store from "./store";
+import { store, persistor } from "./store";
 
 import App from "./App";
 import Login from "./views/Login";
@@ -14,14 +16,19 @@ import Dashboard from "./views/Dashboard";
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={App} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/new_user" component={Register} />
-        <Route exact path="/dashboard" component={Dashboard} />
-      </Switch>
-    </BrowserRouter>
+    <PersistGate loading={<Loader active />} persistor={persistor}>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" component={App} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/new_user" component={Register} />
+          <Route exact path="/projects" component={App} />
+          <Route exact path="/teams" component={App} />
+          <Route exact path="/events" component={Dashboard} />
+          <Route exact path="/dashboard" component={Dashboard} />
+        </Switch>
+      </BrowserRouter>
+    </PersistGate>
   </Provider>,
   document.getElementById("root")
 );

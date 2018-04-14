@@ -1,4 +1,7 @@
-import { createStore, applyMiddleware, combineReducers, compose } from "redux";
+import { createStore, applyMiddleware, combineReducers } from "redux";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+
 import createHistory from "history/createBrowserHistory";
 import createSagaMiddleware from "redux-saga";
 import logger from "redux-logger";
@@ -19,24 +22,32 @@ const defaultState = {
   user: {
     data: null,
     sync: null
-  },
-  form: {}
+  }
+  // form: {}
 };
 
 const rootReducer = combineReducers({
   registrationsStatus,
-  user,
-  form: formReducer
+  user
+  // form: formReducer
   // registerForm: formReducer,
   // loginForm: formReducer
 });
+
+const persistConfig = {
+  key: "root",
+  storage
+};
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
-  rootReducer,
+  persistedReducer,
   defaultState,
-  compose(applyMiddleware(sagaMiddleware, logger, routerMiddleware(history)))
+  applyMiddleware(sagaMiddleware, logger, routerMiddleware(history))
 );
 sagaMiddleware.run(sagas);
+let persistor = persistStore(store);
 
 export { history };
-export default store;
+export { store, persistor };
