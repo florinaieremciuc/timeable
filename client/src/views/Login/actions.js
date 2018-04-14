@@ -13,18 +13,22 @@ export const loginAttempt = (username, password) => ({
 export const loginSuccess = (
   id,
   username,
-  firstName,
-  lastName,
+  firstname,
+  lastname,
   email,
-  phone
+  phone,
+  role,
+  success
 ) => ({
   type: FETCH_LOGIN_SUCCESS,
   id,
   username,
-  firstName,
-  lastName,
+  firstname,
+  lastname,
   email,
-  phone
+  phone,
+  role,
+  success
 });
 export const loginFailure = errorMessage => ({
   type: FETCH_LOGIN_FAILURE,

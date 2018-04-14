@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 
 const app = express();
 
@@ -9,8 +10,16 @@ const usersRoute = require("./routes/users");
 const organizationsRoute = require("./routes/organizations");
 const teamsRoute = require("./routes/teams");
 
+app.use([
+  cors({
+    exposedHeaders: ["Link"]
+  }),
+  bodyParser.json({
+    limit: "5mb"
+  }),
+  bodyParser.urlencoded({ extended: true, limit: "5mb" })
+]);
 app.use(express.static("public"));
-app.use(bodyParser.json());
 
 // app.use("/", indexRoute);
 app.use("/users", usersRoute);

@@ -8,26 +8,21 @@ import { signInUser } from "../../services/Api";
  */
 export default function* loginSaga({ username, password }) {
   try {
-    console.log("saga 2", username, password);
-    // make the call to the api
-    let response;
-    // const response = yield call(signInUser, username.toLowerCase(), password);
-    console.log(
-      "lkjdajkdkljda",
-      yield call(signInUser, username.toLowerCase(), password)
-    );
+    const response = yield call(signInUser, username.toLowerCase(), password);
 
-    console.log("aci");
+    console.log("aci", response);
     // verify if the authentication was successful
-    if (response && response.successMessage) {
+    if (response && response.success && response.user) {
       yield put(
         loginSuccess(
-          response.id,
+          response.user.id,
           username,
-          response.firstName,
-          response.lastName,
-          response.email,
-          response.phone
+          response.user.first_name,
+          response.user.last_name,
+          response.user.email,
+          response.user.phone,
+          response.user.role,
+          response.success
         )
       );
     } else if (response && response.errorMessage) {

@@ -7,8 +7,8 @@ import * as types from "./actions";
 export const userPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   username: PropTypes.string.isRequired,
-  firstName: PropTypes.string.isRequired,
-  lastName: PropTypes.string.isRequired,
+  firstname: PropTypes.string.isRequired,
+  lastname: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   phone: PropTypes.string.isRequired
 });
@@ -17,10 +17,11 @@ export const INITIAL_STATE = Immutable({
   data: {
     id: null,
     username: null,
-    firstName: null,
-    lastName: null,
+    firstname: null,
+    lastname: null,
     email: null,
-    phone: null
+    phone: null,
+    role: null
   },
   sync: {
     attempting: 0,
@@ -41,10 +42,11 @@ const data = (state = INITIAL_STATE.data, action) => {
       const userData = {
         id: action.id,
         username: action.username,
-        firstName: action.firstName,
-        lastName: action.lastName,
+        firstname: action.firstname,
+        lastname: action.lastname,
         email: action.email,
-        phone: action.phone
+        phone: action.phone,
+        role: action.role
       };
       return userData;
     }
@@ -72,14 +74,14 @@ const sync = (state = INITIAL_STATE.sync, action) => {
     case types.FETCH_LOGIN_SUCCESS:
       return {
         attempting: 0,
-        successMessage: action.successMessage,
+        successMessage: action.success,
         errorMessage: null
       };
     case types.FETCH_LOGIN_FAILURE:
       return {
         attempting: 0,
         successMessage: null,
-        errorMessage: action.errorMessage
+        errorMessage: action.error
       };
     default:
       return state;
@@ -117,16 +119,16 @@ export const getUsername = state => {
  * Get the first name, if the user is authenticated
  * @param {Object} state
  */
-export const getFirstName = state => {
-  isAuthenticated(state) ? state.data.firstName : null;
+export const getFirstname = state => {
+  isAuthenticated(state) ? state.data.firstname : null;
 };
 
 /**
  * Get the name, if the user is authenticated
  * @param {Object} state
  */
-export const getLastName = state =>
-  isAuthenticated(state) ? state.data.lastName : null;
+export const getLastname = state =>
+  isAuthenticated(state) ? state.data.lastname : null;
 
 /**
  * Get the email address, if the user is authenticated
@@ -142,9 +144,16 @@ export const getEmail = state =>
 export const getPhone = state =>
   isAuthenticated(state) ? state.data.phone : null;
 
-export const getSuccess = state => state.sync.successMessage;
-export const getError = state => state.sync.errorMessage;
-export const isAttempting = state => state.sync.attempting;
+/**
+ * Get the role, if the user is authenticated
+ * @param {Object} state
+ */
+export const getRole = state =>
+  isAuthenticated(state) ? state.data.role : null;
+
+export const getSuccess = state => state.sync && state.sync.successMessage;
+export const getError = state => state.sync && state.sync.errorMessage;
+export const isAttempting = state => state.sync && state.sync.attempting;
 
 export default combineReducers({
   data,
