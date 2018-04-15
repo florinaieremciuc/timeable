@@ -22,7 +22,7 @@ router.get("/:id", (req, res) => {
 /* CREATE a team */
 router.post("/create_team", (req, res) => {
   teamsController
-    .create({ name: req.body.name, organization: req.body.organization })
+    .create({ name: req.body.name })
     .then(() => res.sendStatus(200))
     .catch(err => console.log("Error: ", err));
 });
@@ -32,7 +32,7 @@ router.get("/update/:id/:name", (req, res) => {
   teamsController
     .update(req.params.id, req.params.name)
     .then(
-      // response is gt 0 if it finds an org with the given id
+      // response is gt 0 if it finds a team with the given id
       response => (response > 0 ? res.sendStatus(200) : res.sendStatus(404))
     )
     .catch(err => console.log("Error: ", err));

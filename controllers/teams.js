@@ -1,11 +1,10 @@
 const knex = require("knex")(require("../knexfile"));
 
 module.exports = {
-  create({ name, organization }) {
-    console.log(`Add team ${name} in ${organization}`);
+  create({ name }) {
+    console.log(`Add team ${name}`);
     return knex("teams").insert({
-      name,
-      organization
+      name
     });
   },
   getAll() {
