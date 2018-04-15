@@ -7,26 +7,27 @@ var teamsController = require("../controllers/teams");
 router.get("/", (req, res) => {
   teamsController
     .getAll()
-    .then(response => response.json())
-    .catch(err => console.log("Error: ", err));
+    .then(teams => res.send(teams))
+    .catch(err => res.send(err));
 });
 
 /* GET a team */
 router.get("/:id", (req, res) => {
   teamsController
     .getOne(req.params.id)
-    .then(response => response.json())
-    .catch(err => console.log("Error: ", err));
+    .then(team => res.send(team))
+    .catch(err => res.send(err));
 });
 
 /* CREATE a team */
 router.post("/create_team", (req, res) => {
   teamsController
     .create({ name: req.body.name })
-    .then(() => res.sendStatus(200))
-    .catch(err => console.log("Error: ", err));
+    .then(team => res.send(team))
+    .catch(err => res.send(err));
 });
 
+// TO TEST
 /* UPDATE a team */
 router.get("/update/:id/:name", (req, res) => {
   teamsController

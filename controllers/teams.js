@@ -13,14 +13,19 @@ module.exports = {
   },
   getOne(id) {
     console.log(`Get team w id ${id}`);
-    return knex("teams").where("id", id);
+    return knex("teams")
+      .where("id", id)
+      .then(([team]) => {
+        if (!team) return { error: "Team does not exist" };
+        return { success: true, team: team };
+      });
   },
-  update(id, name) {
-    console.log(`Updating team having id ${id} w ${name}`);
+  update(id, newname) {
+    console.log(`Updating team having id ${id} w ${newname}`);
     return knex("teams")
       .where("id", id)
       .update({
-        name: name
+        name: newname
       });
   },
   delete(id) {
