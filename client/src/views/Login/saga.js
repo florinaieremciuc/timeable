@@ -9,8 +9,6 @@ import { signInUser } from "../../services/Api";
 export default function* loginSaga({ username, password }) {
   try {
     const response = yield call(signInUser, username.toLowerCase(), password);
-
-    console.log("aci", response);
     // verify if the authentication was successful
     if (response && response.success && response.user) {
       yield put(
