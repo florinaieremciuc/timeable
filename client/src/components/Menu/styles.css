@@ -1,0 +1,12 @@
+.button.side-menu {
+  position: absolute;
+  z-index: 1;
+  left: 4%;
+  top: 5.5%;
+  background: none;
+}
+.button.side-menu:hover,
+.button.side-menu:visited,
+.button.side-menu:active {
+  background: none;
+}
