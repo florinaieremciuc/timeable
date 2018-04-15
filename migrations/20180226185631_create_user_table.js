@@ -8,16 +8,14 @@ exports.up = function(knex, Promise) {
     t.string("last_name").notNullable();
     t.string("email").notNullable();
     t.string("phone").notNullable();
-    t
-      .enu("role", [
-        "teamlead",
-        "frontend",
-        "backend",
-        "tester",
-        "sysadmin",
-        "*"
-      ])
-      .notNullable();
+    t.enu("role", [
+      "teamlead",
+      "frontend",
+      "backend",
+      "tester",
+      "sysadmin",
+      "*"
+    ]);
   });
 };
 
