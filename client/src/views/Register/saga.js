@@ -11,8 +11,8 @@ import { registerUser } from "../../services/Api";
 export default function* registerSaga({
   username,
   password,
-  firstName,
-  lastName,
+  firstname,
+  lastname,
   email,
   phone
 }) {
@@ -22,8 +22,8 @@ export default function* registerSaga({
       registerUser,
       username.toLowerCase(),
       password,
-      firstName,
-      lastName,
+      firstname,
+      lastname,
       email,
       phone
     );

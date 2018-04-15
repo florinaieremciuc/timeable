@@ -7,16 +7,16 @@ export const FETCH_REGISTER_FAILURE = "FETCH_REGISTER_FAILURE";
 export const registerAttempt = (
   username,
   password,
-  firstName,
-  lastName,
+  firstname,
+  lastname,
   email,
   phone
 ) => ({
   type: FETCH_REGISTER_REQUEST,
   username,
   password,
-  firstName,
-  lastName,
+  firstname,
+  lastname,
   email,
   phone
 });
