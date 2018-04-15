@@ -56,7 +56,36 @@ export const signInUser = (username, password) => {
   }).then(response => response.json());
 };
 
+/**
+ * Call API to create team.
+ * @param {String} name
+ */
+export const createTeam = name => {
+  const params = { name };
+  return fetch(`${config.API_URL}/teams/create_team`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(params)
+  }).then(response => response.json());
+};
+
+/**
+ * Call API to get teams.
+ */
+export const getTeams = () => {
+  return fetch(`${config.API_URL}/teams/`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  }).then(response => response.json());
+};
+
 export default {
   signInUser,
-  registerUser
+  registerUser,
+  create_team,
+  getTeams
 };
