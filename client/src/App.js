@@ -12,12 +12,12 @@ import { get } from "http";
 
 class App extends Component {
   render() {
-    const { isAuthenticated } = this.props;
+    const { isAuthenticated, logout, username, match } = this.props;
     return (
       <div className="App">
         <Header
           isAuthenticated={isAuthenticated}
-          logout={this.props.logout}
+          logout={logout}
           username={username}
         />
         {!isAuthenticated && (
@@ -32,7 +32,7 @@ class App extends Component {
             </Link>
           </Container>
         )}
-        <Dashboard />
+        <Dashboard path={match.path} />
       </div>
     );
   }
