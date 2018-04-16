@@ -14,7 +14,9 @@ export default function* registerSaga({
   firstname,
   lastname,
   email,
-  phone
+  phone,
+  role,
+  team
 }) {
   try {
     // make the call to the api
@@ -25,15 +27,17 @@ export default function* registerSaga({
       firstname,
       lastname,
       email,
-      phone
+      phone,
+      role,
+      team
     );
-
+    console.log("saga response", response);
     // verify if the authentication was successful
-    if (response && response.successMessage) {
+    if (response && response.success) {
       // add token and refreshToken in the application's state
-      yield put(registerSuccess(response.successMessage));
-    } else if (response && response.errorMessage) {
-      yield put(registerFailure(response.errorMessage));
+      yield put(registerSuccess(response.success));
+    } else if (response && response.error) {
+      yield put(registerFailure(response.error));
     } else {
       yield put(registerFailure("Unable to log in, please contact support."));
     }

@@ -6,8 +6,8 @@ import * as types from "./actions";
 
 export const INITIAL_STATE = Immutable({
   attempting: 0,
-  successMessage: null,
-  errorMessage: null
+  success: null,
+  error: null
 });
 
 /**
@@ -20,28 +20,28 @@ const registrationsStatus = (state = INITIAL_STATE, action) => {
     case types.FETCH_REGISTER_REQUEST:
       return {
         attempting: 1,
-        successMessage: null,
-        errorMessage: null
+        success: null,
+        error: null
       };
     case types.FETCH_REGISTER_SUCCESS:
       return {
         attempting: 0,
-        successMessage: action.successMessage,
-        errorMessage: null
+        success: action.success,
+        error: null
       };
     case types.FETCH_REGISTER_FAILURE:
       return {
         attempting: 0,
-        successMessage: null,
-        errorMessage: action.errorMessage
+        success: null,
+        error: action.error
       };
     default:
       return state;
   }
 };
 
-export const getSuccess = state => state.successMessage;
-export const getError = state => state.errorMessage;
+export const getSuccess = state => state.success;
+export const getError = state => state.error;
 export const isAttempting = state => state.attempting;
 
 export default registrationsStatus;

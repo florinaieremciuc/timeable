@@ -10,7 +10,9 @@ export const registerAttempt = (
   firstname,
   lastname,
   email,
-  phone
+  phone,
+  role,
+  team
 ) => ({
   type: FETCH_REGISTER_REQUEST,
   username,
@@ -18,13 +20,15 @@ export const registerAttempt = (
   firstname,
   lastname,
   email,
-  phone
+  phone,
+  role,
+  team
 });
-export const registerSuccess = successMessage => ({
+export const registerSuccess = success => ({
   type: FETCH_REGISTER_SUCCESS,
-  successMessage
+  success
 });
-export const registerFailure = errorMessage => ({
+export const registerFailure = error => ({
   type: FETCH_REGISTER_FAILURE,
-  errorMessage
+  error
 });
