@@ -9,7 +9,8 @@ import "./index.css";
 import registerServiceWorker from "./registerServiceWorker";
 import { store, persistor } from "./store";
 
-import App from "./App";
+import App from "./App/App";
+import NewTeam from "./views/NewTeam";
 import Login from "./views/Login";
 import Register from "./views/Register";
 import Dashboard from "./views/Dashboard";
@@ -20,12 +21,12 @@ ReactDOM.render(
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={App} />
+          <Route exact path="/new_team" component={NewTeam} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/new_user" component={Register} />
           <Route exact path="/projects" component={App} />
           <Route exact path="/teams" component={App} />
-          <Route exact path="/events" component={Dashboard} />
-          <Route exact path="/dashboard" component={Dashboard} />
+          <Route exact path="/events" component={App} />
         </Switch>
       </BrowserRouter>
     </PersistGate>

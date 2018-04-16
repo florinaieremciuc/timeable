@@ -9,11 +9,16 @@ import { routerMiddleware } from "react-router-redux";
 import { reducer as formReducer } from "redux-form";
 
 import sagas from "./sagas";
+import team from "./views/NewTeam/reducer";
 import registrationsStatus from "./views/Register/reducers";
 import user from "./views/Login/reducers";
 
 const history = createHistory();
 const defaultState = {
+  team: {
+    data: null,
+    sync: null
+  },
   registrationsStatus: {
     attempting: 0,
     successMessage: null,
@@ -27,6 +32,7 @@ const defaultState = {
 };
 
 const rootReducer = combineReducers({
+  team,
   registrationsStatus,
   user
   // form: formReducer

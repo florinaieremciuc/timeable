@@ -86,6 +86,6 @@ export const getTeams = () => {
 export default {
   signInUser,
   registerUser,
-  create_team,
+  createTeam,
   getTeams
 };
