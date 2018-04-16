@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Form, Input, Button } from "semantic-ui-react";
-import { Redirect } from "react-router-dom";
+import { Form, Input, Button, Segment } from "semantic-ui-react";
+import { Redirect, Link } from "react-router-dom";
 
 import { getSuccess } from "../reducers";
 import { loginAttempt } from "../actions";
@@ -72,6 +72,9 @@ class LoginForm extends React.Component {
           compact
           onClick={this.submit}
         />
+        <Segment inverted>
+          Don't have an account? <Link to="/new_user">Register!</Link>
+        </Segment>
       </Form>
     );
   }
