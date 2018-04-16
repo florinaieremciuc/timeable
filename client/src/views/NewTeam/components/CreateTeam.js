@@ -17,7 +17,6 @@ class CreateTeamForm extends React.Component {
     this.submit = this.submit.bind(this);
   }
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
     nextProps.newteamid && this.setState({ redirect: !this.state.redirect });
   }
   handleChangeName(text) {
@@ -25,11 +24,10 @@ class CreateTeamForm extends React.Component {
   }
   async submit() {
     await this.props.createTeamAttempt(this.state.name);
-    // console.log("props", this.props);
   }
   render() {
     if (this.state.redirect) {
-      return <Redirect to="/login" team={this.props.newteamid} />;
+      return <Redirect to="/new_user" />;
     }
 
     return (

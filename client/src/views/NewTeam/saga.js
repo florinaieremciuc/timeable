@@ -10,7 +10,6 @@ export default function* createTeamSaga({ name }) {
   try {
     const response = yield call(createTeam, name.toLowerCase());
     // verify if the authentication was successful
-    console.log("response saga", response);
     if (response && response.errno) {
       yield put(createTeamFailure(response));
     } else if (response && response[0]) {
