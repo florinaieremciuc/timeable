@@ -10,10 +10,11 @@ export default function* createTeamSaga({ name }) {
   try {
     const response = yield call(createTeam, name.toLowerCase());
     // verify if the authentication was successful
-    if (response && response.success && response.team) {
-      yield put(createTeamSuccess(response.team.id, name));
-    } else if (response && response.error) {
-      yield put(createTeamFailure(response.error));
+    console.log("response saga", response);
+    if (response && response.errno) {
+      yield put(createTeamFailure(response));
+    } else if (response && response[0]) {
+      yield put(createTeamSuccess(response[0], name));
     } else {
       yield put(createTeamFailure("Unable to log in, please contact support."));
     }

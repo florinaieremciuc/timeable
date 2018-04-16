@@ -8,11 +8,10 @@ export const createTeamAttempt = name => ({
   type: FETCH_CREATE_TEAM_REQUEST,
   name
 });
-export const createTeamSuccess = (id, name, success) => ({
+export const createTeamSuccess = (id, name) => ({
   type: FETCH_CREATE_TEAM_SUCCESS,
   id,
-  name,
-  success
+  name
 });
 export const createTeamFailure = error => ({
   type: FETCH_CREATE_TEAM_FAILURE,

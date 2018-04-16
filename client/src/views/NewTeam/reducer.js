@@ -16,7 +16,6 @@ export const INITIAL_STATE = Immutable({
   },
   sync: {
     attempting: 0,
-    success: null,
     error: null
   }
 });
@@ -37,7 +36,6 @@ const data = (state = INITIAL_STATE.data, action) => {
       return newTeamData;
     }
     case types.FETCH_CREATE_TEAM_FAILURE:
-      return INITIAL_STATE.data;
     default:
       return state;
   }
@@ -53,19 +51,16 @@ const sync = (state = INITIAL_STATE.sync, action) => {
     case types.FETCH_CREATE_TEAM_REQUEST:
       return {
         attempting: 1,
-        success: null,
         error: null
       };
     case types.FETCH_CREATE_TEAM_SUCCESS:
       return {
         attempting: 0,
-        success: action.success,
         error: null
       };
     case types.FETCH_CREATE_TEAM_FAILURE:
       return {
         attempting: 0,
-        success: null,
         error: action.error
       };
     default:
@@ -74,15 +69,21 @@ const sync = (state = INITIAL_STATE.sync, action) => {
 };
 
 /**
+ * Get the id
+ * @param {Object} state
+ */
+export const getId = state => {
+  return state.data.id;
+};
+/**
  * Get the name
  * @param {Object} state
  */
 export const getName = state => {
   return state.data.name;
 };
-export const getSuccess = state => state.sync && state.sync.success;
-export const getError = state => state.sync && state.sync.error;
-export const isAttempting = state => state.sync && state.sync.attempting;
+export const getError = state => state.sync.error;
+export const isAttempting = state => state.sync.attempting;
 
 export default combineReducers({
   data,

@@ -3,8 +3,8 @@ import { connect } from "react-redux";
 import { Form, Input, Button } from "semantic-ui-react";
 import { Redirect } from "react-router-dom";
 
-import { getSuccess } from "../reducers";
 import { createTeamAttempt } from "../actions";
+import { getId } from "../reducer";
 
 class CreateTeamForm extends React.Component {
   constructor(props) {
@@ -17,18 +17,19 @@ class CreateTeamForm extends React.Component {
     this.submit = this.submit.bind(this);
   }
   componentWillReceiveProps(nextProps) {
-    nextProps.success && this.setState({ redirect: !this.state.redirect });
+    console.log(nextProps);
+    nextProps.newteamid && this.setState({ redirect: !this.state.redirect });
   }
   handleChangeName(text) {
     this.setState({ name: text.target.value });
   }
   async submit() {
     await this.props.createTeamAttempt(this.state.name);
-    console.log("props", this.props);
+    // console.log("props", this.props);
   }
   render() {
     if (this.state.redirect) {
-      return <Redirect to="/projects" />;
+      return <Redirect to="/login" team={this.props.newteamid} />;
     }
 
     return (
@@ -59,6 +60,6 @@ class CreateTeamForm extends React.Component {
   }
 }
 const mapStateToProps = state => ({
-  success: getSuccess(state.team)
+  newteamid: getId(state.team)
 });
 export default connect(mapStateToProps, { createTeamAttempt })(CreateTeamForm);
