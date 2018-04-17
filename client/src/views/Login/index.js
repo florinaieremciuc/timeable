@@ -4,11 +4,12 @@ import { Container } from "semantic-ui-react";
 import LoginForm from "./components/Login";
 import "./styles.css";
 
-let Login = () => {
+let Login = props => {
+  const { teamId } = props.match.params;
   return (
     <Container className="login">
       <h1>Login</h1>
-      <LoginForm />
+      <LoginForm team={teamId} />
     </Container>
   );
 };

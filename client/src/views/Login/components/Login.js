@@ -31,7 +31,6 @@ class LoginForm extends React.Component {
 
   async submit() {
     await this.props.loginAttempt(this.state.username, this.state.password);
-    console.log("props", this.props);
   }
   render() {
     if (this.state.redirect) {
@@ -73,7 +72,8 @@ class LoginForm extends React.Component {
           onClick={this.submit}
         />
         <Segment inverted>
-          Don't have an account? <Link to="/new_user">Register!</Link>
+          Don't have an account?&nbsp;
+          <Link to={`/new_user/${this.props.team}`}>Register!</Link>
         </Segment>
       </Form>
     );
