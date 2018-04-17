@@ -33,9 +33,9 @@ class App extends Component {
             </Link>
             or select a team:
             {teams.map(team => (
-              <Label key={team.id} color="red">
-                {team.name}
-              </Label>
+              <Link key={team.id} to={`login/${team.id}`}>
+                <Label color="red">{team.name}</Label>
+              </Link>
             ))}
           </Container>
         )}
