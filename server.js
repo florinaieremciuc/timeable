@@ -7,7 +7,6 @@ const app = express();
 // ROUTES
 const indexRoute = require("./routes/index");
 const usersRoute = require("./routes/users");
-const organizationsRoute = require("./routes/organizations");
 const teamsRoute = require("./routes/teams");
 
 app.use([
@@ -23,7 +22,6 @@ app.use(express.static("public"));
 
 // app.use("/", indexRoute);
 app.use("/users", usersRoute);
-app.use("/organizations", organizationsRoute);
 app.use("/teams", teamsRoute);
 
 app.use((error, req, res, next) => {
