@@ -22,7 +22,9 @@ ReactDOM.render(
         <Switch>
           <Route exact path="/" component={App} />
           <Route exact path="/new_team" component={NewTeam} />
+          <Route exact path="/login/:teamId" component={Login} />
           <Route exact path="/login" component={Login} />
+          <Route exact path="/new_user/:teamId" component={Register} />
           <Route exact path="/new_user" component={Register} />
           <Route exact path="/projects" component={App} />
           <Route exact path="/teams" component={App} />
