@@ -2,7 +2,7 @@ import React from "react";
 
 class Teams extends React.Component {
   render() {
-    return <h1>Teams</h1>;
+    return <h1>Team</h1>;
   }
 }
 

@@ -9,10 +9,6 @@ import "./styles.css";
 
 const Header = props => {
   const { isAuthenticated, logout, username } = props;
-  const logoutAndRedirect = () => {
-    logout();
-    <Redirect to="/login" />;
-  };
   return (
     <header className="header">
       <img src={logo} className="logo" alt="logo" />
@@ -21,7 +17,7 @@ const Header = props => {
           <Link to={`/profile/${username}`}>
             <Icon name="user circle outline" />
           </Link>
-          <Link to="/login">
+          <Link to="/">
             <Icon name="log out" onClick={logout} />
           </Link>
         </div>

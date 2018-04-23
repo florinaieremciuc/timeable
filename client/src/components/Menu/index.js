@@ -24,7 +24,7 @@ class Sidemenu extends Component {
         <Menu.Item name="users">
           <Link to="/teams">
             <Icon name="users" />
-            Teams
+            Team
           </Link>
         </Menu.Item>
         <Menu.Item name="checked calendar">

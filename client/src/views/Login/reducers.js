@@ -83,6 +83,8 @@ const sync = (state = INITIAL_STATE.sync, action) => {
         successMessage: null,
         errorMessage: action.error
       };
+    case types.LOGOUT:
+      return INITIAL_STATE.sync;
     default:
       return state;
   }
