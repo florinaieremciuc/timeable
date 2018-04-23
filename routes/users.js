@@ -12,9 +12,18 @@ router.post("/create_user", (req, res) => {
       first_name: req.body.first_name,
       last_name: req.body.last_name,
       email: req.body.email,
-      phone: req.body.phone
+      phone: req.body.phone,
+      role: req.body.role,
+      team: req.body.team
     })
-    .then(() => res.sendStatus(200));
+    .then(user => {
+      console.log("Response: ", user);
+      res.send({ user });
+    })
+    .catch(error => {
+      console.log("Error: ", error);
+      res.send({ error });
+    });
 });
 
 /* GET all users */
@@ -29,8 +38,8 @@ router.get("/", (req, res) => {
 router.get("/:id", (req, res) => {
   usersController
     .getOne(req.params.id)
-    .then(response => console.log("response", response))
-    .catch(err => console.log("Error: ", err));
+    .then(response => response)
+    .catch(error => error);
 });
 
 /* LOG in */
@@ -38,12 +47,14 @@ router.post("/login", (req, res) => {
   usersController
     .authenticate({
       username: req.body.username,
-      password: req.body.password
+      password: req.body.password,
+      team: req.body.team
     })
-    .then(({ success, user }) => {
-      if (success && user) res.send({ success: success, user: user });
-      else res.sendStatus(401);
-    });
+    .then(({ success, user, error, message }) => {
+      if (success && user) res.send({ success, user });
+      else res.send({ error, message });
+    })
+    .catch(error => res.send({ error, message: "Caught error" }));
 });
 
 /* UPDATE a user */

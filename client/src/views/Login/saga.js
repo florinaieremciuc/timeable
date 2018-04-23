@@ -6,9 +6,14 @@ import { signInUser } from "../../services/Api";
  * Yield a call to the API for authenticating the user using email and password.
  * @param {*} Action payload that contains the `email` and `password` fields
  */
-export default function* loginSaga({ username, password }) {
+export default function* loginSaga({ username, password, team }) {
   try {
-    const response = yield call(signInUser, username.toLowerCase(), password);
+    const response = yield call(
+      signInUser,
+      username.toLowerCase(),
+      password,
+      team
+    );
     // verify if the authentication was successful
     if (response && response.success && response.user) {
       yield put(
@@ -23,8 +28,8 @@ export default function* loginSaga({ username, password }) {
           response.success
         )
       );
-    } else if (response && response.errorMessage) {
-      yield put(loginFailure(response.errorMessage));
+    } else if (response && response.error && response.message) {
+      yield put(loginFailure(response.error, response.message));
     } else {
       yield put(loginFailure("Unable to log in, please contact support."));
     }

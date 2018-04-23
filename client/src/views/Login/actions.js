@@ -5,10 +5,11 @@ export const FETCH_LOGIN_FAILURE = "FETCH_LOGIN_FAILURE";
 export const LOGOUT = "LOGOUT";
 
 // ACTION CREATORS ----------------------------------------
-export const loginAttempt = (username, password) => ({
+export const loginAttempt = (username, password, team) => ({
   type: FETCH_LOGIN_REQUEST,
   username,
-  password
+  password,
+  team
 });
 export const loginSuccess = (
   id,
@@ -30,9 +31,10 @@ export const loginSuccess = (
   role,
   success
 });
-export const loginFailure = errorMessage => ({
+export const loginFailure = (error, message) => ({
   type: FETCH_LOGIN_FAILURE,
-  errorMessage
+  error,
+  message
 });
 
 export const logout = () => ({ type: LOGOUT });

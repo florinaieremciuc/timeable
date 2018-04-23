@@ -30,7 +30,11 @@ class LoginForm extends React.Component {
   }
 
   async submit() {
-    await this.props.loginAttempt(this.state.username, this.state.password);
+    await this.props.loginAttempt(
+      this.state.username,
+      this.state.password,
+      this.props.team
+    );
   }
   render() {
     if (this.state.redirect) {

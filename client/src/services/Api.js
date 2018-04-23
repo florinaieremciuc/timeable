@@ -13,20 +13,22 @@ import config from "./../config";
 export const registerUser = (
   username,
   password,
-  firstname,
-  lastname,
+  first_name,
+  last_name,
   email,
   phone,
-  role
+  role,
+  team
 ) => {
   const params = {
     username,
     password,
-    firstname,
-    lastname,
+    first_name,
+    last_name,
     email,
     phone,
-    role
+    role,
+    team
   };
 
   return fetch(`${config.API_URL}/users/create_user`, {
@@ -36,17 +38,17 @@ export const registerUser = (
       "Content-Type": "application/json"
     },
     body: JSON.stringify(params)
-  }).then(response => console.log("RESPONSE REGISTER", response));
-  // }).then(response => response.json());
+  }).then(response => response.json());
 };
 
 /**
  * Call API to authenticate user.
  * @param {String} username
  * @param {String} password
+ * @param {Number} team
  */
-export const signInUser = (username, password) => {
-  const params = { username, password };
+export const signInUser = (username, password, team) => {
+  const params = { username, password, team };
   return fetch(`${config.API_URL}/users/login`, {
     method: "POST",
     headers: {

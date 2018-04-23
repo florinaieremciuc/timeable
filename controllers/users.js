@@ -15,31 +15,55 @@ const randomString = () => {
 };
 
 module.exports = {
-  createUser({ username, password, first_name, last_name, email, phone }) {
+  createUser({
+    username,
+    password,
+    first_name,
+    last_name,
+    email,
+    phone,
+    role,
+    team
+  }) {
     console.log(`Add user ${username}`);
     const { salt, hash } = saltHashPassword({ password });
-    return knex("users").insert({
-      salt,
-      encrypted_password: hash,
-      username,
-      first_name,
-      last_name,
-      email,
-      phone
-    });
-  },
-  authenticate({ username, password }) {
-    console.log(`Authenticating user ${username}`);
     return knex("users")
-      .where({ username })
+      .insert({
+        salt,
+        encrypted_password: hash,
+        username,
+        first_name,
+        last_name,
+        email,
+        phone,
+        role,
+        team
+      })
+      .then(response => response)
+      .catch(error => error);
+  },
+  authenticate({ username, password, team }) {
+    console.log(`Authenticating user ${username} from ${team} team`);
+    return knex("users")
+      .where({ username, team })
       .then(([user]) => {
-        if (!user) return { success: false };
-        const { hash } = saltHashPassword({
-          password,
-          salt: user.salt
-        });
-        return { success: hash === user.encrypted_password, user: user };
-      });
+        if (!user) {
+          return {
+            error: true,
+            message: "User not found. Check if you chose the right team"
+          };
+        } else {
+          const { hash } = saltHashPassword({
+            password,
+            salt: user.salt
+          });
+          return { success: hash === user.encrypted_password, user: user };
+        }
+      })
+      .catch(error => error);
+  },
+  addRole() {
+    // add user role
   },
   getAll() {
     console.log("Get users list");
