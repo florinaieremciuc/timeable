@@ -31,13 +31,12 @@ export default function* registerSaga({
       role,
       team
     );
-    console.log("saga response", response);
     // verify if the authentication was successful
-    if (response && response.success) {
+    if (response.user && response.user[0]) {
       // add token and refreshToken in the application's state
-      yield put(registerSuccess(response.success));
-    } else if (response && response.error) {
-      yield put(registerFailure(response.error));
+      yield put(registerSuccess({ success: "User added successfully" }));
+    } else if (response && response.user.errno) {
+      yield put(registerFailure({ error: "User already registered" }));
     } else {
       yield put(registerFailure("Unable to log in, please contact support."));
     }
