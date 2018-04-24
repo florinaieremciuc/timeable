@@ -74,6 +74,23 @@ export const createTeam = name => {
 };
 
 /**
+ * Call API to send invites to team members.
+ * @param {Number} team - id
+ * @param {String} teamLead - team lead name
+ * @param {Array} members - array of members: {email, role}
+ */
+export const addMembers = (team, teamLead, members) => {
+  const params = { team, teamLead, members };
+  return fetch(`${config.API_URL}/teams/add_members`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(params)
+  }).then(response => response.json());
+};
+
+/**
  * Call API to get teams.
  */
 export const getTeams = () => {
