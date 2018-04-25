@@ -1,4 +1,4 @@
-import config from "./../config";
+import config from './../config';
 
 /**
  * Call API to create user.
@@ -18,7 +18,7 @@ export const registerUser = (
   email,
   phone,
   role,
-  team
+  team,
 ) => {
   const params = {
     username,
@@ -28,16 +28,16 @@ export const registerUser = (
     email,
     phone,
     role,
-    team
+    team,
   };
 
   return fetch(`${config.API_URL}/users/create_user`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json"
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify(params)
+    body: JSON.stringify(params),
   }).then(response => response.json());
 };
 
@@ -50,11 +50,11 @@ export const registerUser = (
 export const signInUser = (username, password, team) => {
   const params = { username, password, team };
   return fetch(`${config.API_URL}/users/login`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json"
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify(params)
+    body: JSON.stringify(params),
   }).then(response => response.json());
 };
 
@@ -62,14 +62,14 @@ export const signInUser = (username, password, team) => {
  * Call API to create team.
  * @param {String} name
  */
-export const createTeam = name => {
+export const createTeam = (name) => {
   const params = { name };
   return fetch(`${config.API_URL}/teams/create_team`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json"
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify(params)
+    body: JSON.stringify(params),
   }).then(response => response.json());
 };
 
@@ -82,29 +82,28 @@ export const createTeam = name => {
 export const addMembers = (team, teamLead, members) => {
   const params = { team, teamLead, members };
   return fetch(`${config.API_URL}/teams/add_members`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json"
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify(params)
-  }).then(response => response.json());
+    body: JSON.stringify(params),
+  });
 };
 
 /**
  * Call API to get teams.
  */
-export const getTeams = () => {
-  return fetch(`${config.API_URL}/teams/`, {
-    method: "GET",
+export const getTeams = () =>
+  fetch(`${config.API_URL}/teams/`, {
+    method: 'GET',
     headers: {
-      "Content-Type": "application/json"
-    }
+      'Content-Type': 'application/json',
+    },
   }).then(response => response.json());
-};
 
 export default {
   signInUser,
   registerUser,
   createTeam,
-  getTeams
+  getTeams,
 };
