@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import { Container } from "semantic-ui-react";
+import React from 'react';
+import { Container } from 'semantic-ui-react';
 
-import LoginForm from "./components/Login";
-import "./styles.css";
+import LoginForm from './components/Login';
+import './styles.css';
 
-let Login = props => {
-  const { teamId } = props.match.params;
+const Login = (props) => {
+  const { teamId, role } = props.match.params;
   return (
     <Container className="login">
       <h1>Login</h1>
-      <LoginForm team={teamId} />
+      <LoginForm team={teamId} role={role} />
     </Container>
   );
 };
