@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 
 import LoginForm from './components/Login';
 import './styles.css';
@@ -13,5 +14,9 @@ const Login = (props) => {
     </Container>
   );
 };
-
 export default Login;
+Login.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.object,
+  }).isRequired,
+};

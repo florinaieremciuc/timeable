@@ -1,6 +1,6 @@
-import { put, call } from "redux-saga/effects";
-import { createTeamSuccess, createTeamFailure } from "./actions";
-import { createTeam } from "../../services/Api";
+import { put, call } from 'redux-saga/effects';
+import { createTeamSuccess, createTeamFailure } from './actions';
+import { createTeam } from '../../../services/Api';
 
 /**
  * Yield a call to the API for creating a team.
@@ -15,9 +15,9 @@ export default function* createTeamSaga({ name }) {
     } else if (response && response[0]) {
       yield put(createTeamSuccess(response[0], name));
     } else {
-      yield put(createTeamFailure("Unable to log in, please contact support."));
+      yield put(createTeamFailure('Unable to log in, please contact support.'));
     }
   } catch (e) {
-    yield put(createTeamFailure("Unable to connect to the server."));
+    yield put(createTeamFailure('Unable to connect to the server.'));
   }
 }

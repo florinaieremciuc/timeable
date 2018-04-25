@@ -1,6 +1,6 @@
-import { put, call } from "redux-saga/effects";
-import { getTeamsSuccess, getTeamsFailure } from "./actions";
-import { getTeams } from "../services/Api";
+import { put, call } from 'redux-saga/effects';
+import { getTeamsSuccess, getTeamsFailure } from './actions';
+import { getTeams } from '../../../services/Api';
 
 /**
  * Yield a call to the API for getting the teams list.
@@ -14,9 +14,9 @@ export default function* getTeamsSaga() {
     } else if (response && Array(response)) {
       yield put(getTeamsSuccess(response));
     } else {
-      yield put(getTeamsFailure("Unable to log in, please contact support."));
+      yield put(getTeamsFailure('Unable to log in, please contact support.'));
     }
   } catch (e) {
-    yield put(getTeamsFailure("Unable to connect to the server."));
+    yield put(getTeamsFailure('Unable to connect to the server.'));
   }
 }

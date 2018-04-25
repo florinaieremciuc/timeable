@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import { combineReducers } from 'redux';
 import Immutable from 'seamless-immutable';
-import { isNil } from 'lodash';
 import * as types from './actions';
 
 export const userPropType = PropTypes.shape({

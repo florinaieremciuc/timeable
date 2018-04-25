@@ -1,25 +1,28 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Form, Input, Button, Segment } from "semantic-ui-react";
-import { Redirect, Link } from "react-router-dom";
+import React from 'react';
+import { connect } from 'react-redux';
+import { Form, Input, Button, Segment } from 'semantic-ui-react';
+import { Redirect, Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-import { getSuccess } from "../reducers";
-import { loginAttempt } from "../actions";
+import { getSuccess } from '../../../State/Users/login/reducers';
+import { loginAttempt } from '../../../State/Users/login/actions';
 
 class LoginForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
-      password: "",
-      redirect: false
+      username: '',
+      password: '',
+      redirect: false,
     };
     this.handleChangeUsername = this.handleChangeUsername.bind(this);
     this.handleChangePassword = this.handleChangePassword.bind(this);
     this.submit = this.submit.bind(this);
   }
   componentWillReceiveProps(nextProps) {
-    nextProps.success && this.setState({ redirect: !this.state.redirect });
+    if (nextProps.success) {
+      this.setState({ redirect: !this.state.redirect });
+    }
   }
   handleChangeUsername(text) {
     this.setState({ username: text.target.value });
@@ -30,11 +33,7 @@ class LoginForm extends React.Component {
   }
 
   async submit() {
-    await this.props.loginAttempt(
-      this.state.username,
-      this.state.password,
-      this.props.team
-    );
+    await this.props.loginAttempt(this.state.username, this.state.password, this.props.team);
   }
   render() {
     if (this.state.redirect) {
@@ -76,7 +75,7 @@ class LoginForm extends React.Component {
           onClick={this.submit}
         />
         <Segment inverted>
-          Don't have an account?&nbsp;
+          {"Don't have an account?"}&nbsp;
           <Link to={`/new_user/${this.props.team}`}>Register!</Link>
         </Segment>
       </Form>
@@ -84,6 +83,11 @@ class LoginForm extends React.Component {
   }
 }
 const mapStateToProps = state => ({
-  success: getSuccess(state.user)
+  success: getSuccess(state.user),
 });
 export default connect(mapStateToProps, { loginAttempt })(LoginForm);
+LoginForm.propTypes = {
+  success: PropTypes.bool.isRequired,
+  team: PropTypes.objectOf().isRequired,
+  loginAttempt: PropTypes.func.isRequired,
+};

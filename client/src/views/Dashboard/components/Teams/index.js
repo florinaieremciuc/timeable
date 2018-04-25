@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Container, Form, Input, Button, Select } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 
 import { addMembers } from '../../../../services/Api';
-import { getId as getTeam } from '../../../NewTeam/reducer';
-import { getUserData as getUser } from '../../../Login/reducers';
+import { getId as getTeam } from '../../../../State/Teams/create/reducer';
+import { getUserData as getUser } from '../../../../State/Users/login/reducers';
 
 class Teams extends React.Component {
   constructor(props) {
@@ -73,7 +74,7 @@ class Teams extends React.Component {
   inputs() {
     const rows = [];
     const { inputCount } = this.state;
-    for (let i = 0; i < inputCount; i++) {
+    for (let i = 0; i < inputCount; i += 1) {
       rows.push(this.addInput(i));
     }
     return rows;
@@ -82,7 +83,9 @@ class Teams extends React.Component {
   handleAddMember(text, index) {
     const members = Object.assign(this.state.members);
     const email = text.target.value.replace(/\s/g, '');
-    email.includes('@') && email.includes('.') ? members.push({ index, email }) : null;
+    if (email.includes('@') && email.includes('.')) {
+      members.push({ index, email });
+    }
     this.setState({ members });
   }
   handleChangeRole(event, index) {
@@ -91,6 +94,7 @@ class Teams extends React.Component {
       if (member.index === index) {
         member.role = event.target.innerText.replace(/\s/g, '').toLowerCase();
       }
+      return null;
     });
     this.setState({ members });
   }
@@ -140,3 +144,11 @@ const mapStateToProps = state => ({
   user: getUser(state.user),
 });
 export default connect(mapStateToProps, null)(Teams);
+Teams.propTypes = {
+  newteamid: PropTypes.string.isRequired,
+  team: PropTypes.number.isRequired,
+  user: PropTypes.shape({
+    firstname: PropTypes.string,
+    lastname: PropTypes.string,
+  }).isRequired,
+};

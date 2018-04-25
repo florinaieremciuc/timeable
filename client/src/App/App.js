@@ -2,26 +2,29 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Container, Button, Label } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
 
 import './App.css';
 import Dashboard from '../views/Dashboard';
 import Header from '../components/Header';
-import { isAuthenticated, getUsername } from '../views/Login/reducers';
-import { logout } from '../views/Login/actions';
-import { getItems } from './reducer';
-import { getTeamsAttempt } from './actions';
+import { isAuthenticated, getUsername } from '../State/Users/login/reducers';
+import { logout } from '../State/Users/login/actions';
+import { getItems } from '../State/Teams/get/reducer';
+import { getTeamsAttempt } from '../State/Teams/get/actions';
 
 class App extends Component {
   componentWillMount() {
     this.props.getTeamsAttempt();
   }
   render() {
-    const {
-      isAuthenticated, logout, username, match, teams,
-    } = this.props;
+    const { username, match, teams } = this.props;
     return (
       <div className="App">
-        <Header isAuthenticated={isAuthenticated} logout={logout} username={username} />
+        <Header
+          isAuthenticated={this.props.isAuthenticated}
+          logout={this.props.logout}
+          username={username}
+        />
         {!isAuthenticated && (
           <Container>
             Choose an action:
@@ -48,3 +51,13 @@ const mapStateToProps = state => ({
   username: getUsername(state.user),
 });
 export default connect(mapStateToProps, { logout, getTeamsAttempt })(App);
+App.propTypes = {
+  getTeamsAttempt: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  logout: PropTypes.func.isRequired,
+  username: PropTypes.string.isRequired,
+  match: PropTypes.shape({
+    path: PropTypes.string,
+  }).isRequired,
+  teams: PropTypes.arrayOf(PropTypes.object).isRequired,
+};

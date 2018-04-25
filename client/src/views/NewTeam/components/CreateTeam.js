@@ -4,8 +4,8 @@ import { Form, Input, Button } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { createTeamAttempt } from '../actions';
-import { getId } from '../reducer';
+import { createTeamAttempt } from '../../../State/Teams/create/actions';
+import { getId } from '../../../State/Teams/create/reducer';
 
 class CreateTeamForm extends React.Component {
   constructor(props) {

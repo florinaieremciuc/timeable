@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { registerAttempt } from '../actions';
+import { registerAttempt } from '../../../State/Users/register/actions';
 
 class RegistrationForm extends React.Component {
   constructor(props) {

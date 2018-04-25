@@ -1,9 +1,9 @@
-import { fork } from "redux-saga/effects";
+import { fork } from 'redux-saga/effects';
 
-import watchGetTeamsAttempt from "./App/watcher";
-import watchCreateTeamAttempt from "./views/NewTeam/watcher";
-import watchRegisterAttempt from "./views/Register/watcher";
-import watchLoginAttempt from "./views/Login/watcher";
+import watchGetTeamsAttempt from './State/Teams/get/watcher';
+import watchCreateTeamAttempt from './State/Teams/create/watcher';
+import watchRegisterAttempt from './State/Users/register/watcher';
+import watchLoginAttempt from './State/Users/login/watcher';
 
 // start the daemons
 export default function* root() {
