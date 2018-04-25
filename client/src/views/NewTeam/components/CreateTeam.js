@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Form, Input, Button } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import { createTeamAttempt } from '../actions';
 import { getId } from '../reducer';
@@ -33,7 +34,7 @@ class CreateTeamForm extends React.Component {
   }
   render() {
     if (this.state.redirect) {
-      return <Redirect to="/new_user/" />;
+      return <Redirect to={`/new_user/${this.props.newteamid}`} />;
     }
     return (
       <Form onSubmit={this.submit}>
@@ -66,3 +67,11 @@ const mapStateToProps = state => ({
   newteamid: getId(state.team),
 });
 export default connect(mapStateToProps, { createTeamAttempt })(CreateTeamForm);
+
+CreateTeamForm.propTypes = {
+  newteamid: PropTypes.number,
+  createTeamAttempt: PropTypes.func.isRequired,
+};
+CreateTeamForm.defaultProps = {
+  newteamid: null,
+};
