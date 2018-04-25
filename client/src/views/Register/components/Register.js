@@ -1,33 +1,31 @@
-import React from "react";
-import { Form, Input, Button, Select } from "semantic-ui-react";
-import { connect } from "react-redux";
-import { registerAttempt } from "../actions";
-import { getId as getTeamId } from "../../NewTeam/reducer";
+import React from 'react';
+import { Form, Input, Button } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
+import { registerAttempt } from '../actions';
 
 class RegistrationForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
-      password: "",
-      confirmpass: "",
-      firstname: "",
-      lastname: "",
-      email: "",
-      role: "",
-      phone: "",
-      role: ""
+      username: '',
+      password: '',
+      confirmpass: '',
+      firstname: '',
+      lastname: '',
+      email: '',
+      phone: '',
+      redirect: false,
     };
     this.handleChangeUsername = this.handleChangeUsername.bind(this);
     this.handleChangePassword = this.handleChangePassword.bind(this);
-    this.handleChangeConfirmPassword = this.handleChangeConfirmPassword.bind(
-      this
-    );
+    this.handleChangeConfirmPassword = this.handleChangeConfirmPassword.bind(this);
     this.handleChangeFirstName = this.handleChangeFirstName.bind(this);
     this.handleChangeLastName = this.handleChangeLastName.bind(this);
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
     this.handleChangePhone = this.handleChangePhone.bind(this);
-    this.handleChangeRole = this.handleChangeRole.bind(this);
     this.submit = this.submit.bind(this);
   }
 
@@ -52,28 +50,29 @@ class RegistrationForm extends React.Component {
   handleChangePhone(event) {
     this.setState({ phone: event.target.value });
   }
-  handleChangeRole(event) {
-    this.setState({
-      role: event.target.innerText.replace(/\s/g, "").toLowerCase()
-    });
-  }
-  submit() {
-    this.state.password === this.state.confirmpass
-      ? this.props.registerAttempt(
-          this.state.username,
-          this.state.password,
-          this.state.firstname,
-          this.state.lastname,
-          this.state.email,
-          this.state.phone,
-          this.state.role,
-          this.props.team
-        )
-      : alert("Parolele difera");
-    console.log("role", this.state.role);
+  async submit() {
+    if (this.state.password === this.state.confirmpass) {
+      await this.props.registerAttempt(
+        this.state.username,
+        this.state.password,
+        this.state.firstname,
+        this.state.lastname,
+        this.state.email,
+        this.state.phone,
+        this.props.params.role ? this.props.params.role : 'teamlead',
+        this.props.params.teamId,
+      );
+      this.setState({ redirect: true });
+    } else {
+      alert('Passwords must match');
+    }
+    return null;
   }
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect to={`/login/${this.props.params.teamId}`} />;
+    }
     return (
       <Form onSubmit={this.submit}>
         <Form.Field
@@ -122,22 +121,6 @@ class RegistrationForm extends React.Component {
           required
         />
         <Form.Field
-          id="role"
-          control={Select}
-          name="role"
-          placeholder="Role"
-          // value={this.state.role}
-          options={[
-            { key: "teamlead", text: "Team lead", value: "Team lead" },
-            { key: "frontend", text: "Front end", value: "Front end" },
-            { key: "backend", text: "Back end", value: "Back end" },
-            { key: "tester", text: "Tester", value: "Tester" },
-            { key: "sysadmin", text: "Sys admin", value: "Sys admin" }
-          ]}
-          onChange={event => this.handleChangeRole(event)}
-          required
-        />
-        <Form.Field
           id="password"
           control={Input}
           name="password"
@@ -167,8 +150,11 @@ class RegistrationForm extends React.Component {
     );
   }
 }
-
-const mapStateToProps = state => ({
-  team: getTeamId(state.team)
-});
-export default connect(mapStateToProps, { registerAttempt })(RegistrationForm);
+export default connect(null, { registerAttempt })(RegistrationForm);
+RegistrationForm.propTypes = {
+  params: PropTypes.shape({
+    role: PropTypes.string,
+    teamId: PropTypes.string,
+  }).isRequired,
+  registerAttempt: PropTypes.func.isRequired,
+};
