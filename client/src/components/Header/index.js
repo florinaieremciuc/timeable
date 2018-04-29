@@ -1,17 +1,18 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Icon } from "semantic-ui-react";
-import { Link } from "react-router-dom";
-import { Redirect } from "react-router-dom";
+import React from 'react';
+import { Icon } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-import logo from "../../assets/Timeable_logo_full_dim.svg";
-import "./styles.css";
+import logo from '../../assets/Timeable_logo_full_dim.svg';
+import './styles.css';
 
-const Header = props => {
+const Header = (props) => {
   const { isAuthenticated, logout, username } = props;
   return (
     <header className="header">
-      <img src={logo} className="logo" alt="logo" />
+      <Link to="/">
+        <img src={logo} className="logo" alt="logo" />
+      </Link>
       {isAuthenticated && (
         <div className="icons">
           <Link to={`/profile/${username}`}>
@@ -25,5 +26,12 @@ const Header = props => {
     </header>
   );
 };
-
 export default Header;
+Header.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired,
+  logout: PropTypes.func.isRequired,
+  username: PropTypes.string,
+};
+Header.defaultProps = {
+  username: null,
+};
