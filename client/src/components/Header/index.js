@@ -28,10 +28,12 @@ const Header = (props) => {
 };
 export default Header;
 Header.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired,
-  logout: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+  logout: PropTypes.func,
   username: PropTypes.string,
 };
 Header.defaultProps = {
+  isAuthenticated: null,
+  logout: null,
   username: null,
 };
