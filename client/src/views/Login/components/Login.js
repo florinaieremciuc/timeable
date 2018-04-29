@@ -33,12 +33,13 @@ class LoginForm extends React.Component {
   }
 
   async submit() {
-    await this.props.loginAttempt(this.state.username, this.state.password, this.props.team);
+    await this.props.loginAttempt(this.state.username, this.state.password);
   }
   render() {
     if (this.state.redirect) {
       return <Redirect to="/projects" />;
     }
+    console.log(this.props);
 
     return (
       <Form onSubmit={this.submit}>
@@ -76,7 +77,7 @@ class LoginForm extends React.Component {
         />
         <Segment inverted>
           {"Don't have an account?"}&nbsp;
-          <Link to={`/new_user/${this.props.team}`}>Register!</Link>
+          <Link to="/">Register!</Link>
         </Segment>
       </Form>
     );
@@ -87,7 +88,9 @@ const mapStateToProps = state => ({
 });
 export default connect(mapStateToProps, { loginAttempt })(LoginForm);
 LoginForm.propTypes = {
-  success: PropTypes.bool.isRequired,
-  team: PropTypes.objectOf().isRequired,
+  success: PropTypes.bool,
   loginAttempt: PropTypes.func.isRequired,
+};
+LoginForm.defaultProps = {
+  success: null,
 };

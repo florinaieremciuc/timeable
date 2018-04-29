@@ -1,10 +1,11 @@
-var express = require("express");
-var router = express.Router();
+const express = require('express');
 
-var usersController = require("../controllers/users");
+const router = express.Router();
+
+const usersController = require('../controllers/users');
 
 /* CREATE a user */
-router.post("/create_user", (req, res) => {
+router.post('/create_user', (req, res) => {
   usersController
     .createUser({
       username: req.body.username,
@@ -14,28 +15,28 @@ router.post("/create_user", (req, res) => {
       email: req.body.email,
       phone: req.body.phone,
       role: req.body.role,
-      team: req.body.team
+      team: req.body.team,
     })
-    .then(user => {
-      console.log("Response: ", user);
+    .then((user) => {
+      console.log('Response: ', user);
       res.send({ user });
     })
-    .catch(error => {
-      console.log("Error: ", error);
+    .catch((error) => {
+      console.log('Error: ', error);
       res.send({ error });
     });
 });
 
 /* GET all users */
-router.get("/", (req, res) => {
+router.get('/', (req, res) => {
   usersController
     .getAll()
-    .then(response => console.log("response", response))
-    .catch(err => console.log("Error: ", err));
+    .then(response => console.log('response', response))
+    .catch(err => console.log('Error: ', err));
 });
 
 /* GET a user */
-router.get("/:id", (req, res) => {
+router.get('/:id', (req, res) => {
   usersController
     .getOne(req.params.id)
     .then(response => response)
@@ -43,18 +44,19 @@ router.get("/:id", (req, res) => {
 });
 
 /* LOG in */
-router.post("/login", (req, res) => {
+router.post('/login', (req, res) => {
   usersController
     .authenticate({
       username: req.body.username,
       password: req.body.password,
-      team: req.body.team
     })
-    .then(({ success, user, error, message }) => {
+    .then(({
+      success, user, error, message,
+    }) => {
       if (success && user) res.send({ success, user });
       else res.send({ error, message });
     })
-    .catch(error => res.send({ error, message: "Caught error" }));
+    .catch(error => res.send({ error, message: 'Caught error' }));
 });
 
 /* UPDATE a user */
@@ -69,10 +71,10 @@ router.post("/login", (req, res) => {
 // });
 
 /* DELETE a user */
-router.get("/delete/:id", (req, res) => {
+router.get('/delete/:id', (req, res) => {
   usersController
     .delete(req.params.id)
     .then(() => res.sendStatus(200))
-    .catch(err => console.log("Error: ", err));
+    .catch(err => console.log('Error: ', err));
 });
 module.exports = router;

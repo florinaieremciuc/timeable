@@ -10,6 +10,8 @@ export const userPropType = PropTypes.shape({
   lastname: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   phone: PropTypes.string.isRequired,
+  role: PropTypes.string.isRequired,
+  team: PropTypes.number.isRequired,
 });
 
 export const INITIAL_STATE = Immutable({
@@ -21,6 +23,7 @@ export const INITIAL_STATE = Immutable({
     email: null,
     phone: null,
     role: null,
+    team: null,
   },
   sync: {
     attempting: 0,
@@ -46,6 +49,7 @@ const data = (state = INITIAL_STATE.data, action) => {
       email: action.email,
       phone: action.phone,
       role: action.role,
+      team: action.team,
     };
     return userData;
   }
@@ -143,6 +147,12 @@ export const getPhone = state => (isAuthenticated(state) ? state.data.phone : nu
  * @param {Object} state
  */
 export const getRole = state => (isAuthenticated(state) ? state.data.role : null);
+
+/**
+ * Get the team, if the user is authenticated
+ * @param {Object} state
+ */
+export const getTeam = state => (isAuthenticated(state) ? state.data.team : null);
 
 export const getSuccess = state => state.sync && state.sync.successMessage;
 export const getError = state => state.sync && state.sync.errorMessage;

@@ -19,6 +19,7 @@ export default function* loginSaga({ username, password, team }) {
         response.user.email,
         response.user.phone,
         response.user.role,
+        response.user.team,
         response.success,
       ));
     } else if (response && response.error && response.message) {

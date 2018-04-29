@@ -1,33 +1,23 @@
-const knex = require("knex")(require("../knexfile"));
-const crypto = require("crypto"); // native node package
+const knex = require('knex')(require('../knexfile'));
+const crypto = require('crypto'); // native node package
 
+const randomString = () => crypto.randomBytes(4).toString('hex');
 const saltHashPassword = ({ password, salt = randomString() }) => {
-  const hash = crypto.createHmac("sha512", salt).update(password);
+  const hash = crypto.createHmac('sha512', salt).update(password);
 
   return {
     salt,
-    hash: hash.digest("hex")
+    hash: hash.digest('hex'),
   };
-};
-
-const randomString = () => {
-  return crypto.randomBytes(4).toString("hex");
 };
 
 module.exports = {
   createUser({
-    username,
-    password,
-    first_name,
-    last_name,
-    email,
-    phone,
-    role,
-    team
+    username, password, first_name, last_name, email, phone, role, team,
   }) {
     console.log(`Add user ${username}`);
     const { salt, hash } = saltHashPassword({ password });
-    return knex("users")
+    return knex('users')
       .insert({
         salt,
         encrypted_password: hash,
@@ -37,28 +27,27 @@ module.exports = {
         email,
         phone,
         role,
-        team
+        team,
       })
       .then(response => response)
       .catch(error => error);
   },
-  authenticate({ username, password, team }) {
-    console.log(`Authenticating user ${username} from ${team} team`);
-    return knex("users")
-      .where({ username, team })
+  authenticate({ username, password }) {
+    console.log(`Authenticating user ${username}`);
+    return knex('users')
+      .where({ username })
       .then(([user]) => {
         if (!user) {
           return {
             error: true,
-            message: "User not found. Check if you chose the right team"
+            message: 'Incorrect user or password',
           };
-        } else {
-          const { hash } = saltHashPassword({
-            password,
-            salt: user.salt
-          });
-          return { success: hash === user.encrypted_password, user: user };
         }
+        const { hash } = saltHashPassword({
+          password,
+          salt: user.salt,
+        });
+        return { success: hash === user.encrypted_password, user };
       })
       .catch(error => error);
   },
@@ -66,26 +55,26 @@ module.exports = {
     // add user role
   },
   getAll() {
-    console.log("Get users list");
-    return knex.select().from("users");
+    console.log('Get users list');
+    return knex.select().from('users');
   },
   getOne(id) {
     console.log(`Get user w id ${id}`);
-    return knex("users").where("id", id);
+    return knex('users').where('id', id);
   },
   update(id, name) {
     console.log(`Updating user having id ${id} w ${name}`);
-    return knex("users")
-      .where("id", id)
+    return knex('users')
+      .where('id', id)
       .update({
-        username: name
+        username: name,
       });
   },
   delete(id) {
     console.log(`Delete user w id ${id}`);
-    return knex("users")
-      .where("id", id)
+    return knex('users')
+      .where('id', id)
       .del();
-  }
+  },
   // getTeamMembers() {}
 };
