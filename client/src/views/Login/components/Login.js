@@ -77,7 +77,7 @@ class LoginForm extends React.Component {
         />
         <Segment inverted>
           {"Don't have an account?"}&nbsp;
-          <Link to="/">Register!</Link>
+          <Link to="/new_team">Create your team!</Link>
         </Segment>
       </Form>
     );
