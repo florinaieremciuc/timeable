@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import { addMembers } from '../../../../services/Api';
 import { getId as getTeam } from '../../../../State/Teams/create/reducer';
-import { getUserData as getUser } from '../../../../State/Users/login/reducers';
+import { getUserData as getUser, userPropType } from '../../../../State/Users/login/reducers';
 
 class Teams extends React.Component {
   constructor(props) {
@@ -105,35 +105,38 @@ class Teams extends React.Component {
   }
 
   render() {
+    const { user } = this.props;
     return (
       <Container>
         <h1>Team</h1>
-        <Form onSubmit={this.submit}>
-          <Form.Group widths="equal">
-            {this.inputs()}
+        {user.role === 'teamlead' && (
+          <Form onSubmit={this.submit}>
+            <Form.Group widths="equal">
+              {this.inputs()}
+              <Form.Field
+                control={Button}
+                content="Add member"
+                onClick={this.addMoreInputs}
+                disabled={this.state.inputCount >= this.state.max}
+              />
+              <Form.Field
+                control={Button}
+                content="Remove member"
+                onClick={this.removeInputs}
+                disabled={this.state.inputCount <= this.state.min}
+              />
+            </Form.Group>
             <Form.Field
               control={Button}
-              content="Add member"
-              onClick={this.addMoreInputs}
-              disabled={this.state.inputCount >= this.state.max}
+              content="Send"
+              id="submit"
+              type="submit"
+              color="teal"
+              compact
+              onClick={this.submit}
             />
-            <Form.Field
-              control={Button}
-              content="Remove member"
-              onClick={this.removeInputs}
-              disabled={this.state.inputCount <= this.state.min}
-            />
-          </Form.Group>
-          <Form.Field
-            control={Button}
-            content="Send"
-            id="submit"
-            type="submit"
-            color="teal"
-            compact
-            onClick={this.submit}
-          />
-        </Form>
+          </Form>
+        )}
       </Container>
     );
   }
@@ -147,8 +150,5 @@ export default connect(mapStateToProps, null)(Teams);
 Teams.propTypes = {
   newteamid: PropTypes.string.isRequired,
   team: PropTypes.number.isRequired,
-  user: PropTypes.shape({
-    firstname: PropTypes.string,
-    lastname: PropTypes.string,
-  }).isRequired,
+  user: userPropType.isRequired,
 };
