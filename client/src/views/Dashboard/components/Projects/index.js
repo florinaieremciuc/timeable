@@ -1,13 +1,19 @@
-import React from "react";
-import { Container, Header } from "semantic-ui-react";
-import "./style.css";
+import React from 'react';
+import { Container, Header } from 'semantic-ui-react';
+
+import CreateProjectForm from './components/CreateProject';
+import './style.css';
 
 class Projects extends React.Component {
   render() {
     return (
-      <Container>
-        <Header as="h3">Projects</Header>
-      </Container>
+      <div>
+        <Header />
+        <Container className="create-team">
+          <h1>Create project</h1>
+          <CreateProjectForm />
+        </Container>
+      </div>
     );
   }
 }
