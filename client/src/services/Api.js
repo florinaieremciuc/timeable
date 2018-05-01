@@ -101,9 +101,46 @@ export const getTeams = () =>
     },
   }).then(response => response.json());
 
+/**
+ * Call API to create project.
+ * @param {String} name
+ * @param {String} description
+ * @param {String} deadline
+ * @param {Number} team
+ */
+export const createProject = (name, description, deadline, team) => {
+  const params = {
+    name,
+    description,
+    deadline,
+    team,
+  };
+  return fetch(`${config.API_URL}/projects/create_project`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(params),
+  }).then(response => response.json());
+};
+
+/**
+ * Call API to get a team's projects.
+ */
+export const getProjects = teamid =>
+  fetch(`${config.API_URL}/teams/`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ team: teamid }),
+  }).then(response => response.json());
+
 export default {
   signInUser,
   registerUser,
   createTeam,
   getTeams,
+  createProject,
+  getProjects,
 };
