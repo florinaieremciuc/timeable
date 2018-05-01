@@ -23,7 +23,12 @@ router.get('/:id', (req, res) => {
 /* CREATE a project */
 router.post('/create_project', (req, res) => {
   projectsController
-    .create({ name: req.body.name })
+    .create({
+      name: req.body.name,
+      description: req.body.description,
+      deadline: req.body.deadline,
+      team: req.body.team,
+    })
     .then(project => res.send(project))
     .catch(err => res.send(err));
 });
