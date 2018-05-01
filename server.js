@@ -5,9 +5,10 @@ const cors = require('cors');
 const app = express();
 
 // ROUTES
-const indexRoute = require('./routes/index');
+// const indexRoute = require('./routes/index');
 const usersRoute = require('./routes/users');
 const teamsRoute = require('./routes/teams');
+const projectsRoute = require('./routes/projects');
 
 app.use([
   cors({
@@ -23,6 +24,7 @@ app.use(express.static('public'));
 // app.use("/", indexRoute);
 app.use('/users', usersRoute);
 app.use('/teams', teamsRoute);
+app.use('/projects', projectsRoute);
 
 app.use((error, req, res, next) => {
   if (!error) {
