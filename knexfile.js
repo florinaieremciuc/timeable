@@ -1,9 +1,9 @@
 module.exports = {
-  client: "mysql",
+  client: 'mysql',
   connection: {
-    host: "localhost",
-    user: "root",
-    password: "mysql",
-    database: "timeableDB"
-  }
+    host: 'localhost',
+    user: 'root',
+    password: 'mysql',
+    database: 'timeableDB',
+  },
 };
