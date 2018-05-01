@@ -39,8 +39,6 @@ class LoginForm extends React.Component {
     if (this.state.redirect) {
       return <Redirect to="/projects" />;
     }
-    console.log(this.props);
-
     return (
       <Form onSubmit={this.submit}>
         <Form.Group widths="equal">
