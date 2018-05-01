@@ -1,5 +1,5 @@
 exports.up = knex =>
-  knex.schema.table('users', (t) => {
+  knex.schema.table('projects', (t) => {
     t
       .integer('team')
       .unsigned()

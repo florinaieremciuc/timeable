@@ -1,13 +1,10 @@
-exports.up = function(knex, Promise) {
-  return knex.schema.createTable("teams", t => {
-    t.increments("id").primary();
+exports.up = knex =>
+  knex.schema.createTable('teams', (t) => {
+    t.increments('id').primary();
     t
-      .string("name")
+      .string('name')
       .notNullable()
       .unique();
   });
-};
 
-exports.down = function(knex, Promise) {
-  return knex.schema.dropTableIfExists("teams");
-};
+exports.down = knex => knex.schema.dropTableIfExists('teams');
