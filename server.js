@@ -1,28 +1,28 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const cors = require("cors");
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const app = express();
 
 // ROUTES
-const indexRoute = require("./routes/index");
-const usersRoute = require("./routes/users");
-const teamsRoute = require("./routes/teams");
+const indexRoute = require('./routes/index');
+const usersRoute = require('./routes/users');
+const teamsRoute = require('./routes/teams');
 
 app.use([
   cors({
-    exposedHeaders: ["Link"]
+    exposedHeaders: ['Link'],
   }),
   bodyParser.json({
-    limit: "5mb"
+    limit: '5mb',
   }),
-  bodyParser.urlencoded({ extended: true, limit: "5mb" })
+  bodyParser.urlencoded({ extended: true, limit: '5mb' }),
 ]);
-app.use(express.static("public"));
+app.use(express.static('public'));
 
 // app.use("/", indexRoute);
-app.use("/users", usersRoute);
-app.use("/teams", teamsRoute);
+app.use('/users', usersRoute);
+app.use('/teams', teamsRoute);
 
 app.use((error, req, res, next) => {
   if (!error) {
@@ -33,8 +33,8 @@ app.use((error, req, res, next) => {
   }
 });
 
-var server = app.listen(3001, () => {
-  console.log("Server running on http://localhost:" + server.address().port);
+const server = app.listen(3001, () => {
+  console.log('Server running on http://localhost:' + server.address().port);
 });
 
 module.exports = app;
