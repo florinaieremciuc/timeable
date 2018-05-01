@@ -10,6 +10,7 @@ export const ProjectsPropType = PropTypes.shape({
   name: PropTypes.string.isRequired,
   description: PropTypes.string,
   deadline: PropTypes.string.isRequired,
+  team: PropTypes.number.isRequired,
 });
 
 export const INITIAL_STATE = Immutable({

@@ -8,6 +8,7 @@ export const newProjectPropType = PropTypes.shape({
   name: PropTypes.string.isRequired,
   description: PropTypes.string,
   deadline: PropTypes.string.isRequired,
+  team: PropTypes.number.isRequired,
 });
 
 export const INITIAL_STATE = Immutable({
@@ -16,6 +17,7 @@ export const INITIAL_STATE = Immutable({
     name: null,
     description: null,
     deadline: null,
+    team: null,
   },
   sync: {
     attempting: 0,
@@ -36,7 +38,8 @@ const data = (state = INITIAL_STATE.data, action) => {
       id: action.id,
       name: action.name,
       description: null,
-      deadlie: action.deadlie,
+      deadlie: action.deadline,
+      team: action.team,
     };
     if (action.description) {
       newProjectData.description = action.description;
