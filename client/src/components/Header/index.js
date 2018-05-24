@@ -9,7 +9,7 @@ import './styles.css';
 const Header = (props) => {
   const { isAuthenticated, logout, username } = props;
   return (
-    <header className="header">
+    <header className="header za-black-header">
       <Link to="/">
         <img src={logo} className="logo" alt="logo" />
       </Link>
