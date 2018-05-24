@@ -1,11 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Container, Form, Input, Button, Select } from 'semantic-ui-react';
-import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 
 import { addMembers } from '../../../../services/Api';
-import { getId as getTeam } from '../../../../State/Teams/create/reducer';
 import { getUserData as getUser, userPropType } from '../../../../State/Users/login/reducers';
 
 class Teams extends React.Component {
@@ -97,7 +95,7 @@ class Teams extends React.Component {
   async submit() {
     const teamLeadFullName = this.props.user.firstname + ' ' + this.props.user.lastname;
     this.setState({ redirect: !this.state.redirect });
-    await addMembers(this.props.team, teamLeadFullName, this.state.members);
+    await addMembers(this.props.user.team, teamLeadFullName, this.state.members);
   }
 
   render() {
@@ -143,11 +141,9 @@ class Teams extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  team: getTeam(state.team),
   user: getUser(state.user),
 });
 export default connect(mapStateToProps, null)(Teams);
 Teams.propTypes = {
-  team: PropTypes.number.isRequired,
   user: userPropType.isRequired,
 };
