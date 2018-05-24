@@ -6,9 +6,9 @@ import { getProjects } from '../../../services/Api';
  * Yield a call to the API for getting the projects list.
  * @param {*} Action payload that contains the `name` field
  */
-export default function* getProjectsSaga() {
+export default function* getProjectsSaga(team) {
   try {
-    const response = yield call(getProjects);
+    const response = yield call(getProjects, team.teamid);
     if (response && response.error) {
       yield put(getProjectsFailure(response));
     } else if (response && Array(response)) {

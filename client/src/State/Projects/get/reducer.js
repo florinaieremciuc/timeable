@@ -5,7 +5,7 @@ import _ from 'lodash';
 
 import * as types from './actions';
 
-export const ProjectsPropType = PropTypes.shape({
+export const projectsPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   description: PropTypes.string,
