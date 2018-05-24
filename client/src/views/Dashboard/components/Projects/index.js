@@ -4,6 +4,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
+import {
+  getData,
+  isAttempting as projectLoading,
+  newProjectPropType,
+} from '../../../../State/Projects/create/reducer';
 import { getItems, isAttempting, projectsPropType } from '../../../../State/Projects/get/reducer';
 import { getProjectsAttempt } from '../../../../State/Projects/get/actions';
 import { getTeam } from '../../../../State/Users/login/reducers';
@@ -13,6 +18,10 @@ import './style.css';
 class Projects extends React.Component {
   componentWillMount() {
     this.props.getProjectsAttempt(this.props.teamid);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (_.isNil(nextProps.project.id)) nextProps.getProjectsAttempt(nextProps.teamid);
   }
 
   render() {
@@ -47,6 +56,8 @@ class Projects extends React.Component {
   }
 }
 const mapStateToProps = state => ({
+  project: getData(state.project),
+  loadingProject: projectLoading(state.project),
   loading: isAttempting(state.projects),
   projects: getItems(state.projects),
   teamid: getTeam(state.user),
@@ -54,6 +65,11 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, { getProjectsAttempt })(Projects);
 
 Projects.propTypes = {
+  project: newProjectPropType,
+  projects: PropTypes.arrayOf(projectsPropType).isRequired,
   getProjectsAttempt: PropTypes.func.isRequired,
   teamid: PropTypes.number.isRequired,
+};
+Projects.defaultProps = {
+  project: null,
 };

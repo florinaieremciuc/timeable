@@ -1,3 +1,8 @@
-h3.ui.header {
-  background-color: #ffff;
-}
+.projects {
+  display: flex;
+  flex-direction: column; }
+  .projects .ui.container.projects-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between; }
