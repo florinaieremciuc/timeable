@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { createTeamAttempt } from '../../../State/Teams/create/actions';
-import { getId } from '../../../State/Teams/create/reducer';
+import { getTeam, newTeamPropType } from '../../../State/Teams/create/reducer';
 
 class CreateTeamForm extends React.Component {
   constructor(props) {
@@ -20,7 +20,7 @@ class CreateTeamForm extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.newteamid) {
+    if (nextProps.newteam.id) {
       this.setState({ redirect: !this.state.redirect });
     }
   }
@@ -34,7 +34,7 @@ class CreateTeamForm extends React.Component {
   }
   render() {
     if (this.state.redirect) {
-      return <Redirect to={`/new_user/${this.props.newteamid}`} />;
+      return <Redirect to={`/new_user/${this.props.newteam.id}`} />;
     }
     return (
       <Form onSubmit={this.submit}>
@@ -64,14 +64,14 @@ class CreateTeamForm extends React.Component {
   }
 }
 const mapStateToProps = state => ({
-  newteamid: getId(state.team),
+  newteam: getTeam(state.team),
 });
 export default connect(mapStateToProps, { createTeamAttempt })(CreateTeamForm);
 
 CreateTeamForm.propTypes = {
-  newteamid: PropTypes.number,
+  newteam: newTeamPropType,
   createTeamAttempt: PropTypes.func.isRequired,
 };
 CreateTeamForm.defaultProps = {
-  newteamid: null,
+  newteam: null,
 };
