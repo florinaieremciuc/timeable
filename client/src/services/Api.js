@@ -128,12 +128,11 @@ export const createProject = (name, description, deadline, team) => {
  * Call API to get a team's projects.
  */
 export const getProjects = teamid =>
-  fetch(`${config.API_URL}/teams/`, {
+  fetch(`${config.API_URL}/projects/${teamid}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ team: teamid }),
   }).then(response => response.json());
 
 export default {
