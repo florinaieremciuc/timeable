@@ -14,7 +14,6 @@ import { logout } from '../State/Users/login/actions';
 class App extends Component {
   render() {
     const { username, match } = this.props;
-    console.log('props', this.props);
     return (
       <div className="App">
         <Header
