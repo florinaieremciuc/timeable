@@ -26,7 +26,7 @@ class Dashboard extends React.Component {
     case '/events':
       return <Events />;
     case '/':
-      return null;
+      return <Projects />;
     default:
       return <h1>Not found</h1>;
     }
