@@ -68,17 +68,15 @@ const sync = (state = INITIAL_STATE.sync, action) => {
 };
 
 /**
- * Get the id
+ * Get data
  * @param {Object} state
  */
-export const getId = state => state.data.id;
+export const getTeam = state => state.data;
 /**
- * Get the name
+ * Get sync
  * @param {Object} state
  */
-export const getName = state => state.data.name;
-export const getError = state => state.sync.error;
-export const isAttempting = state => state.sync.attempting;
+export const getTeamSync = state => state.sync;
 
 export default combineReducers({
   data,
