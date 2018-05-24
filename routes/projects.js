@@ -7,7 +7,7 @@ const projectsController = require('../controllers/projects');
 /* GET list of projects from a team. */
 router.get('/:teamid', (req, res) => {
   projectsController
-    .getAll()
+    .getAll(req.params.teamid)
     .then(projects => res.send(projects))
     .catch(err => res.send(err));
 });

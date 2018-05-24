@@ -14,7 +14,12 @@ module.exports = {
   },
   getAll(teamid) {
     console.log(`Get projects list from ${teamid} team`);
-    return knex('projects').where('team', teamid);
+    return knex('projects')
+      .where('team', teamid)
+      .then((projects) => {
+        if (!projects) return { error: 'There are no projects here' };
+        return projects;
+      });
   },
   getOne(id) {
     console.log(`Get project w id ${id}`);
