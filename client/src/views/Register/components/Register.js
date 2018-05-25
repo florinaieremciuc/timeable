@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 
 import { registerAttempt } from '../../../State/Users/register/actions';
 
+// IMPORTANT - rm / from enc-base64 crypto-js script -- routes bug
 const CryptoJS = require('crypto-js');
 
 class RegistrationForm extends React.Component {
