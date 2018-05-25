@@ -21,7 +21,9 @@ class Projects extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (_.isNil(nextProps.project.id)) nextProps.getProjectsAttempt(nextProps.teamid);
+    if (!_.isNil(nextProps.project) && _.isNil(nextProps.project.id)) {
+      nextProps.getProjectsAttempt(nextProps.teamid);
+    }
   }
 
   render() {
