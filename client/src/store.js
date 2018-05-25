@@ -1,5 +1,5 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
-import { persistStore, persistReducer } from 'redux-persist';
+import { createStore, applyMiddleware } from 'redux';
+import { persistStore, persistReducer, persistCombineReducers } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 import createHistory from 'history/createBrowserHistory';
@@ -61,32 +61,43 @@ const defaultState = {
   // form: {}
 };
 
-const rootReducer = combineReducers({
+const rootPersistConfig = {
+  key: 'root',
+  storage,
+  blacklist: ['projects', 'project', 'teams', 'team', 'registrationsStatus', 'user'],
+};
+
+const persistConfig = {
+  storage,
+  blacklist: ['sync'],
+};
+
+const rootReducer = persistCombineReducers(rootPersistConfig, {
   projects,
   project,
   teams,
   team,
   registrationsStatus,
-  user,
+  user: persistReducer(
+    {
+      key: 'user',
+      ...persistConfig,
+    },
+    user,
+  ),
   // form: formReducer
   // registerForm: formReducer,
   // loginForm: formReducer
 });
 
-const persistConfig = {
-  key: 'root',
-  storage,
-};
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
-  persistedReducer,
+  rootReducer,
   defaultState,
   applyMiddleware(sagaMiddleware, logger, routerMiddleware(history)),
 );
 sagaMiddleware.run(sagas);
 const persistor = persistStore(store);
-persistor.purge();
+// persistor.purge();
 export { history };
 export { store, persistor };
