@@ -38,7 +38,7 @@ const data = (state = INITIAL_STATE.data, action) => {
       id: action.id,
       name: action.name,
       description: null,
-      deadlie: action.deadline,
+      deadline: action.deadline,
       team: action.team,
     };
     if (action.description) {
