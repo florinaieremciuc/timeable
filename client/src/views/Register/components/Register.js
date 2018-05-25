@@ -3,8 +3,11 @@ import { Form, Input, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import CryptoJS from 'crypto-js';
 
 import { registerAttempt } from '../../../State/Users/register/actions';
+
+// const CryptoJS = require('crypto-js');
 
 class RegistrationForm extends React.Component {
   constructor(props) {
@@ -15,7 +18,6 @@ class RegistrationForm extends React.Component {
       confirmpass: '',
       firstname: '',
       lastname: '',
-      email: '',
       phone: '',
       redirect: false,
     };
@@ -24,7 +26,6 @@ class RegistrationForm extends React.Component {
     this.handleChangeConfirmPassword = this.handleChangeConfirmPassword.bind(this);
     this.handleChangeFirstName = this.handleChangeFirstName.bind(this);
     this.handleChangeLastName = this.handleChangeLastName.bind(this);
-    this.handleChangeEmail = this.handleChangeEmail.bind(this);
     this.handleChangePhone = this.handleChangePhone.bind(this);
     this.submit = this.submit.bind(this);
   }
@@ -44,20 +45,24 @@ class RegistrationForm extends React.Component {
   handleChangeLastName(event) {
     this.setState({ lastname: event.target.value });
   }
-  handleChangeEmail(event) {
-    this.setState({ email: event.target.value });
-  }
   handleChangePhone(event) {
     this.setState({ phone: event.target.value });
   }
   async submit() {
     if (this.state.password === this.state.confirmpass) {
+      // Decrypt
+      const bytes = CryptoJS.AES.decrypt(
+        this.props.params.encryptEmail.toString(),
+        this.props.params.role,
+      );
+      const decryptedEmail = bytes.toString(CryptoJS.enc.Utf8);
+
       await this.props.registerAttempt(
         this.state.username,
         this.state.password,
         this.state.firstname,
         this.state.lastname,
-        this.state.email,
+        decryptedEmail,
         this.state.phone,
         this.props.params.role ? this.props.params.role : 'teamlead',
         this.props.params.teamId,
@@ -100,15 +105,6 @@ class RegistrationForm extends React.Component {
           type="text"
           placeholder="Last name"
           onChange={event => this.handleChangeLastName(event)}
-          required
-        />
-        <Form.Field
-          id="email"
-          control={Input}
-          name="email"
-          type="text"
-          placeholder="Email address"
-          onChange={event => this.handleChangeEmail(event)}
           required
         />
         <Form.Field
@@ -155,6 +151,7 @@ RegistrationForm.propTypes = {
   params: PropTypes.shape({
     role: PropTypes.string,
     teamId: PropTypes.string,
+    encryptEmail: PropTypes.string.isRequired,
   }).isRequired,
   registerAttempt: PropTypes.func.isRequired,
 };

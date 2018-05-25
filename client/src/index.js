@@ -23,6 +23,7 @@ ReactDOM.render(
           <Route exact path="/" component={App} />
           <Route exact path="/new_team" component={NewTeam} />
           <Route exact path="/new_user/:teamId/:role" component={Register} />
+          <Route exact path="/new_user/:teamId/:role/:encryptEmail" component={Register} />
           <Route exact path="/new_user/:teamId" component={Register} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/projects" component={App} />

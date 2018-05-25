@@ -1,4 +1,5 @@
 const express = require('express');
+const CryptoJS = require('crypto-js'); // native node package
 
 const router = express.Router();
 const nodemailer = require('nodemailer');
@@ -42,16 +43,19 @@ router.post('/add_members', (req, res) => {
       },
     });
     req.body.members.map((member) => {
+      // encrypt member email
+      const { email, role } = member;
+      const encryptEmail = CryptoJS.AES.encrypt(email, role);
       // setup email data with unicode symbols
       const mailOptions = {
         from: '"Timeable 👻" <admin@timeable.com>', // sender address
-        to: member.email, // list of receivers
+        to: email, // list of receivers
         subject: 'Join Timeable', // Subject line
         text: 'Hello! Some douche wants you in its team. Join here: yolo/id', // plain text body
         html: `<h3>Hi there!</h3><br/> 
             <p>Some douche called <b>${req.body.teamLead}</b> 
             wants you to join their team. <br/>
-            <a href="http://localhost:5000/new_user/${req.body.team}/${member.role}">
+            <a href="http://localhost:5000/new_user/${req.body.team}/${role}/${encryptEmail}">
             Click here!
             </a>.
             <br/> Regards, <br/> <em>Timeable Team</em></p>`, // html body
