@@ -9,6 +9,7 @@ import { routerMiddleware } from 'react-router-redux';
 import { reducer as formReducer } from 'redux-form';
 
 import sagas from './sagas';
+import projects from './State/Projects/get/reducer';
 import project from './State/Projects/create/reducer';
 import teams from './State/Teams/get/reducer';
 import team from './State/Teams/create/reducer';
@@ -17,17 +18,33 @@ import user from './State/Users/login/reducers';
 
 const history = createHistory();
 const defaultState = {
+  projects: {
+    items: [],
+    sync: {
+      attempting: 0,
+      error: null,
+    },
+  },
   project: {
     data: null,
-    sync: null,
+    sync: {
+      attempting: 0,
+      error: null,
+    },
   },
   teams: {
     items: [],
-    sync: null,
+    sync: {
+      attempting: 0,
+      error: null,
+    },
   },
   team: {
     data: null,
-    sync: null,
+    sync: {
+      attempting: 0,
+      error: null,
+    },
   },
   registrationsStatus: {
     attempting: 0,
@@ -36,12 +53,16 @@ const defaultState = {
   },
   user: {
     data: null,
-    sync: null,
+    sync: {
+      attempting: 0,
+      error: null,
+    },
   },
   // form: {}
 };
 
 const rootReducer = combineReducers({
+  projects,
   project,
   teams,
   team,
@@ -66,6 +87,6 @@ const store = createStore(
 );
 sagaMiddleware.run(sagas);
 const persistor = persistStore(store);
-
+persistor.purge();
 export { history };
 export { store, persistor };
