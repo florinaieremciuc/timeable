@@ -6,9 +6,10 @@ import createHistory from 'history/createBrowserHistory';
 import createSagaMiddleware from 'redux-saga';
 import logger from 'redux-logger';
 import { routerMiddleware } from 'react-router-redux';
-import { reducer as formReducer } from 'redux-form';
+// import { reducer as formReducer } from 'redux-form';
 
 import sagas from './sagas';
+import deleteProject from './State/Projects/delete/reducer';
 import projects from './State/Projects/get/reducer';
 import project from './State/Projects/create/reducer';
 import teams from './State/Teams/get/reducer';
@@ -18,6 +19,13 @@ import user from './State/Users/login/reducers';
 
 const history = createHistory();
 const defaultState = {
+  deleteProject: {
+    sync: {
+      attempting: 0,
+      error: null,
+      success: null,
+    },
+  },
   projects: {
     items: [],
     sync: {
@@ -64,15 +72,15 @@ const defaultState = {
 const rootPersistConfig = {
   key: 'root',
   storage,
-  blacklist: ['projects', 'project', 'teams', 'team', 'registrationsStatus', 'user'],
+  blacklist: ['deleteProject', 'projects', 'project', 'teams', 'team', 'registrationsStatus'],
 };
 
 const persistConfig = {
   storage,
-  blacklist: ['sync'],
 };
 
 const rootReducer = persistCombineReducers(rootPersistConfig, {
+  deleteProject,
   projects,
   project,
   teams,

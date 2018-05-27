@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import { isAttempting as attemptDelete } from '../../../../State/Projects/delete/reducer';
 import { deleteProjectAttempt } from '../../../../State/Projects/delete/actions';
 import {
   getData,
@@ -14,7 +13,6 @@ import {
 import { getItems, isAttempting, projectsPropType } from '../../../../State/Projects/get/reducer';
 import { getProjectsAttempt } from '../../../../State/Projects/get/actions';
 import { getTeam } from '../../../../State/Users/login/reducers';
-import CreateProject from '../CreateProjects';
 import './style.css';
 
 class Projects extends React.Component {
@@ -23,19 +21,14 @@ class Projects extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (
-      (!_.isNil(nextProps.project) && _.isNil(nextProps.project.id)) ||
-      nextProps.attemptDelete === 1
-    ) {
+    if (!_.isNil(nextProps.project) && _.isNil(nextProps.project.id)) {
       nextProps.getProjectsAttempt(nextProps.teamid);
     }
-    console.log('attemopt', nextProps.attemptDelete);
   }
 
   delete(id) {
     this.props.deleteProjectAttempt(id);
-    this.props.getProjectsAttempt(this.props.teamid);
-    console.log('attempt delete', this.props.attemptDelete);
+    _.remove(this.props.projects, project => project.id === id);
   }
 
   render() {
@@ -64,16 +57,11 @@ class Projects extends React.Component {
             return null;
           })}
         </Container>
-        {/* <Container className="create-project">
-          <Header>Create project</Header>
-          <CreateProject />
-        </Container> */}
       </div>
     );
   }
 }
 const mapStateToProps = state => ({
-  attemptDelete: attemptDelete(state.project),
   project: getData(state.project),
   loadingProject: projectLoading(state.project),
   loading: isAttempting(state.projects),

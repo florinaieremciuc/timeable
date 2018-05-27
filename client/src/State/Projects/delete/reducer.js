@@ -6,6 +6,7 @@ export const INITIAL_STATE = Immutable({
   sync: {
     attempting: 0,
     error: null,
+    success: null,
   },
 });
 
@@ -20,16 +21,19 @@ const sync = (state = INITIAL_STATE.sync, action) => {
     return {
       attempting: 1,
       error: null,
+      success: null,
     };
   case types.DELETE_PROJECT_SUCCESS:
     return {
       attempting: 0,
       error: null,
+      success: action.success,
     };
   case types.DELETE_PROJECT_FAILURE:
     return {
       attempting: 0,
       error: action.error,
+      success: null,
     };
   default:
     return state;
@@ -37,6 +41,7 @@ const sync = (state = INITIAL_STATE.sync, action) => {
 };
 
 export const getError = state => state.sync.error;
+export const getSuccess = state => state.sync.success;
 export const isAttempting = state => state.sync.attempting;
 
 export default combineReducers({
