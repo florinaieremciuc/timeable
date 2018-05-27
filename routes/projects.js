@@ -45,10 +45,12 @@ router.get('/update/:id/:name', (req, res) => {
 });
 
 /* DELETE a project */
-router.get('/delete/:id', (req, res) => {
+router.delete('/delete/:id', (req, res) => {
   projectsController
     .delete(req.params.id)
-    .then(() => res.sendStatus(200))
+    .then(() => {
+      res.sendStatus(200);
+    })
     .catch(err => console.log('Error: ', err));
 });
 
