@@ -1,0 +1,81 @@
+//Base font variables
+// $base-font-family: "Roboto Condensed", sans-serif;
+$base-font-family: "Hind", Serif;
+
+// Headlines and primary texts
+$base-text-color: #303030;
+
+// Secondary texts - dates and other messages
+$extra-text-color: #636363;
+
+// Links
+$base-links-color: #2e5d8bd2;
+
+// Buttons background
+// $buttons-bg-color: #362947;
+$buttons-bg-color: #fafafa; // borrowed from mosaic
+// Buttons icon
+// $buttons-icon-color: #ffffff;
+$buttons-icon-color: #747474; // borrowed from mosaic
+
+// Posts menu background
+$cover-panel-color: #32394a;
+// Posts menu text color (home page)
+$cover-text-color: #ffffff;
+
+// Article background
+$base-bg-color: #ffffff;
+
+// Borders
+$article-border-color: #dddddd;
+
+// Category label
+$category-color: #e9314d;
+$category-text-color: #ffffff;
+
+// Side menu background
+$panel-background: #fcfafa; // <- side menu
+// Side menu text color
+$panel-color: #818792;
+// Side menu border
+$panel-border: #dddddd;
+
+// Comments
+$comments-header-bg: #efefef;
+
+// Forms
+$form-border-color: #5c5c5c;
+
+// Footer background
+$footer-bg-color: #fafafa;
+
+//Colors
+$color-white: #ffffff;
+$color-black: #000000;
+$color-purple-dark: #1d1627;
+$color-purple: #362947;
+$color-purple-light: #69597e;
+$color-grey: #7b7878;
+$color-grey-post-title: #303030;
+$color-grey-post-date: #636363;
+$color-light-grey: #f2f2f2;
+$color-pink: #e9314d;
+
+//Base font-size
+$base-font-size: 14px;
+
+// Other variables
+$multiplying-factor: 1.1;
+
+//Base padding and margin
+$base-spacing-xxs: 2px;
+$base-spacing-xs: 5px;
+$base-spacing-sm: 8px;
+$base-spacing-xsm: 10px;
+$base-spacing: 16px;
+$base-spacing-xmd: 20px;
+$base-spacing-md: 24px;
+$base-spacing-lg: 32px;
+$base-spacing-xl: 64px;
+$base-spacing-xxl: 72px;
+$base-spacing-xxxl: 80px;
