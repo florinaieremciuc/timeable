@@ -135,6 +135,17 @@ export const getProjects = teamid =>
     },
   }).then(response => response.json());
 
+/**
+ * Call API to detele a project.
+ */
+export const deleteProject = id =>
+  fetch(`${config.API_URL}/projects/delete/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).then(response => response);
+
 export default {
   signInUser,
   registerUser,
@@ -142,4 +153,5 @@ export default {
   getTeams,
   createProject,
   getProjects,
+  deleteProject,
 };
