@@ -14,19 +14,19 @@ export const INITIAL_STATE = Immutable({
  */
 const registrationsStatus = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case types.FETCH_REGISTER_REQUEST:
+  case types.REGISTER_REQUEST:
     return {
       attempting: 1,
       success: null,
       error: null,
     };
-  case types.FETCH_REGISTER_SUCCESS:
+  case types.REGISTER_SUCCESS:
     return {
       attempting: 0,
       success: action.success,
       error: null,
     };
-  case types.FETCH_REGISTER_FAILURE:
+  case types.REGISTER_FAILURE:
     return {
       attempting: 0,
       success: null,

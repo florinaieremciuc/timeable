@@ -1,18 +1,18 @@
 // ACTIONS ----------------------------------------
-export const FETCH_GET_PROJECTS_REQUEST = 'FETCH_GET_PROJECTS_REQUEST';
-export const FETCH_GET_PROJECTS_SUCCESS = 'FETCH_GET_PROJECTS_SUCCESS';
-export const FETCH_GET_PROJECTS_FAILURE = 'FETCH_GET_PROJECTS_FAILURE';
+export const GET_PROJECTS_REQUEST = 'GET_PROJECTS_REQUEST';
+export const GET_PROJECTS_SUCCESS = 'GET_PROJECTS_SUCCESS';
+export const GET_PROJECTS_FAILURE = 'GET_PROJECTS_FAILURE';
 
 // ACTION CREATORS ----------------------------------------
 export const getProjectsAttempt = teamid => ({
-  type: FETCH_GET_PROJECTS_REQUEST,
+  type: GET_PROJECTS_REQUEST,
   teamid,
 });
 export const getProjectsSuccess = projects => ({
-  type: FETCH_GET_PROJECTS_SUCCESS,
+  type: GET_PROJECTS_SUCCESS,
   projects,
 });
 export const getProjectsFailure = error => ({
-  type: FETCH_GET_PROJECTS_FAILURE,
+  type: GET_PROJECTS_FAILURE,
   error,
 });

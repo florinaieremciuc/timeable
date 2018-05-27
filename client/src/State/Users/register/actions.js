@@ -1,7 +1,7 @@
 // ACTIONS ----------------------------------------
-export const FETCH_REGISTER_REQUEST = 'FETCH_REGISTER_REQUEST';
-export const FETCH_REGISTER_SUCCESS = 'FETCH_REGISTER_SUCCESS';
-export const FETCH_REGISTER_FAILURE = 'FETCH_REGISTER_FAILURE';
+export const REGISTER_REQUEST = 'REGISTER_REQUEST';
+export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+export const REGISTER_FAILURE = 'REGISTER_FAILURE';
 
 // ACTION CREATORS ----------------------------------------
 export const registerAttempt = (
@@ -14,7 +14,7 @@ export const registerAttempt = (
   role,
   team,
 ) => ({
-  type: FETCH_REGISTER_REQUEST,
+  type: REGISTER_REQUEST,
   username,
   password,
   firstname,
@@ -25,10 +25,10 @@ export const registerAttempt = (
   team,
 });
 export const registerSuccess = success => ({
-  type: FETCH_REGISTER_SUCCESS,
+  type: REGISTER_SUCCESS,
   success,
 });
 export const registerFailure = error => ({
-  type: FETCH_REGISTER_FAILURE,
+  type: REGISTER_FAILURE,
   error,
 });

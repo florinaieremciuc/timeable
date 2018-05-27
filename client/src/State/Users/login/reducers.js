@@ -39,8 +39,8 @@ export const INITIAL_STATE = Immutable({
  */
 const data = (state = INITIAL_STATE.data, action) => {
   switch (action.type) {
-  case types.FETCH_LOGIN_REQUEST:
-  case types.FETCH_LOGIN_SUCCESS: {
+  case types.LOGIN_REQUEST:
+  case types.LOGIN_SUCCESS: {
     const userData = {
       id: action.id,
       username: action.username,
@@ -53,7 +53,7 @@ const data = (state = INITIAL_STATE.data, action) => {
     };
     return userData;
   }
-  case types.FETCH_LOGIN_FAILURE:
+  case types.LOGIN_FAILURE:
   case types.LOGOUT:
     return INITIAL_STATE.data;
   default:
@@ -68,19 +68,19 @@ const data = (state = INITIAL_STATE.data, action) => {
  */
 const sync = (state = INITIAL_STATE.sync, action) => {
   switch (action.type) {
-  case types.FETCH_LOGIN_REQUEST:
+  case types.LOGIN_REQUEST:
     return {
       attempting: 1,
       successMessage: null,
       errorMessage: null,
     };
-  case types.FETCH_LOGIN_SUCCESS:
+  case types.LOGIN_SUCCESS:
     return {
       attempting: 0,
       successMessage: action.success,
       errorMessage: null,
     };
-  case types.FETCH_LOGIN_FAILURE:
+  case types.LOGIN_FAILURE:
     return {
       attempting: 0,
       successMessage: null,

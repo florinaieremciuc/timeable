@@ -1,18 +1,18 @@
 // ACTIONS ----------------------------------------
-export const FETCH_CREATE_PROJECT_REQUEST = 'FETCH_CREATE_PROJECT_REQUEST';
-export const FETCH_CREATE_PROJECT_SUCCESS = 'FETCH_CREATE_PROJECT_SUCCESS';
-export const FETCH_CREATE_PROJECT_FAILURE = 'FETCH_CREATE_PROJECT_FAILURE';
+export const CREATE_PROJECT_REQUEST = 'CREATE_PROJECT_REQUEST';
+export const CREATE_PROJECT_SUCCESS = 'CREATE_PROJECT_SUCCESS';
+export const CREATE_PROJECT_FAILURE = 'CREATE_PROJECT_FAILURE';
 
 // ACTION CREATORS ----------------------------------------
 export const createProjectAttempt = (name, description, deadline, team) => ({
-  type: FETCH_CREATE_PROJECT_REQUEST,
+  type: CREATE_PROJECT_REQUEST,
   name,
   description,
   deadline,
   team,
 });
 export const createProjectSuccess = (id, name, description, deadline, team) => ({
-  type: FETCH_CREATE_PROJECT_SUCCESS,
+  type: CREATE_PROJECT_SUCCESS,
   id,
   name,
   description,
@@ -20,6 +20,6 @@ export const createProjectSuccess = (id, name, description, deadline, team) => (
   team,
 });
 export const createProjectFailure = error => ({
-  type: FETCH_CREATE_PROJECT_FAILURE,
+  type: CREATE_PROJECT_FAILURE,
   error,
 });

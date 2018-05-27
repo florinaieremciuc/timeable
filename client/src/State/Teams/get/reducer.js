@@ -23,13 +23,13 @@ export const INITIAL_STATE = Immutable({
  */
 const items = (state = INITIAL_STATE.items, action) => {
   switch (action.type) {
-  case types.FETCH_GET_TEAMS_REQUEST: {
+  case types.GET_TEAMS_REQUEST: {
     return state;
   }
-  case types.FETCH_GET_TEAMS_SUCCESS: {
+  case types.GET_TEAMS_SUCCESS: {
     return action.teams;
   }
-  case types.FETCH_GET_TEAMS_FAILURE:
+  case types.GET_TEAMS_FAILURE:
   default:
     return state;
   }
@@ -42,17 +42,17 @@ const items = (state = INITIAL_STATE.items, action) => {
  */
 const sync = (state = INITIAL_STATE.sync, action) => {
   switch (action.type) {
-  case types.FETCH_GET_TEAMS_REQUEST:
+  case types.GET_TEAMS_REQUEST:
     return {
       attempting: 1,
       error: null,
     };
-  case types.FETCH_GET_TEAMS_SUCCESS:
+  case types.GET_TEAMS_SUCCESS:
     return {
       attempting: 0,
       error: null,
     };
-  case types.FETCH_GET_TEAMS_FAILURE:
+  case types.GET_TEAMS_FAILURE:
     return {
       attempting: 0,
       error: action.error,

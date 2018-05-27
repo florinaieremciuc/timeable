@@ -4,6 +4,7 @@ import Immutable from 'seamless-immutable';
 import _ from 'lodash';
 
 import * as types from './actions';
+import { LOGOUT } from '../../Users/login/actions';
 
 export const projectsPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
@@ -28,16 +29,18 @@ export const INITIAL_STATE = Immutable({
  */
 const items = (state = INITIAL_STATE.items, action) => {
   switch (action.type) {
-  case types.FETCH_GET_PROJECTS_REQUEST: {
+  case types.GET_PROJECTS_REQUEST: {
     return state;
   }
-  case types.FETCH_GET_PROJECTS_SUCCESS: {
+  case types.GET_PROJECTS_SUCCESS: {
     if (Array.isArray(action.projects)) {
       return _.unionBy(state, action.projects, 'id');
     }
     return _.unionBy(state, [action.projects], 'id');
   }
-  case types.FETCH_GET_PROJECTS_FAILURE:
+  case types.GET_PROJECTS_FAILURE:
+  case LOGOUT:
+    return INITIAL_STATE.items;
   default:
     return state;
   }
@@ -50,21 +53,23 @@ const items = (state = INITIAL_STATE.items, action) => {
  */
 const sync = (state = INITIAL_STATE.sync, action) => {
   switch (action.type) {
-  case types.FETCH_GET_PROJECTS_REQUEST:
+  case types.GET_PROJECTS_REQUEST:
     return {
       attempting: 1,
       error: null,
     };
-  case types.FETCH_GET_PROJECTS_SUCCESS:
+  case types.GET_PROJECTS_SUCCESS:
     return {
       attempting: 0,
       error: null,
     };
-  case types.FETCH_GET_PROJECTS_FAILURE:
+  case types.GET_PROJECTS_FAILURE:
     return {
       attempting: 0,
       error: action.error,
     };
+  case LOGOUT:
+    return INITIAL_STATE.sync;
   default:
     return state;
   }
