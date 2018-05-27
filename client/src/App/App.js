@@ -5,7 +5,7 @@ import { Container, Button, Label } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import './App.css';
+import './style.css';
 import Dashboard from '../views/Dashboard';
 import Header from '../components/Header';
 import { isAuthenticated, getUsername } from '../State/Users/login/reducers';
