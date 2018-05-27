@@ -7,11 +7,11 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 
 import 'react-datepicker/dist/react-datepicker.css';
-import { createProjectAttempt } from '../../../../../State/Projects/create/actions';
-import { getData, newProjectPropType } from '../../../../../State/Projects/create/reducer';
-import { getTeam } from '../../../../../State/Users/login/reducers';
+import { createProjectAttempt } from '../../../../State/Projects/create/actions';
+import { getData, newProjectPropType } from '../../../../State/Projects/create/reducer';
+import { getTeam } from '../../../../State/Users/login/reducers';
 
-class CreateTeam extends React.Component {
+class CreateProject extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -103,9 +103,9 @@ const mapStateToProps = state => ({
   newproject: getData(state.project),
   team: getTeam(state.user),
 });
-export default connect(mapStateToProps, { createProjectAttempt })(CreateTeam);
+export default connect(mapStateToProps, { createProjectAttempt })(CreateProject);
 
-CreateTeam.propTypes = {
+CreateProject.propTypes = {
   createProjectAttempt: PropTypes.func.isRequired,
   team: PropTypes.number.isRequired,
   // newproject: newProjectPropType.isRequired,

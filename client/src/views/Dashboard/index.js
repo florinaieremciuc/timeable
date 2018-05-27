@@ -2,7 +2,8 @@ import React from 'react';
 import { Sidebar, Button } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
-import Projects from './components/Projects';
+import Projects from './components/Home';
+import CreateProjects from './components/CreateProjects';
 import Teams from './components/Teams';
 import Events from './components/Events';
 import Menu from '../../components/Menu';
@@ -20,7 +21,7 @@ class Dashboard extends React.Component {
   setView() {
     switch (this.props.path) {
     case '/projects':
-      return <Projects />;
+      return <CreateProjects />;
     case '/teams':
       return <Teams />;
     case '/events':
