@@ -9,16 +9,48 @@ import { routerMiddleware } from 'react-router-redux';
 // import { reducer as formReducer } from 'redux-form';
 
 import sagas from './sagas';
+
+// CRUD ops for tasks
+import deleteTask from './State/Tasks/delete/reducer';
+import tasks from './State/Tasks/get/reducer';
+import newtask from './State/Tasks/create/reducer';
+
+// CRUD ops for teams
 import deleteProject from './State/Projects/delete/reducer';
 import projects from './State/Projects/get/reducer';
 import project from './State/Projects/create/reducer';
+
+// CRud ops for teams
 import teams from './State/Teams/get/reducer';
 import team from './State/Teams/create/reducer';
+
+// ops for user
 import registrationsStatus from './State/Users/register/reducers';
 import user from './State/Users/login/reducers';
 
 const history = createHistory();
 const defaultState = {
+  deleteTask: {
+    sync: {
+      attempting: 0,
+      error: null,
+      success: null,
+    },
+  },
+  tasks: {
+    items: [],
+    sync: {
+      attempting: 0,
+      error: null,
+    },
+  },
+  newtask: {
+    data: null,
+    sync: {
+      attempting: 0,
+      error: null,
+    },
+  },
   deleteProject: {
     sync: {
       attempting: 0,
@@ -72,7 +104,17 @@ const defaultState = {
 const rootPersistConfig = {
   key: 'root',
   storage,
-  blacklist: ['deleteProject', 'projects', 'project', 'teams', 'team', 'registrationsStatus'],
+  blacklist: [
+    'deleteTask',
+    'tasks',
+    'newtask',
+    'deleteProject',
+    'projects',
+    'project',
+    'teams',
+    'team',
+    'registrationsStatus',
+  ],
 };
 
 const persistConfig = {
@@ -80,6 +122,9 @@ const persistConfig = {
 };
 
 const rootReducer = persistCombineReducers(rootPersistConfig, {
+  deleteTask,
+  tasks,
+  newtask,
   deleteProject,
   projects,
   project,
