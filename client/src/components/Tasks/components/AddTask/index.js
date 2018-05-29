@@ -20,6 +20,13 @@ class AddTask extends React.Component {
     this.closeConfirm = this.closeConfirm.bind(this);
     this.open = this.open.bind(this);
     this.close = this.close.bind(this);
+
+    this.handleChangeName = this.handleChangeName.bind(this);
+    this.handleChangeDescription = this.handleChangeDescription.bind(this);
+    this.handleChangeEstimate = this.handleChangeEstimate.bind(this);
+    this.handleChangePriority = this.handleChangePriority.bind(this);
+
+    this.submit = this.submit.bind(this);
   }
 
   openConfirm() {
@@ -45,12 +52,12 @@ class AddTask extends React.Component {
   handleChangeEstimate(event) {
     this.setState({ estimate: event.target.value });
   }
-  handleChangePriority(event) {
-    this.setState({ priority: event.target.value });
+  handleChangePriority(event, data) {
+    this.setState({ priority: data.value });
   }
 
   async submit() {
-    if (this.state.name && this.state.estimate && this.state.priority) {
+    if (this.state && this.state.name && this.state.estimate && this.state.priority) {
       await this.props.createTaskAttempt(
         this.state.name,
         this.state.description,
@@ -59,23 +66,27 @@ class AddTask extends React.Component {
         'to_do', // for starters, status will be to do
         this.props.project, // project
       );
+      this.close();
     } else {
       this.openConfirm();
-      return (
-        <Confirm
-          open={this.state.confirmVisible}
-          onCancel={this.closeConfirm}
-          onConfirm={this.closeConfirm}
-          content="Fill in the fields ca lumea boss"
-        />
-      );
     }
-    this.close();
     return null;
   }
 
   render() {
     const { open } = this.state;
+    console.log('this.state', this.state);
+
+    if (this.state.confirmVisible) {
+      return (
+        <Confirm
+          open={this.state.confirmVisible}
+          cancelButton={null}
+          onConfirm={this.closeConfirm}
+          content="Fill in the fields ca lumea boss"
+        />
+      );
+    }
 
     return (
       <Modal
@@ -124,21 +135,21 @@ class AddTask extends React.Component {
               id="priority"
               control={Select}
               options={[
-                { key: '0', text: 'Mild', value: 'nice-to-have' },
-                { key: '1', text: 'Medium', value: 'enhancement' },
-                { key: '2', text: 'Medium high', value: 'new-feature' },
-                { key: '3', text: 'High', value: 'bug' },
+                { key: '0', text: 'Mild', value: '0' },
+                { key: '1', text: 'Medium', value: '1' },
+                { key: '2', text: 'Medium high', value: '2' },
+                { key: '3', text: 'High', value: '3' },
               ]}
               name="priority"
               type="text"
               placeholder="Priority"
-              onChange={event => this.handleChangePriority(event)}
+              onChange={(event, data) => this.handleChangePriority(event, data)}
               required
             />
           </Form>
         </Modal.Content>
         <Modal.Actions>
-          <Button icon="check" content="All Done" onClick={this.submit} />
+          <Button icon="check" content="All Done" type="submit" onClick={this.submit} />
         </Modal.Actions>
       </Modal>
     );
