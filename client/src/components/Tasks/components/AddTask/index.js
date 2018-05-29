@@ -75,7 +75,6 @@ class AddTask extends React.Component {
 
   render() {
     const { open } = this.state;
-    console.log('this.state', this.state);
 
     if (this.state.confirmVisible) {
       return (
