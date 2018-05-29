@@ -6,9 +6,9 @@ import { getTasks } from '../../../services/Api';
  * Yield a call to the API for getting the tasks list.
  * @param {*} Action payload that contains the `name` field
  */
-export default function* getTasksSaga(team) {
+export default function* getTasksSaga(project) {
   try {
-    const response = yield call(getTasks, team.teamid);
+    const response = yield call(getTasks, project.projectid);
     if (response && response.error) {
       yield put(getTasksFailure(response));
     } else if (response && Array(response)) {
