@@ -13,6 +13,9 @@ import {
 import { getItems, isAttempting, projectsPropType } from '../../../../State/Projects/get/reducer';
 import { getProjectsAttempt } from '../../../../State/Projects/get/actions';
 import { getTeam } from '../../../../State/Users/login/reducers';
+
+import Tasks from '../../../../components/Tasks/index';
+
 import './style.css';
 
 class Projects extends React.Component {
@@ -50,7 +53,9 @@ class Projects extends React.Component {
                     <Icon name="calendar outline" />
                     {project.deadline}
                   </Card.Content>
-                  <Card.Content description={project.description} />
+                  <Card.Content description={project.description}>
+                    <Tasks project={project.id} />
+                  </Card.Content>
                 </Card>
               );
             }
