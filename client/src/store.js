@@ -28,8 +28,11 @@ import team from './State/Teams/create/reducer';
 import registrationsStatus from './State/Users/register/reducers';
 import user from './State/Users/login/reducers';
 
+import modalVisible from './components/Tasks/reducer';
+
 const history = createHistory();
 const defaultState = {
+  modalVisible: false,
   deleteTask: {
     sync: {
       attempting: 0,
@@ -105,6 +108,7 @@ const rootPersistConfig = {
   key: 'root',
   storage,
   blacklist: [
+    'modalVisible',
     'deleteTask',
     'tasks',
     'newtask',
@@ -122,6 +126,7 @@ const persistConfig = {
 };
 
 const rootReducer = persistCombineReducers(rootPersistConfig, {
+  modalVisible,
   deleteTask,
   tasks,
   newtask,
