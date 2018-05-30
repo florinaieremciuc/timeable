@@ -7,10 +7,10 @@ import * as types from './actions';
 export const taskPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
-  duration: PropTypes.number,
+  duration: PropTypes.string,
   description: PropTypes.string,
   status: PropTypes.string.isRequired,
-  priority: PropTypes.number.isRequired,
+  priority: PropTypes.string.isRequired,
   project: PropTypes.number.isRequired,
   estimate: PropTypes.string.isRequired,
   assignee: PropTypes.number,
