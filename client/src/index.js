@@ -33,7 +33,7 @@ ReactDOM.render(
             <Route exact path="/teams" component={App} />
             <Route exact path="/events" component={App} />
             <Route exact path="/profile/:userId" component={Profile} />
-            <ModalRoute exact path="/tasks/:projectid" component={Tasks} />
+            <ModalRoute exact path="/tasks/:projectid" component={Tasks} parentPath="/" />
           </Switch>
           <ModalContainer containerClassName="react-router-modal__container tasks" />
         </div>
