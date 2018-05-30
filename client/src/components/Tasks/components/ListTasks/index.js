@@ -4,23 +4,15 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import { getTasksAttempt } from '../../../../State/Tasks/get/actions';
-import {
-  getItems as getTasks,
-  isAttempting as loadingTasks,
-} from '../../../../State/Tasks/get/reducer';
-
 import { deleteTaskAttempt } from '../../../../State/Tasks/delete/actions';
-import { isAttempting as loadDelete } from '../../../../State/Tasks/delete/reducer';
-import { taskPropType, isAttempting as loadCreate } from '../../../../State/Tasks/create/reducer';
 
 // priority:
 // 0 - idea
 // 1 - thermometer half
 // 2 - thermometer three quarters
 // 3 - bug
-const ListTasks = (props) => {
-  const selectIcon = (task) => {
+class ListTasks extends React.Component {
+  static selectIcon(task) {
     switch (task.priority) {
     case '0':
       return 'idea';
@@ -33,57 +25,54 @@ const ListTasks = (props) => {
     default:
       return null;
     }
-  };
-  // componentWillMount() {
-  //   console.log('project', this.props.project);
-  //   this.props.getTasksAttempt(this.props.project);
-  // }
-  // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.loadCreate === 1 || nextProps.loadDelete === 1) {
-  //     this.props.getTasksAttempt(this.props.project);
-  //   }
+  }
+  // constructor(props) {
+  //   super(props);
+  //   // this.state = {
+  //   //   wantToDelete: false,
+  //   //   toDelete: null,
+  //   // };
   // }
 
-  const deleteTask = (id) => {
-    _.remove(props.tasks, task => task.id === id);
-    props.deleteTaskAttempt(id);
-  };
-  // this.props.tasks.filter(task => task.project === this.props.project);
-  console.log('props', props);
-  return (
-    <Segment inverted>
-      {props.tasks.length > 0 ? (
-        <List divided inverted relaxed>
-          {props.tasks.map(task => (
-            <List.Item key={task.id}>
-              <List.Icon name={selectIcon(task)} />
-              <List.Content>
-                <List.Header>{task.name}</List.Header>
-                {task.description}
-              </List.Content>
-              <Icon name="close" onClick={() => deleteTask(task.id)} />
-            </List.Item>
-          ))}
-        </List>
-      ) : (
-        'No tasks here man'
-      )}
-    </Segment>
-  );
-};
-// const mapStateToProps = state => ({
-//   // tasks: getTasks(state.tasks),
-//   // loadingTasks: loadingTasks(state.tasks),
-//   // loadCreate: loadCreate(state.newtask),
-//   // loadDelete: loadDelete(state.deleteTask),
-// });
+  deleteTask(id) {
+    // this.setState({ wantToDelete: true, toDelete: id });
+    _.remove(this.props.tasks, task => task.id !== id);
+    console.log('out', _.filter(this.props.tasks, task => task.id !== id));
+    console.log('tasks', this.props.tasks);
+    this.props.deleteTaskAttempt(id);
+  }
+  render() {
+    console.log('props din list', this.props);
+    // const tasks = this.props.tasks.slice();
+    // tasks.slice(this.props.tasks);
+    // if (this.state.wantToDelete) {
+    //   _.remove(this.props.tasks, task => task.id === this.state.toDelete);
+    //   this.setState({ wantToDelete: false, toDelete: null });
+    // }
+    return (
+      <Segment inverted>
+        {this.props.tasks.length > 0 ? (
+          <List divided inverted relaxed>
+            {this.props.tasks.map(task => (
+              <List.Item key={task.id}>
+                <List.Icon name={ListTasks.selectIcon(task)} />
+                <List.Content>
+                  <List.Header>{task.name}</List.Header>
+                  {task.description}
+                </List.Content>
+                <Icon name="close" onClick={() => this.deleteTask(task.id)} />
+              </List.Item>
+            ))}
+          </List>
+        ) : (
+          'No tasks here man'
+        )}
+      </Segment>
+    );
+  }
+}
 export default connect(null, { deleteTaskAttempt })(ListTasks);
 
 ListTasks.propTypes = {
-  // getTasksAttempt: PropTypes.func.isRequired,
-  tasks: PropTypes.arrayOf(taskPropType).isRequired,
   deleteTaskAttempt: PropTypes.func.isRequired,
-  project: PropTypes.number.isRequired,
-  // loadCreate: PropTypes.number.isRequired,
-  // loadDelete: PropTypes.number.isRequired,
 };
