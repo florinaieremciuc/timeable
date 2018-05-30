@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Button, Icon, Modal } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+import { Icon, Container, Header } from 'semantic-ui-react';
+import 'react-router-modal/css/react-router-modal.css';
 
 import { openModal, closeModal } from './action';
 import AddTask from './components/AddTask';
@@ -13,37 +15,38 @@ import ListTasks from './components/ListTasks';
 import { isAttempting as loadDelete } from '../../State/Tasks/delete/reducer';
 import { taskPropType, isAttempting as loadCreate } from '../../State/Tasks/create/reducer';
 
+import './style.css';
+
 class Tasks extends React.Component {
   componentWillMount() {
-    console.log('project n tasks', this.props.project);
-    this.props.getTasksAttempt(this.props.project);
+    this.props.getTasksAttempt(this.props.match.params.projectid);
   }
   componentWillReceiveProps(nextProps) {
-    console.log('will receive props', this.props.project, nextProps.project);
-    if (nextProps.loadCreate === 1 || nextProps.loadDelete === 1) {
-      nextProps.getTasksAttempt(nextProps.project);
+    // console.log('will receive props', nextProps);
+    if (nextProps.loadCreate === 1) {
+      nextProps.getTasksAttempt(nextProps.match.params.projectid);
     }
   }
   render() {
     const open = this.props.modalVisible;
-    const tasksToList = this.props.tasks.filter(task => task.project === this.props.project);
-    console.log('render tasks', this.props.tasks);
-    console.log('filtered tasks', tasksToList);
+    const tasksToList = this.props.tasks.filter(task => task.project === Number(this.props.match.params.projectid));
+    // console.log('props', this.props);
+    // console.log('projectid', this.props.match.params.projectid);
+    // console.log('tasks', this.props.tasks);
+    // console.log('filtered tasks', tasksToList);
     return (
-      <Modal open={open} onOpen={this.props.openModal} trigger={<Button>Activity list</Button>}>
-        <Modal.Header>
+      <Container>
+        <Header>
           Activity list<Icon name="tasks" />
-          <Icon name="close" onClick={this.props.closeModal} />
-        </Modal.Header>
-        <Modal.Content image>
-          <Modal.Description>
-            <ListTasks open={open} project={this.props.project} tasks={tasksToList} />
-          </Modal.Description>
-        </Modal.Content>
-        <Modal.Actions>
-          <AddTask project={this.props.project} />
-        </Modal.Actions>
-      </Modal>
+          <Link to="/">
+            <Icon name="close" />
+          </Link>
+        </Header>
+        <Container>
+          <ListTasks open={open} project={this.props.match.params.projectid} tasks={tasksToList} />
+        </Container>
+        <AddTask project={this.props.match.params.projectid} />
+      </Container>
     );
   }
 }
@@ -58,10 +61,12 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, { openModal, closeModal, getTasksAttempt })(Tasks);
 
 Tasks.propTypes = {
-  project: PropTypes.number.isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      projectid: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
   modalVisible: PropTypes.bool.isRequired,
-  openModal: PropTypes.func.isRequired,
-  closeModal: PropTypes.func.isRequired,
   getTasksAttempt: PropTypes.func.isRequired,
   tasks: PropTypes.arrayOf(taskPropType).isRequired,
   loadCreate: PropTypes.number.isRequired,
