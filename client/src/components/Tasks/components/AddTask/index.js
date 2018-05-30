@@ -5,6 +5,8 @@ import { Modal, Button, Icon, Form, Input, Select, Confirm } from 'semantic-ui-r
 
 import { createTaskAttempt } from '../../../../State/Tasks/create/actions';
 
+import './style.css';
+
 class AddTask extends React.Component {
   constructor(props) {
     super(props);
