@@ -1,5 +1,6 @@
 import React from 'react';
-import { Container, Header, Card, Icon } from 'semantic-ui-react';
+import { Container, Header, Card, Icon, Button } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
@@ -13,8 +14,6 @@ import {
 import { getItems, isAttempting, projectsPropType } from '../../../../State/Projects/get/reducer';
 import { getProjectsAttempt } from '../../../../State/Projects/get/actions';
 import { getTeam } from '../../../../State/Users/login/reducers';
-
-import Tasks from '../../../../components/Tasks/index';
 
 import './style.css';
 
@@ -54,7 +53,9 @@ class Projects extends React.Component {
                     {project.deadline}
                   </Card.Content>
                   <Card.Content description={project.description}>
-                    <Tasks project={project.id} />
+                    <Link to={`/tasks/${project.id}`}>
+                      <Button>Activity list</Button>
+                    </Link>
                   </Card.Content>
                 </Card>
               );
