@@ -54,39 +54,33 @@ router.post('/add_task', (req, res) => {
 // TO TEST
 /* UPDATE a task */
 // add assignee
-router.get('/update/:id/:assignee', (req, res) => {
+router.post('/update/assignee', (req, res) => {
   tasksController
-    .update(req.params.id, req.params.assignee)
+    .update(req.body.id, req.body.assignee)
     .then(
       // response is gt 0 if it finds a project with the given id
       response => (response > 0 ? res.sendStatus(200) : res.sendStatus(404)))
     .catch(err => console.log('Error: ', err));
 });
 // add duration
-router.get('/update/:id/:duration', (req, res) => {
+router.post('/update/duration', (req, res) => {
   tasksController
-    .update(req.params.id, req.params.duration)
-    .then(
-      // response is gt 0 if it finds a project with the given id
-      response => (response > 0 ? res.sendStatus(200) : res.sendStatus(404)))
+    .update(req.body.id, req.body.duration)
+    .then(response => (response > 0 ? res.sendStatus(200) : res.sendStatus(404)))
     .catch(err => console.log('Error: ', err));
 });
 // change status
-router.get('/update/:id/:status', (req, res) => {
+router.post('/update/status', (req, res) => {
   tasksController
-    .update(req.params.id, req.params.status)
-    .then(
-      // response is gt 0 if it finds a project with the given id
-      response => (response > 0 ? res.sendStatus(200) : res.sendStatus(404)))
+    .update(req.body.id, req.body.status)
+    .then(response => (response > 0 ? res.sendStatus(200) : res.sendStatus(404)))
     .catch(err => console.log('Error: ', err));
 });
 // change priority
-router.get('/update/:id/:priority', (req, res) => {
+router.post('/update/priority', (req, res) => {
   tasksController
-    .update(req.params.id, req.params.priority)
-    .then(
-      // response is gt 0 if it finds a project with the given id
-      response => (response > 0 ? res.sendStatus(200) : res.sendStatus(404)))
+    .update(req.body.id, req.body.priority)
+    .then(response => (response > 0 ? res.sendStatus(200) : res.sendStatus(404)))
     .catch(err => console.log('Error: ', err));
 });
 

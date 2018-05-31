@@ -27,12 +27,26 @@ router.post('/create_user', (req, res) => {
     });
 });
 
+/* GET team members */
+router.get('/team/:teamid', (req, res) => {
+  usersController
+    .getTeam(req.params.teamid)
+    .then(response => res.send({ response }))
+    .catch((err) => {
+      console.log('Error get team members: ', err);
+      res.send(err);
+    });
+});
+
 /* GET all users */
 router.get('/', (req, res) => {
   usersController
     .getAll()
-    .then(response => console.log('response', response))
-    .catch(err => console.log('Error: ', err));
+    .then(response => res.send(response))
+    .catch((err) => {
+      console.log('Error: ', err);
+      res.send(err);
+    });
 });
 
 /* GET a user */

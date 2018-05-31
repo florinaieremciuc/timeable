@@ -51,12 +51,20 @@ module.exports = {
       })
       .catch(error => error);
   },
-  addRole() {
-    // add user role
-  },
   getAll() {
     console.log('Get users list');
     return knex.select().from('users');
+  },
+  getTeam(teamid) {
+    console.log(`Get team ${teamid} members`);
+    return knex
+      .select()
+      .from('users')
+      .where('team', teamid)
+      .then(([members]) => {
+        if (!members) return { error: 'Team has no members' };
+        return members;
+      });
   },
   getOne(id) {
     console.log(`Get user w id ${id}`);
