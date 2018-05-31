@@ -1,6 +1,6 @@
 import { put, call } from 'redux-saga/effects';
 import { createTeamSuccess, createTeamFailure } from './actions';
-import { createTeam } from '../../../services/Api';
+import { createTeam } from '../../../services/Teams';
 
 /**
  * Yield a call to the API for creating a team.

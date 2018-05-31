@@ -1,6 +1,6 @@
 import { put, call } from 'redux-saga/effects';
 import { deleteProjectSuccess, deleteProjectFailure } from './actions';
-import { deleteProject } from '../../../services/Api';
+import { deleteProject } from '../../../services/Projects';
 
 /**
  * Yield a call to the API for deleting a project.

@@ -220,6 +220,63 @@ export const deleteTask = id =>
     },
   }).then(response => response);
 
+/**
+ * Call API to update task assignee.
+ * @param {number} id
+ * @param {number} assignee - userid
+ */
+export const updateAssignee = (id, assignee) => {
+  const params = {
+    id,
+    assignee,
+  };
+  return fetch(`${config.API_URL}/tasks/update/assignee`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(params),
+  }).then(response => response.json());
+};
+
+/**
+ * Call API to update task status.
+ * @param {number} id
+ * @param {string} status
+ */
+export const updateStatus = (id, status) => {
+  const params = {
+    id,
+    status,
+  };
+  return fetch(`${config.API_URL}/tasks/update/status`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(params),
+  }).then(response => response.json());
+};
+
+/**
+ * Call API to update task duration.
+ * @param {number} id
+ * @param {number} assignee - userid
+ */
+export const updateDuration = (id, duration) => {
+  const params = {
+    id,
+    duration,
+  };
+  return fetch(`${config.API_URL}/tasks/update/duration`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(params),
+  }).then(response => response.json());
+};
+
 export default {
   signInUser,
   registerUser,
@@ -231,4 +288,7 @@ export default {
   createTask,
   getTasks,
   deleteTask,
+  updateAssignee,
+  updateStatus,
+  updateDuration,
 };

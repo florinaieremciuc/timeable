@@ -1,6 +1,6 @@
 import { put, call } from 'redux-saga/effects';
 import { getTasksSuccess, getTasksFailure } from './actions';
-import { getTasks } from '../../../services/Api';
+import { getTasks } from '../../../services/Tasks';
 
 /**
  * Yield a call to the API for getting the tasks list.

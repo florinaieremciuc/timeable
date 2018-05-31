@@ -1,6 +1,6 @@
 import { put, call } from 'redux-saga/effects';
 import { registerSuccess, registerFailure } from './actions';
-import { registerUser } from '../../../services/Api';
+import { registerUser } from '../../../services/Users';
 
 /**
  * Yield a call to the API for registering the user using

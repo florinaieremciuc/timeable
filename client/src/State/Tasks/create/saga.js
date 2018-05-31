@@ -1,6 +1,6 @@
 import { put, call } from 'redux-saga/effects';
 import { createTaskSuccess, createTaskFailure } from './actions';
-import { createTask } from '../../../services/Api';
+import { createTask } from '../../../services/Tasks';
 
 /**
  * Yield a call to the API for creating a task.

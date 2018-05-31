@@ -1,6 +1,6 @@
 import { put, call } from 'redux-saga/effects';
 import { createProjectSuccess, createProjectFailure } from './actions';
-import { createProject } from '../../../services/Api';
+import { createProject } from '../../../services/Projects';
 
 /**
  * Yield a call to the API for creating a project.

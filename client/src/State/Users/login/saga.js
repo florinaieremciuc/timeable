@@ -1,6 +1,6 @@
 import { put, call } from 'redux-saga/effects';
 import { loginSuccess, loginFailure } from './actions';
-import { signInUser } from '../../../services/Api';
+import { signInUser } from '../../../services/Users';
 
 /**
  * Yield a call to the API for authenticating the user using email and password.

@@ -1,6 +1,6 @@
 import { put, call } from 'redux-saga/effects';
 import { deleteTaskSuccess, deleteTaskFailure } from './actions';
-import { deleteTask } from '../../../services/Api';
+import { deleteTask } from '../../../services/Tasks';
 
 /**
  * Yield a call to the API for deleting a task.

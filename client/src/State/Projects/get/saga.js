@@ -1,6 +1,6 @@
 import { put, call } from 'redux-saga/effects';
 import { getProjectsSuccess, getProjectsFailure } from './actions';
-import { getProjects } from '../../../services/Api';
+import { getProjects } from '../../../services/Projects';
 
 /**
  * Yield a call to the API for getting the projects list.

@@ -1,6 +1,6 @@
 import { put, call } from 'redux-saga/effects';
 import { getTeamsSuccess, getTeamsFailure } from './actions';
-import { getTeams } from '../../../services/Api';
+import { getTeams } from '../../../services/Teams';
 
 /**
  * Yield a call to the API for getting the teams list.

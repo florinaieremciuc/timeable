@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Container, Form, Input, Button, Select } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
 
-import { addMembers } from '../../../../services/Api';
+import { addMembers } from '../../../../services/Teams';
 import { getUserData as getUser, userPropType } from '../../../../State/Users/login/reducers';
 
 class Teams extends React.Component {
