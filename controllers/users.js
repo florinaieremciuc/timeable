@@ -61,7 +61,7 @@ module.exports = {
       .select()
       .from('users')
       .where('team', teamid)
-      .then(([members]) => {
+      .then((members) => {
         if (!members) return { error: 'Team has no members' };
         return members;
       });

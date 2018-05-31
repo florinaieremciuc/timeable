@@ -9,10 +9,11 @@ import { getMembers } from '../../../services/Users';
 export default function* getMembersSaga(action) {
   try {
     const response = yield call(getMembers, action.teamid);
+
     if (response && response.error) {
       yield put(getMembersFailure(response));
-    } else if (response && Array(response)) {
-      yield put(getMembersSuccess(response));
+    } else if (response && response.members) {
+      yield put(getMembersSuccess(response.members));
     } else {
       yield put(getMembersFailure('Unable to get members.'));
     }

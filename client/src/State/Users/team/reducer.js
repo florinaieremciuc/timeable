@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux';
 import Immutable from 'seamless-immutable';
-import _ from 'lodash';
 
 import * as types from './actions';
 import { LOGOUT } from '../../Users/login/actions';
@@ -24,10 +23,7 @@ const items = (state = INITIAL_STATE.items, action) => {
     return state;
   }
   case types.GET_MEMBERS_SUCCESS: {
-    if (Array.isArray(action.members)) {
-      return _.unionBy(state, action.members, 'id');
-    }
-    return _.unionBy(state, [action.members], 'id');
+    return action.members;
   }
   case types.GET_MEMBERS_FAILURE:
   case LOGOUT:

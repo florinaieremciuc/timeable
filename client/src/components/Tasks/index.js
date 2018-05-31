@@ -15,11 +15,19 @@ import ListTasks from './components/ListTasks';
 import { isAttempting as loadDelete } from '../../State/Tasks/delete/reducer';
 import { taskPropType, isAttempting as loadCreate } from '../../State/Tasks/create/reducer';
 
+import { getMembersAttempt } from '../../State/Users/team/actions';
+import {
+  isAttempting as loadMembers,
+  getItems as getMembers,
+} from '../../State/Users/team/reducer';
+import { getTeam } from '../../State/Users/login/reducers';
+
 import './style.css';
 
 class Tasks extends React.Component {
   componentWillMount() {
     this.props.getTasksAttempt(this.props.match.params.projectid);
+    this.props.getMembersAttempt(this.props.teamid);
   }
   componentWillReceiveProps(nextProps) {
     // console.log('will receive props', nextProps);
@@ -30,7 +38,7 @@ class Tasks extends React.Component {
   render() {
     const open = this.props.modalVisible;
     const tasksToList = this.props.tasks.filter(task => task.project === Number(this.props.match.params.projectid));
-    // console.log('props', this.props);
+    console.log('props', this.props);
     // console.log('projectid', this.props.match.params.projectid);
     // console.log('tasks', this.props.tasks);
     // console.log('filtered tasks', tasksToList);
@@ -57,8 +65,16 @@ const mapStateToProps = state => ({
   loadingTasks: loadingTasks(state.tasks),
   loadCreate: loadCreate(state.newtask),
   loadDelete: loadDelete(state.deleteTask),
+  loadMembers: loadMembers(state.members),
+  members: getMembers(state.members),
+  teamid: getTeam(state.user),
 });
-export default connect(mapStateToProps, { openModal, closeModal, getTasksAttempt })(Tasks);
+export default connect(mapStateToProps, {
+  openModal,
+  closeModal,
+  getTasksAttempt,
+  getMembersAttempt,
+})(Tasks);
 
 Tasks.propTypes = {
   match: PropTypes.shape({
@@ -71,4 +87,6 @@ Tasks.propTypes = {
   tasks: PropTypes.arrayOf(taskPropType).isRequired,
   loadCreate: PropTypes.number.isRequired,
   loadDelete: PropTypes.number.isRequired,
+  getMembersAttempt: PropTypes.func.isRequired,
+  teamid: PropTypes.number.isRequired,
 };

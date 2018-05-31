@@ -31,7 +31,7 @@ router.post('/create_user', (req, res) => {
 router.get('/team/:teamid', (req, res) => {
   usersController
     .getTeam(req.params.teamid)
-    .then(response => res.send({ response }))
+    .then(members => res.send({ members }))
     .catch((err) => {
       console.log('Error get team members: ', err);
       res.send(err);
