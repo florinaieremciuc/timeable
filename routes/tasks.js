@@ -56,7 +56,7 @@ router.post('/add_task', (req, res) => {
 // add assignee
 router.post('/update/assignee', (req, res) => {
   tasksController
-    .update(req.body.id, req.body.assignee)
+    .addAssignee(req.body.id, req.body.assignee)
     .then(
       // response is gt 0 if it finds a project with the given id
       response => (response > 0 ? res.sendStatus(200) : res.sendStatus(404)))
@@ -65,21 +65,21 @@ router.post('/update/assignee', (req, res) => {
 // add duration
 router.post('/update/duration', (req, res) => {
   tasksController
-    .update(req.body.id, req.body.duration)
+    .addDuration(req.body.id, req.body.duration)
     .then(response => (response > 0 ? res.sendStatus(200) : res.sendStatus(404)))
     .catch(err => console.log('Error: ', err));
 });
 // change status
 router.post('/update/status', (req, res) => {
   tasksController
-    .update(req.body.id, req.body.status)
+    .changeStatus(req.body.id, req.body.status)
     .then(response => (response > 0 ? res.sendStatus(200) : res.sendStatus(404)))
     .catch(err => console.log('Error: ', err));
 });
 // change priority
 router.post('/update/priority', (req, res) => {
   tasksController
-    .update(req.body.id, req.body.priority)
+    .changePriority(req.body.id, req.body.priority)
     .then(response => (response > 0 ? res.sendStatus(200) : res.sendStatus(404)))
     .catch(err => console.log('Error: ', err));
 });
