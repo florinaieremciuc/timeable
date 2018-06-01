@@ -29,12 +29,20 @@ import team from './State/Teams/create/reducer';
 import registrationsStatus from './State/Users/register/reducers';
 import user from './State/Users/login/reducers';
 import members from './State/Users/team/reducer';
+import userById from './State/Users/user/reducer';
 
 import modalVisible from './components/Tasks/reducer';
 
 const history = createHistory();
 const defaultState = {
   modalVisible: false,
+  userById: {
+    item: {},
+    sync: {
+      attempting: 0,
+      error: null,
+    },
+  },
   updateTask: {
     assignee: {
       attempting: 0,
@@ -132,6 +140,7 @@ const rootPersistConfig = {
   storage,
   blacklist: [
     'modalVisible',
+    'userById',
     'updateTask',
     'deleteTask',
     'tasks',
@@ -152,6 +161,7 @@ const persistConfig = {
 
 const rootReducer = persistCombineReducers(rootPersistConfig, {
   modalVisible,
+  userById,
   updateTask,
   deleteTask,
   tasks,

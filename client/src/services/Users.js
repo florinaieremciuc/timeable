@@ -70,8 +70,21 @@ export const getMembers = teamid =>
     },
   }).then(response => response.json());
 
+/**
+ * Call API to get user.
+ * @param {Number} id
+ */
+export const getUser = id =>
+  fetch(`${config.API_URL}/users/${id}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).then(response => response.json());
+
 export default {
   signInUser,
   registerUser,
   getMembers,
+  getUser,
 };

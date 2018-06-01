@@ -19,6 +19,7 @@ import watchCreateTeamAttempt from './State/Teams/create/watcher';
 import watchRegisterAttempt from './State/Users/register/watcher';
 import watchLoginAttempt from './State/Users/login/watcher';
 import watchGetMembersAttempt from './State/Users/team/watcher';
+import watchGetUserAttempt from './State/Users/user/watcher';
 
 // start the daemons
 export default function* root() {
@@ -37,6 +38,7 @@ export default function* root() {
   yield fork(watchGetTeamsAttempt);
   yield fork(watchCreateTeamAttempt);
 
+  yield fork(watchGetUserAttempt);
   yield fork(watchGetMembersAttempt);
   yield fork(watchRegisterAttempt);
   yield fork(watchLoginAttempt);
