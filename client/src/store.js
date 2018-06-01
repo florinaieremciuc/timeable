@@ -11,6 +11,7 @@ import { routerMiddleware } from 'react-router-redux';
 import sagas from './sagas';
 
 // CRUD ops for tasks
+import updateTask from './State/Tasks/update/reducer';
 import deleteTask from './State/Tasks/delete/reducer';
 import tasks from './State/Tasks/get/reducer';
 import newtask from './State/Tasks/create/reducer';
@@ -34,6 +35,20 @@ import modalVisible from './components/Tasks/reducer';
 const history = createHistory();
 const defaultState = {
   modalVisible: false,
+  updateTask: {
+    assignee: {
+      attempting: 0,
+      error: null,
+    },
+    status: {
+      attempting: 0,
+      error: null,
+    },
+    duration: {
+      attempting: 0,
+      error: null,
+    },
+  },
   deleteTask: {
     sync: {
       attempting: 0,
@@ -117,6 +132,7 @@ const rootPersistConfig = {
   storage,
   blacklist: [
     'modalVisible',
+    'updateTask',
     'deleteTask',
     'tasks',
     'newtask',
@@ -136,6 +152,7 @@ const persistConfig = {
 
 const rootReducer = persistCombineReducers(rootPersistConfig, {
   modalVisible,
+  updateTask,
   deleteTask,
   tasks,
   newtask,
