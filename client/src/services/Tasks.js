@@ -88,7 +88,7 @@ export const updateAssignee = (id, assignee) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(params),
-  }).then(response => response.json());
+  }).then(response => response);
 };
 
 /**
