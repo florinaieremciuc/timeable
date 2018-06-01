@@ -68,7 +68,12 @@ module.exports = {
   },
   getOne(id) {
     console.log(`Get user w id ${id}`);
-    return knex('users').where('id', id);
+    return knex('users')
+      .where('id', id)
+      .then((user) => {
+        if (!user) return { error: 'No user found' };
+        return user;
+      });
   },
   update(id, name) {
     console.log(`Updating user having id ${id} w ${name}`);

@@ -53,8 +53,11 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   usersController
     .getOne(req.params.id)
-    .then(response => response)
-    .catch(error => error);
+    .then(user => res.send({ user }))
+    .catch((error) => {
+      console.log('Error getting user: ', error);
+      res.send(error);
+    });
 });
 
 /* LOG in */
