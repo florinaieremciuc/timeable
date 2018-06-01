@@ -20,7 +20,7 @@ import {
   isAttempting as loadMembers,
   getItems as getMembers,
 } from '../../State/Users/team/reducer';
-import { getTeam } from '../../State/Users/login/reducers';
+import { getTeam, userPropType } from '../../State/Users/login/reducers';
 
 import './style.css';
 
@@ -30,18 +30,16 @@ class Tasks extends React.Component {
     this.props.getMembersAttempt(this.props.teamid);
   }
   componentWillReceiveProps(nextProps) {
-    // console.log('will receive props', nextProps);
     if (nextProps.loadCreate === 1) {
       nextProps.getTasksAttempt(nextProps.match.params.projectid);
     }
   }
   render() {
-    const open = this.props.modalVisible;
-    const tasksToList = this.props.tasks.filter(task => task.project === Number(this.props.match.params.projectid));
-    console.log('props', this.props);
-    // console.log('projectid', this.props.match.params.projectid);
-    // console.log('tasks', this.props.tasks);
-    // console.log('filtered tasks', tasksToList);
+    const {
+      modalVisible, match, members, loadingMembers, tasks,
+    } = this.props;
+    const tasksToList = tasks.filter(task => task.project === Number(match.params.projectid));
+
     return (
       <Container>
         <Header>
@@ -51,7 +49,13 @@ class Tasks extends React.Component {
           </Link>
         </Header>
         <Container>
-          <ListTasks open={open} project={this.props.match.params.projectid} tasks={tasksToList} />
+          <ListTasks
+            open={modalVisible}
+            project={match.params.projectid}
+            tasks={tasksToList}
+            members={members}
+            loadMembers={loadingMembers}
+          />
         </Container>
         <AddTask project={this.props.match.params.projectid} />
       </Container>
@@ -65,7 +69,7 @@ const mapStateToProps = state => ({
   loadingTasks: loadingTasks(state.tasks),
   loadCreate: loadCreate(state.newtask),
   loadDelete: loadDelete(state.deleteTask),
-  loadMembers: loadMembers(state.members),
+  loadingMembers: loadMembers(state.members),
   members: getMembers(state.members),
   teamid: getTeam(state.user),
 });
@@ -89,4 +93,6 @@ Tasks.propTypes = {
   loadDelete: PropTypes.number.isRequired,
   getMembersAttempt: PropTypes.func.isRequired,
   teamid: PropTypes.number.isRequired,
+  loadingMembers: PropTypes.number.isRequired,
+  members: PropTypes.arrayOf(userPropType).isRequired,
 };

@@ -159,6 +159,6 @@ class AddTask extends React.Component {
 
 export default connect(null, { createTaskAttempt })(AddTask);
 AddTask.propTypes = {
-  project: PropTypes.number.isRequired,
+  project: PropTypes.string.isRequired,
   createTaskAttempt: PropTypes.func.isRequired,
 };

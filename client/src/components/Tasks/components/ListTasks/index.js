@@ -1,10 +1,12 @@
 import React from 'react';
-import { Segment, List, Icon } from 'semantic-ui-react';
+import { Segment, List, Icon, Dropdown } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 import { deleteTaskAttempt } from '../../../../State/Tasks/delete/actions';
+
+import { updateAssigneeAttempt } from '../../../../State/Tasks/update/actions';
 
 // priority:
 // 0 - idea
@@ -26,29 +28,46 @@ class ListTasks extends React.Component {
       return null;
     }
   }
-  // constructor(props) {
-  //   super(props);
-  //   // this.state = {
-  //   //   wantToDelete: false,
-  //   //   toDelete: null,
-  //   // };
-  // }
+  constructor(props) {
+    super(props);
+    // this.state = {
+    //   wantToDelete: false,
+    //   toDelete: null,
+    // };
+    this.handleChange = this.handleChange.bind(this);
+    this.deleteTask = this.deleteTask.bind(this);
+  }
 
+  handleChange(e, { value }, id) {
+    this.props.updateAssigneeAttempt(id, value);
+  }
   deleteTask(id) {
     // this.setState({ wantToDelete: true, toDelete: id });
     _.remove(this.props.tasks, task => task.id !== id);
-    console.log('out', _.filter(this.props.tasks, task => task.id !== id));
-    console.log('tasks', this.props.tasks);
+    // console.log('out', _.filter(this.props.tasks, task => task.id !== id));
+    // console.log('tasks', this.props.tasks);
     this.props.deleteTaskAttempt(id);
   }
   render() {
-    console.log('props din list', this.props);
+    // console.log('props din list', this.props);
     // const tasks = this.props.tasks.slice();
     // tasks.slice(this.props.tasks);
     // if (this.state.wantToDelete) {
     //   _.remove(this.props.tasks, task => task.id === this.state.toDelete);
     //   this.setState({ wantToDelete: false, toDelete: null });
     // }
+
+    // const options = this.props.loadMembers === 0 && this.props.members.slice();
+    const options = [];
+    this.props.members.map((member, i) => {
+      const option = {};
+      option.key = i;
+      option.text = member.first_name + ' ' + member.last_name + ' (' + member.role + ')';
+      option.value = member.id;
+      options.push(option);
+      return null;
+    });
+
     return (
       <Segment inverted>
         {this.props.tasks.length > 0 ? (
@@ -61,6 +80,12 @@ class ListTasks extends React.Component {
                   {task.description}
                 </List.Content>
                 <Icon name="close" onClick={() => this.deleteTask(task.id)} />
+                <Dropdown
+                  onChange={(e, { value }) => this.handleChange(e, { value }, task.id)}
+                  options={options}
+                  placeholder="Choose an option"
+                  selection
+                />
               </List.Item>
             ))}
           </List>
@@ -71,7 +96,7 @@ class ListTasks extends React.Component {
     );
   }
 }
-export default connect(null, { deleteTaskAttempt })(ListTasks);
+export default connect(null, { deleteTaskAttempt, updateAssigneeAttempt })(ListTasks);
 
 ListTasks.propTypes = {
   deleteTaskAttempt: PropTypes.func.isRequired,
