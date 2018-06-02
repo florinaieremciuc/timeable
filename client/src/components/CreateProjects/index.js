@@ -5,11 +5,12 @@ import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
+import 'react-router-modal/css/react-router-modal.css';
 
 import 'react-datepicker/dist/react-datepicker.css';
-import { createProjectAttempt } from '../../../../State/Projects/create/actions';
-import { getData, newProjectPropType } from '../../../../State/Projects/create/reducer';
-import { getTeam } from '../../../../State/Users/login/reducers';
+import { createProjectAttempt } from '../../State/Projects/create/actions';
+import { getData, newProjectPropType } from '../../State/Projects/create/reducer';
+import { getTeam } from '../../State/Users/login/reducers';
 
 class CreateProject extends React.Component {
   constructor(props) {
@@ -91,7 +92,6 @@ class CreateProject extends React.Component {
           content="Send"
           id="submit"
           type="submit"
-          color="teal"
           compact
           onClick={this.submit}
         />

@@ -62,6 +62,9 @@ class Projects extends React.Component {
             }
             return null;
           })}
+          <Link to="/projects/new">
+            <Button>Create project</Button>
+          </Link>
         </Container>
       </div>
     );
