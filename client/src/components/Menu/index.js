@@ -1,7 +1,9 @@
-import React, { Component } from "react";
-import { Sidebar, Menu, Icon } from "semantic-ui-react";
-import { Link } from "react-router-dom";
-import "./styles.css";
+import React, { Component } from 'react';
+import { Sidebar, Menu, Icon } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
+import './styles.css';
 
 class Sidemenu extends Component {
   render() {
@@ -16,7 +18,7 @@ class Sidemenu extends Component {
         inverted
       >
         <Menu.Item name="browser">
-          <Link to="/projects">
+          <Link to="/">
             <Icon name="browser" />
             Projects
           </Link>
@@ -39,3 +41,6 @@ class Sidemenu extends Component {
 }
 
 export default Sidemenu;
+Sidemenu.propTypes = {
+  visible: PropTypes.bool.isRequired,
+};
