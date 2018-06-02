@@ -1,3 +1,5 @@
+@import "../../utilities/variables";
+
 .header.za-black-header {
   background-color: #222;
   height: 18vh;
@@ -6,17 +8,21 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between; }
-  .header.za-black-header .logo {
+  justify-content: space-between;
+  .logo {
     /* animation: App-logo-spin infinite 20s linear; */
     height: 80px;
     position: absolute;
-    top: -8px;
-    right: 40%; }
-  .header.za-black-header .icons {
+    top: -$base-spacing-sm;
+    right: 40%;
+  }
+  .icons {
     min-width: 8%;
     display: flex;
-    justify-content: space-between; }
-    .header.za-black-header .icons i {
+    justify-content: space-between;
+    i {
       height: 0;
-      font-size: 2.5em; }
+      font-size: 2.5em;
+    }
+  }
+}
