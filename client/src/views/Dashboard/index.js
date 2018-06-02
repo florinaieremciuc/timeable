@@ -7,8 +7,6 @@ import Teams from './components/Teams';
 import Events from './components/Events';
 import Menu from '../../components/Menu';
 
-import './styles.css';
-
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
