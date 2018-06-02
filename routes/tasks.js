@@ -4,6 +4,14 @@ const router = express.Router();
 
 const tasksController = require('../controllers/tasks');
 
+/* GET assigned tasks */
+router.get('/', (req, res) => {
+  tasksController
+    .getAssigned()
+    .then(tasks => res.send(tasks))
+    .catch(err => res.send(err));
+});
+
 /* GET list of tasks from a project. */
 router.get('/:projectid', (req, res) => {
   tasksController
@@ -17,14 +25,6 @@ router.get('/:id', (req, res) => {
   tasksController
     .getOne(req.params.id)
     .then(task => res.send(task))
-    .catch(err => res.send(err));
-});
-
-/* GET assigned tasks */
-router.get('/assigned', (req, res) => {
-  tasksController
-    .getAssigned()
-    .then(tasks => res.send(tasks))
     .catch(err => res.send(err));
 });
 

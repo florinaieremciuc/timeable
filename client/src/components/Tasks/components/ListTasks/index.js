@@ -1,12 +1,14 @@
 import React from 'react';
-import { Segment, List, Icon, Dropdown } from 'semantic-ui-react';
+import { Segment, List, Icon, Dropdown, Label } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 import { deleteTaskAttempt } from '../../../../State/Tasks/delete/actions';
-
 import { updateAssigneeAttempt } from '../../../../State/Tasks/update/actions';
+
+import { taskPropType } from '../../../../State/Tasks/create/reducer';
+import { userPropType } from '../../../../State/Users/login/reducers';
 
 // priority:
 // 0 - idea
@@ -30,14 +32,18 @@ class ListTasks extends React.Component {
   }
   constructor(props) {
     super(props);
-    // this.state = {
-    //   wantToDelete: false,
-    //   toDelete: null,
-    // };
+    this.state = {
+      // wantToDelete: false,
+      // toDelete: null,
+    };
+    this.getAssignee = this.getAssignee.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.deleteTask = this.deleteTask.bind(this);
   }
 
+  getAssignee(id) {
+    return this.props.members.filter(member => member.id === id);
+  }
   handleChange(e, { value }, id) {
     this.props.updateAssigneeAttempt(id, value);
   }
@@ -48,6 +54,7 @@ class ListTasks extends React.Component {
     // console.log('tasks', this.props.tasks);
     this.props.deleteTaskAttempt(id);
   }
+
   render() {
     // console.log('props din list', this.props);
     // const tasks = this.props.tasks.slice();
@@ -79,13 +86,27 @@ class ListTasks extends React.Component {
                   <List.Header>{task.name}</List.Header>
                   {task.description}
                 </List.Content>
-                <Icon name="close" onClick={() => this.deleteTask(task.id)} />
-                <Dropdown
-                  onChange={(e, { value }) => this.handleChange(e, { value }, task.id)}
-                  options={options}
-                  placeholder="Choose an option"
-                  selection
-                />
+                {task.assignee ? (
+                  <Label tag>
+                    {this.getAssignee(task.assignee).length > 0 &&
+                      this.getAssignee(task.assignee)[0].first_name +
+                        ' ' +
+                        this.getAssignee(task.assignee)[0].last_name +
+                        ' (' +
+                        this.getAssignee(task.assignee)[0].role +
+                        ')'}
+                  </Label>
+                ) : (
+                  <Dropdown
+                    onChange={(e, { value, text }) =>
+                      this.handleChange(e, { value, text }, task.id)
+                    }
+                    options={options}
+                    placeholder="Choose an option"
+                    selection
+                  />
+                )}
+                <Icon size="big" name="trash" onClick={() => this.deleteTask(task.id)} />
               </List.Item>
             ))}
           </List>
@@ -100,4 +121,7 @@ export default connect(null, { deleteTaskAttempt, updateAssigneeAttempt })(ListT
 
 ListTasks.propTypes = {
   deleteTaskAttempt: PropTypes.func.isRequired,
+  updateAssigneeAttempt: PropTypes.func.isRequired,
+  members: PropTypes.arrayOf(userPropType).isRequired,
+  tasks: PropTypes.arrayOf(taskPropType).isRequired,
 };

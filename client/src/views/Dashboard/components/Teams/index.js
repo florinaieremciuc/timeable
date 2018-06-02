@@ -1,12 +1,38 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Container, Form, Input, Button, Select } from 'semantic-ui-react';
+import { Container, Form, Input, Button, Select, Card, Segment, List } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
+import { getAssignedTasksAttempt } from '../../../../State/Tasks/get/actions';
+import {
+  taskPropType,
+  getItems as getTasks,
+  isAttempting as loadingTasks,
+} from '../../../../State/Tasks/get/reducer';
 
 import { addMembers } from '../../../../services/Teams';
+import { getMembersAttempt } from '../../../../State/Users/team/actions';
+import { getItems as getMembers } from '../../../../State/Users/team/reducer';
+
 import { getUserData as getUser, userPropType } from '../../../../State/Users/login/reducers';
 
 class Teams extends React.Component {
+  static selectIcon(task) {
+    switch (task.priority) {
+    case '0':
+      return 'idea';
+    case '1':
+      return 'thermometer half';
+    case '2':
+      return 'thermometer three quarters';
+    case '3':
+      return 'bug';
+    default:
+      return null;
+    }
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -20,10 +46,20 @@ class Teams extends React.Component {
     this.addInput = this.addInput.bind(this);
     this.addMoreInputs = this.addMoreInputs.bind(this);
     this.removeInputs = this.removeInputs.bind(this);
+    this.getUserTasks = this.getUserTasks.bind(this);
 
     this.handleAddMember = this.handleAddMember.bind(this);
     this.handleChangeRole = this.handleChangeRole.bind(this);
     this.submit = this.submit.bind(this);
+  }
+
+  componentWillMount() {
+    this.props.getAssignedTasksAttempt();
+    this.props.getMembersAttempt(this.props.user.team);
+  }
+
+  getUserTasks(id) {
+    return this.props.tasks.filter(task => task.assignee === id);
   }
 
   addMoreInputs() {
@@ -99,7 +135,8 @@ class Teams extends React.Component {
   }
 
   render() {
-    const { user } = this.props;
+    const { user, teamMembers } = this.props;
+    console.log('teams', this.props);
     if (this.state.redirect) {
       return <Redirect to="/projects" />;
     }
@@ -107,6 +144,32 @@ class Teams extends React.Component {
     return (
       <Container>
         <h1>Team</h1>
+        {teamMembers.map(member => (
+          <Card key={member.id}>
+            <Card.Header
+              content={member.first_name + ' ' + member.last_name + '(' + member.role + ')'}
+            />
+            <Card.Content>
+              <Segment inverted>
+                {this.getUserTasks(member.id).length > 0 ? (
+                  <List divided inverted relaxed>
+                    {this.getUserTasks(member.id).map(task => (
+                      <List.Item key={task.id}>
+                        <List.Icon name={Teams.selectIcon(task)} />
+                        <List.Content>
+                          <List.Header>{task.name}</List.Header>
+                          {task.description}
+                        </List.Content>
+                      </List.Item>
+                    ))}
+                  </List>
+                ) : (
+                  'No tasks here man'
+                )}
+              </Segment>
+            </Card.Content>
+          </Card>
+        ))}
         {user.role === 'teamlead' && (
           <Form onSubmit={this.submit}>
             <Form.Group widths="equal">
@@ -129,7 +192,6 @@ class Teams extends React.Component {
               content="Send"
               id="submit"
               type="submit"
-              color="teal"
               compact
               onClick={this.submit}
             />
@@ -141,9 +203,17 @@ class Teams extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  tasks: getTasks(state.tasks),
+  loadTasks: loadingTasks(state.tasks),
+  teamMembers: getMembers(state.members),
   user: getUser(state.user),
 });
-export default connect(mapStateToProps, null)(Teams);
+export default connect(mapStateToProps, { getMembersAttempt, getAssignedTasksAttempt })(Teams);
+
 Teams.propTypes = {
+  tasks: PropTypes.arrayOf(taskPropType).isRequired,
   user: userPropType.isRequired,
+  getMembersAttempt: PropTypes.func.isRequired,
+  getAssignedTasksAttempt: PropTypes.func.isRequired,
+  teamMembers: PropTypes.arrayOf(userPropType).isRequired,
 };
