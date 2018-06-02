@@ -11,43 +11,15 @@ $extra-text-color: #636363;
 // Links
 $base-links-color: #2e5d8bd2;
 
-// Buttons background
-// $buttons-bg-color: #362947;
-$buttons-bg-color: #fafafa; // borrowed from mosaic
-// Buttons icon
-// $buttons-icon-color: #ffffff;
-$buttons-icon-color: #747474; // borrowed from mosaic
+// Buttons
+$buttons-bg-color: #c8c8d2;
+$buttons-text-color: #ffffff;
+$buttons-icon-color: #c86464;
 
 // Posts menu background
 $cover-panel-color: #32394a;
 // Posts menu text color (home page)
 $cover-text-color: #ffffff;
-
-// Article background
-$base-bg-color: #ffffff;
-
-// Borders
-$article-border-color: #dddddd;
-
-// Category label
-$category-color: #e9314d;
-$category-text-color: #ffffff;
-
-// Side menu background
-$panel-background: #fcfafa; // <- side menu
-// Side menu text color
-$panel-color: #818792;
-// Side menu border
-$panel-border: #dddddd;
-
-// Comments
-$comments-header-bg: #efefef;
-
-// Forms
-$form-border-color: #5c5c5c;
-
-// Footer background
-$footer-bg-color: #fafafa;
 
 //Colors
 $color-white: #ffffff;
@@ -79,3 +51,5 @@ $base-spacing-lg: 32px;
 $base-spacing-xl: 64px;
 $base-spacing-xxl: 72px;
 $base-spacing-xxxl: 80px;
+
+// Breakpoints
