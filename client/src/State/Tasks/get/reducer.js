@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux';
 import Immutable from 'seamless-immutable';
-import _ from 'lodash';
 
 import * as types from './actions';
 import { LOGOUT } from '../../Users/login/actions';
@@ -23,13 +22,17 @@ const items = (state = INITIAL_STATE.items, action) => {
   case types.GET_TASKS_REQUEST: {
     return state;
   }
+  case types.GET_ASSIGNED_TASKS_REQUEST: {
+    return state;
+  }
   case types.GET_TASKS_SUCCESS: {
-    if (Array.isArray(action.tasks)) {
-      return _.unionBy(state, action.tasks, 'id');
-    }
-    return _.unionBy(state, [action.tasks], 'id');
+    return action.tasks;
+  }
+  case types.GET_ASSIGNED_TASKS_SUCCESS: {
+    return action.tasks;
   }
   case types.GET_TASKS_FAILURE:
+  case types.GET_ASSIGNED_TASKS_FAILURE:
   case LOGOUT:
     return INITIAL_STATE.items;
   default:
@@ -49,12 +52,27 @@ const sync = (state = INITIAL_STATE.sync, action) => {
       attempting: 1,
       error: null,
     };
+  case types.GET_ASSIGNED_TASKS_REQUEST:
+    return {
+      attempting: 1,
+      error: null,
+    };
   case types.GET_TASKS_SUCCESS:
     return {
       attempting: 0,
       error: null,
     };
+  case types.GET_ASSIGNED_TASKS_SUCCESS:
+    return {
+      attempting: 0,
+      error: null,
+    };
   case types.GET_TASKS_FAILURE:
+    return {
+      attempting: 0,
+      error: action.error,
+    };
+  case types.GET_ASSIGNED_TASKS_FAILURE:
     return {
       attempting: 0,
       error: action.error,

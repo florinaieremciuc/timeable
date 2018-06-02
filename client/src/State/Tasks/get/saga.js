@@ -1,12 +1,17 @@
 import { put, call } from 'redux-saga/effects';
-import { getTasksSuccess, getTasksFailure } from './actions';
-import { getTasks } from '../../../services/Tasks';
+import {
+  getTasksSuccess,
+  getTasksFailure,
+  getAssignedTasksSuccess,
+  getAssignedTasksFailure,
+} from './actions';
+import { getTasks, getAssignedTasks } from '../../../services/Tasks';
 
 /**
  * Yield a call to the API for getting the tasks list.
  * @param {*} Action payload that contains the `name` field
  */
-export default function* getTasksSaga(project) {
+export function* getTasksSaga(project) {
   try {
     const response = yield call(getTasks, project.projectid);
     if (response && response.error) {
@@ -18,5 +23,26 @@ export default function* getTasksSaga(project) {
     }
   } catch (e) {
     yield put(getTasksFailure('Unable to connect to the server.'));
+  }
+}
+
+/**
+ * Yield a call to the API for getting the assigned tasks list.
+ * @param {*} Action payload that contains the `name` field
+ */
+export function* getAssignedTasksSaga(userid) {
+  try {
+    console.log('get assigned', userid);
+    const response = yield call(getAssignedTasks, userid);
+    console.log('get assigned', userid, response);
+    if (response && response.error) {
+      yield put(getAssignedTasksFailure(response));
+    } else if (response && Array(response)) {
+      yield put(getAssignedTasksSuccess(response));
+    } else {
+      yield put(getAssignedTasksFailure('Unable get assigned tasks.'));
+    }
+  } catch (e) {
+    yield put(getAssignedTasksFailure('Unable to connect to the server.'));
   }
 }
