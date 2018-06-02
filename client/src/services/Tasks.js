@@ -38,11 +38,10 @@ export const getTasks = projectid =>
   }).then(response => response.json());
 
 /**
- * Call API to get a user's tasks.
- * @param {Number} userid
+ * Call API to get assigned tasks.
  */
-export const getAssignedTasks = userid =>
-  fetch(`${config.API_URL}/tasks/${userid}`, {
+export const getAssignedTasks = () =>
+  fetch(`${config.API_URL}/tasks/assigned`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

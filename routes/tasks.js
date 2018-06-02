@@ -21,9 +21,9 @@ router.get('/:id', (req, res) => {
 });
 
 /* GET assigned tasks */
-router.get('/:userid', (req, res) => {
+router.get('/assigned', (req, res) => {
   tasksController
-    .getAssigned(req.params.userid)
+    .getAssigned()
     .then(tasks => res.send(tasks))
     .catch(err => res.send(err));
 });

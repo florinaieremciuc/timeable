@@ -23,12 +23,12 @@ module.exports = {
         return tasks;
       });
   },
-  getAssigned(userid) {
-    console.log(`Get tasks that have been assigned to ${userid}`);
+  getAssigned() {
+    console.log('Get tasks that have been assigned to anyone');
     return knex('tasks')
-      .where('asignee', userid)
+      .whereNotNull('asignee')
       .then((tasks) => {
-        if (!tasks) return { error: `No tasks assigned to ${userid}` };
+        if (!tasks) return { error: 'No tasks assigned' };
         return tasks;
       });
   },

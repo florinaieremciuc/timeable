@@ -23,9 +23,8 @@ export const getTasksFailure = error => ({
   error,
 });
 // assigned tasks
-export const getAssignedTasksAttempt = userid => ({
+export const getAssignedTasksAttempt = () => ({
   type: GET_TASKS_REQUEST,
-  userid,
 });
 export const getAssignedTasksSuccess = tasks => ({
   type: GET_TASKS_SUCCESS,

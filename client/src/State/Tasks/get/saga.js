@@ -30,11 +30,11 @@ export function* getTasksSaga(project) {
  * Yield a call to the API for getting the assigned tasks list.
  * @param {*} Action payload that contains the `name` field
  */
-export function* getAssignedTasksSaga(userid) {
+export function* getAssignedTasksSaga() {
   try {
-    console.log('get assigned', userid);
-    const response = yield call(getAssignedTasks, userid);
-    console.log('get assigned', userid, response);
+    console.log('get assigned');
+    const response = yield call(getAssignedTasks);
+    console.log('get assigned', response);
     if (response && response.error) {
       yield put(getAssignedTasksFailure(response));
     } else if (response && Array(response)) {
