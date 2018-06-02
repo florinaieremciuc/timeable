@@ -1,9 +1,8 @@
 import React from 'react';
-import { Sidebar, Button } from 'semantic-ui-react';
+import { Sidebar, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
 import Projects from './components/Home';
-import CreateProjects from './components/CreateProjects';
 import Teams from './components/Teams';
 import Events from './components/Events';
 import Menu from '../../components/Menu';
@@ -20,8 +19,6 @@ class Dashboard extends React.Component {
 
   setView() {
     switch (this.props.path) {
-    case '/projects':
-      return <CreateProjects />;
     case '/teams':
       return <Teams />;
     case '/events':
@@ -41,7 +38,7 @@ class Dashboard extends React.Component {
 
     return (
       <div>
-        <Button className="side-menu" onClick={this.toggleVisibility} />
+        <Icon name="content" size="big" className="side-menu" onClick={this.toggleVisibility} />
         <Sidebar.Pushable as="div">
           <Menu visible={visible} />
           <Sidebar.Pusher className="side-menu">{this.setView()}</Sidebar.Pusher>
