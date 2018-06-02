@@ -1,14 +1,21 @@
 .projects {
   display: flex;
   flex-direction: column; }
+  .projects .ui.header:first-child {
+    margin: 20px; }
   .projects .ui.container.projects-list {
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
     justify-content: space-between; }
-    .projects .ui.container.projects-list i.icon.trash {
-      position: absolute;
-      top: 10;
-      right: 0;
-      font-size: 1.6rem;
-      color: #ad1111; }
+    .projects .ui.container.projects-list .ui.card .header {
+      display: flex;
+      justify-content: center;
+      margin: 10px 0; }
+      .projects .ui.container.projects-list .ui.card .header i.icon.trash {
+        position: absolute;
+        top: 16px;
+        right: 5px; }
+    .projects .ui.container.projects-list .ui.card .extra.content,
+    .projects .ui.container.projects-list .ui.card .content {
+      padding: 10px 0; }

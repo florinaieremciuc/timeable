@@ -13,7 +13,7 @@ import {
 } from '../../../../State/Projects/create/reducer';
 import { getItems, isAttempting, projectsPropType } from '../../../../State/Projects/get/reducer';
 import { getProjectsAttempt } from '../../../../State/Projects/get/actions';
-import { getTeam } from '../../../../State/Users/login/reducers';
+import { getTeam, getRole } from '../../../../State/Users/login/reducers';
 
 import './style.css';
 
@@ -34,20 +34,26 @@ class Projects extends React.Component {
   }
 
   render() {
-    const { projects } = this.props;
-
+    const { projects, role } = this.props;
     return (
       <div className="projects">
         <Header>Projects List</Header>
+        {role === 'teamlead' ? (
+          <Link to="/projects/new">
+            <Button>
+              <Icon name="add" />Create project
+            </Button>
+          </Link>
+        ) : null}
         <Container className="projects-list">
           {projects.map((project) => {
             if (project.id) {
               return (
                 <Card key={project.id}>
-                  <Card.Content>
-                    <Icon name="trash" onClick={() => this.delete(project.id)} />
+                  <Card.Header>
                     <Header content={project.name} />
-                  </Card.Content>
+                    <Icon size="big" name="trash" onClick={() => this.delete(project.id)} />
+                  </Card.Header>
                   <Card.Content extra>
                     <Icon name="calendar outline" />
                     {project.deadline}
@@ -62,9 +68,6 @@ class Projects extends React.Component {
             }
             return null;
           })}
-          <Link to="/projects/new">
-            <Button>Create project</Button>
-          </Link>
         </Container>
       </div>
     );
@@ -76,6 +79,7 @@ const mapStateToProps = state => ({
   loading: isAttempting(state.projects),
   projects: getItems(state.projects),
   teamid: getTeam(state.user),
+  role: getRole(state.user),
 });
 export default connect(mapStateToProps, { getProjectsAttempt, deleteProjectAttempt })(Projects);
 
@@ -85,6 +89,7 @@ Projects.propTypes = {
   getProjectsAttempt: PropTypes.func.isRequired,
   deleteProjectAttempt: PropTypes.func.isRequired,
   teamid: PropTypes.number.isRequired,
+  role: PropTypes.string.isRequired,
 };
 Projects.defaultProps = {
   project: null,

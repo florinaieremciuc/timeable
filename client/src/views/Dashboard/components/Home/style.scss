@@ -1,18 +1,32 @@
+@import "../../../../utilities/variables";
+
 .projects {
   display: flex;
   flex-direction: column;
+  .ui.header:first-child {
+    margin: $base-spacing-xmd;
+  }
   .ui.container {
     &.projects-list {
       display: flex;
       flex-wrap: wrap;
       align-items: baseline;
       justify-content: space-between;
-      i.icon.trash {
-        position: absolute;
-        top: 10;
-        right: 0;
-        font-size: 1.6rem;
-        color: #ad1111;
+      .ui.card {
+        .header {
+          display: flex;
+          justify-content: center;
+          margin: $base-spacing-xsm 0;
+          i.icon.trash {
+            position: absolute;
+            top: $base-spacing;
+            right: 5px;
+          }
+        }
+        .extra.content,
+        .content {
+          padding: $base-spacing-xsm 0;
+        }
       }
     }
     &.create-project {
