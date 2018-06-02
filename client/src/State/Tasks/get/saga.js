@@ -32,9 +32,7 @@ export function* getTasksSaga(project) {
  */
 export function* getAssignedTasksSaga() {
   try {
-    console.log('get assigned');
     const response = yield call(getAssignedTasks);
-    console.log('get assigned', response);
     if (response && response.error) {
       yield put(getAssignedTasksFailure(response));
     } else if (response && Array(response)) {

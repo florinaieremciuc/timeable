@@ -26,11 +26,10 @@ export const createTask = (name, description, estimate, priority, status, projec
 };
 
 /**
- * Call API to get a projects's tasks.
- * @param {Number} projectid
+ * Call API to get assigned tasks.
  */
-export const getTasks = projectid =>
-  fetch(`${config.API_URL}/tasks/${projectid}`, {
+export const getAssignedTasks = () =>
+  fetch(`${config.API_URL}/tasks`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -38,10 +37,11 @@ export const getTasks = projectid =>
   }).then(response => response.json());
 
 /**
- * Call API to get assigned tasks.
+ * Call API to get a projects's tasks.
+ * @param {Number} projectid
  */
-export const getAssignedTasks = () =>
-  fetch(`${config.API_URL}/tasks/assigned`, {
+export const getTasks = projectid =>
+  fetch(`${config.API_URL}/tasks/${projectid}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

@@ -24,13 +24,13 @@ export const getTasksFailure = error => ({
 });
 // assigned tasks
 export const getAssignedTasksAttempt = () => ({
-  type: GET_TASKS_REQUEST,
+  type: GET_ASSIGNED_TASKS_REQUEST,
 });
 export const getAssignedTasksSuccess = tasks => ({
-  type: GET_TASKS_SUCCESS,
+  type: GET_ASSIGNED_TASKS_SUCCESS,
   tasks,
 });
 export const getAssignedTasksFailure = error => ({
-  type: GET_TASKS_FAILURE,
+  type: GET_ASSIGNED_TASKS_FAILURE,
   error,
 });

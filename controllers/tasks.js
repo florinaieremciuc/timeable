@@ -26,9 +26,9 @@ module.exports = {
   getAssigned() {
     console.log('Get tasks that have been assigned to anyone');
     return knex('tasks')
-      .whereNotNull('asignee')
+      .whereNotNull('assignee')
       .then((tasks) => {
-        if (!tasks) return { error: 'No tasks assigned' };
+        if (!tasks || tasks.length === 0) return { error: 'No tasks assigned' };
         return tasks;
       });
   },
