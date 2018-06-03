@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Form, Input, Button } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 
 import { createTeamAttempt } from '../../../State/Teams/create/actions';
 import { getTeam, newTeamPropType } from '../../../State/Teams/create/reducer';
@@ -11,7 +12,7 @@ class CreateTeamForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
+      name: null,
       redirect: false,
     };
 
@@ -30,7 +31,9 @@ class CreateTeamForm extends React.Component {
   }
 
   async submit() {
-    await this.props.createTeamAttempt(this.state.name);
+    if (!_.isNil(this.state.name)) {
+      await this.props.createTeamAttempt(this.state.name);
+    }
   }
   render() {
     if (this.state.redirect) {

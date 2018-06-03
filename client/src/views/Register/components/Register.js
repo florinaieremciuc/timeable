@@ -3,6 +3,7 @@ import { Form, Input, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 
 import { registerAttempt } from '../../../State/Users/register/actions';
 
@@ -13,13 +14,13 @@ class RegistrationForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      password: '',
-      confirmpass: '',
-      firstname: '',
-      lastname: '',
-      email: '',
-      phone: '',
+      username: null,
+      password: null,
+      confirmpass: null,
+      firstname: null,
+      lastname: null,
+      email: null,
+      phone: null,
       redirect: false,
     };
     this.handleChangeUsername = this.handleChangeUsername.bind(this);
@@ -54,31 +55,42 @@ class RegistrationForm extends React.Component {
     this.setState({ phone: event.target.value });
   }
   async submit() {
-    if (this.state.password === this.state.confirmpass) {
-      // Decrypt
-      let decryptedEmail;
-      if (this.props.params.encryptEmail) {
-        const bytes = CryptoJS.AES.decrypt(
-          this.props.params.encryptEmail.toString(),
-          this.props.params.role,
+    const {
+      username, password, confirmpass, firstname, lastname, email, phone,
+    } = this.state;
+    const { encryptEmail, role, teamId } = this.props.params;
+
+    if (
+      !_.isNil(username) ||
+      !_.isNil(password) ||
+      !_.isNil(firstname) ||
+      !_.isNil(lastname) ||
+      !_.isNil(email) ||
+      !_.isNil(phone)
+    ) {
+      if (password === confirmpass) {
+        // Decrypt
+        let decryptedEmail;
+        if (encryptEmail) {
+          const bytes = CryptoJS.AES.decrypt(encryptEmail.toString(), role);
+          decryptedEmail = bytes.toString(CryptoJS.enc.Utf8);
+        }
+
+        await this.props.registerAttempt(
+          username,
+          password,
+          firstname,
+          lastname,
+          encryptEmail ? decryptedEmail : email,
+          phone,
+          role || 'teamlead',
+          teamId,
         );
-        decryptedEmail = bytes.toString(CryptoJS.enc.Utf8);
+
+        this.setState({ redirect: true });
+      } else {
+        alert('Passwords must match');
       }
-
-      await this.props.registerAttempt(
-        this.state.username,
-        this.state.password,
-        this.state.firstname,
-        this.state.lastname,
-        this.props.params.encryptEmail ? decryptedEmail : this.state.email,
-        this.state.phone,
-        this.props.params.role ? this.props.params.role : 'teamlead',
-        this.props.params.teamId,
-      );
-
-      this.setState({ redirect: true });
-    } else {
-      alert('Passwords must match');
     }
     return null;
   }
