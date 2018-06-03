@@ -1,5 +1,9 @@
 @import "../../utilities/variables";
 
+.ui.sidebar.menu.left {
+  background: $header-bg-color;
+  color: $header-text-color;
+}
 .icon.side-menu {
   position: absolute;
   z-index: 1;

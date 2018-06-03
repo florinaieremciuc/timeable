@@ -1,3 +1,7 @@
+.ui.sidebar.menu.left {
+  background: #222;
+  color: #c8c8c8; }
+
 .icon.side-menu {
   position: absolute;
   z-index: 1;
