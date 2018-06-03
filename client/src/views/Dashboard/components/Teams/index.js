@@ -1,15 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {
-  Container,
-  Form,
-  Input,
-  Button,
-  Select,
-  Card,
-  Segment,
-  List,
-} from 'semantic-ui-react';
+import { Container, Form, Input, Button, Select, Card, Segment, List } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
@@ -156,6 +147,7 @@ class Teams extends React.Component {
       return <Redirect to="/" />;
     }
 
+    console.log('user teams', this.props);
     return (
       <Container className="teams">
         <h1>Team</h1>
@@ -163,7 +155,13 @@ class Teams extends React.Component {
           {teamMembers.map(member => (
             <Card key={member.id}>
               <Card.Header
-                content={member.first_name + ' ' + member.last_name + '(' + member.role + ')'}
+                content={
+                  user.firstname === member.first_name &&
+                  user.lastname === member.last_name &&
+                  user.role === member.role
+                    ? 'My tasks'
+                    : member.first_name + ' ' + member.last_name + ' (' + member.role + ')'
+                }
               />
               <Card.Content>
                 <Segment inverted>
