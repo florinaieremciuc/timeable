@@ -7,8 +7,8 @@ p,
 div {
   font-size: $base-font-size;
   font-weight: normal;
-  font-family: $base-font-family;
-  color: $base-text-color;
+  font-family: $base-font-family !important;
+  color: $base-text-color !important;
 }
 
 // Headings
@@ -18,43 +18,43 @@ h1,
 .h1 {
   font-size: $base-font-size * mpow($multiplying-factor, 4);
   font-weight: normal;
-  font-family: $base-font-family;
+  font-family: $base-font-family !important;
   color: $base-text-color;
 }
 h2,
 .h2 {
   font-size: $base-font-size * mpow($multiplying-factor, 3);
   font-weight: normal;
-  font-family: $base-font-family;
+  font-family: $base-font-family !important;
   color: $base-text-color;
 }
 h3,
 .h3 {
   font-size: $base-font-size * mpow($multiplying-factor, 2);
   font-weight: normal;
-  font-family: $base-font-family;
+  font-family: $base-font-family !important;
   color: $base-text-color;
 }
 h4,
 .h4 {
   font-size: $base-font-size * mpow($multiplying-factor, 1);
   font-weight: normal;
-  font-family: $base-font-family;
+  font-family: $base-font-family !important;
   color: $base-text-color;
 }
 h5,
 .h5 {
   font-size: $base-font-size;
   font-weight: normal;
-  font-family: $base-font-family;
+  font-family: $base-font-family !important;
   color: $base-text-color;
 }
 h6,
 .h6 {
   font-size: $base-font-size / mpow($multiplying-factor, 1);
   font-weight: normal;
-  font-family: $base-font-family;
-  color: $base-text-color;
+  font-family: $base-font-family !important;
+  color: $base-text-color !important;
 }
 
 // Buttons & Links
@@ -62,7 +62,8 @@ h6,
 
 button.ui.button {
   background: $buttons-bg-color !important;
-  color: $buttons-text-color;
+  color: $buttons-text-color !important;
+  font-family: $base-font-family !important;
 }
 i.icon {
   color: $buttons-icon-color !important;

@@ -1,5 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto+Condensed:300");
-@import url("https://fonts.googleapis.com/css?family=Hind");
+@import url("https://fonts.googleapis.com/css?family=Dosis|Quicksand|Roboto+Condensed:300");
 .center-content {
   display: -webkit-box !important;
   display: -ms-flexbox !important;
@@ -91,54 +90,55 @@ p,
 div {
   font-size: 14px;
   font-weight: normal;
-  font-family: "Hind", Serif;
-  color: #303030; }
+  font-family: "Quicksand", Serif !important;
+  color: #222 !important; }
 
 h1,
 .h1 {
   font-size: 20.4974px;
   font-weight: normal;
-  font-family: "Hind", Serif;
-  color: #303030; }
+  font-family: "Quicksand", Serif !important;
+  color: #222; }
 
 h2,
 .h2 {
   font-size: 18.634px;
   font-weight: normal;
-  font-family: "Hind", Serif;
-  color: #303030; }
+  font-family: "Quicksand", Serif !important;
+  color: #222; }
 
 h3,
 .h3 {
   font-size: 16.94px;
   font-weight: normal;
-  font-family: "Hind", Serif;
-  color: #303030; }
+  font-family: "Quicksand", Serif !important;
+  color: #222; }
 
 h4,
 .h4 {
   font-size: 15.4px;
   font-weight: normal;
-  font-family: "Hind", Serif;
-  color: #303030; }
+  font-family: "Quicksand", Serif !important;
+  color: #222; }
 
 h5,
 .h5 {
   font-size: 14px;
   font-weight: normal;
-  font-family: "Hind", Serif;
-  color: #303030; }
+  font-family: "Quicksand", Serif !important;
+  color: #222; }
 
 h6,
 .h6 {
   font-size: 12.72727px;
   font-weight: normal;
-  font-family: "Hind", Serif;
-  color: #303030; }
+  font-family: "Quicksand", Serif !important;
+  color: #222 !important; }
 
 button.ui.button {
   background: #c8c8d2 !important;
-  color: #ffffff; }
+  color: #ffffff !important;
+  font-family: "Quicksand", Serif !important; }
 
 i.icon {
   color: #c86464 !important; }

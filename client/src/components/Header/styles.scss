@@ -1,10 +1,10 @@
 @import "../../utilities/variables";
 
 .header.za-black-header {
-  background-color: #222;
+  background-color: $header-bg-color;
   height: 15vh;
-  padding: 0 10px;
-  color: #c8c8c8;
+  padding: 0 $base-spacing-xsm;
+  color: $header-text-color;
   display: flex;
   align-items: center;
   justify-content: space-between;

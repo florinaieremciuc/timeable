@@ -1,9 +1,11 @@
 //Base font variables
 // $base-font-family: "Roboto Condensed", sans-serif;
-$base-font-family: "Hind", Serif;
+$base-font-family: "Quicksand", Serif;
+// $base-font-family: "Dosis", sans-serif;
+// $base-font-family: "Hind", Serif;
 
 // Headlines and primary texts
-$base-text-color: #303030;
+$base-text-color: #222;
 
 // Secondary texts - dates and other messages
 $extra-text-color: #636363;
@@ -16,10 +18,9 @@ $buttons-bg-color: #c8c8d2;
 $buttons-text-color: #ffffff;
 $buttons-icon-color: #c86464;
 
-// Posts menu background
-$cover-panel-color: #32394a;
-// Posts menu text color (home page)
-$cover-text-color: #ffffff;
+// Header + side menu bg
+$header-bg-color: #222;
+$header-text-color: #c8c8c8;
 
 //Colors
 $color-white: #ffffff;
