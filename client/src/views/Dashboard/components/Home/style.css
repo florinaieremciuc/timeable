@@ -154,7 +154,7 @@ a {
 .projects {
   display: flex;
   flex-direction: column; }
-  .projects .ui.header:first-child {
+  .projects h1 {
     margin: 20px; }
   .projects .ui.container.projects-list {
     display: flex;

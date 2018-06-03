@@ -37,7 +37,7 @@ class Projects extends React.Component {
     const { projects, role } = this.props;
     return (
       <div className="projects">
-        <Header>Projects List</Header>
+        <h1>Projects List</h1>
         {role === 'teamlead' ? (
           <Link to="/projects/new">
             <Button>

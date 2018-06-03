@@ -3,7 +3,7 @@
 .projects {
   display: flex;
   flex-direction: column;
-  .ui.header:first-child {
+  h1 {
     margin: $base-spacing-xmd;
   }
   .ui.container {
