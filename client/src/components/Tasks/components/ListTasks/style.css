@@ -152,6 +152,7 @@ a {
   box-sizing: border-box; }
 
 .ui.inverted.segment {
+  color: #c8c8c8 !important;
   background: #222;
   margin: 16px 0; }
   .ui.inverted.segment .ui.list .item {

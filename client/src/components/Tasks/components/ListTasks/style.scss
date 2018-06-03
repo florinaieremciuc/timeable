@@ -1,6 +1,7 @@
 @import "../../../../utilities/base";
 
 .ui.inverted.segment {
+  color: $header-text-color !important;
   background: $header-bg-color;
   margin: $base-spacing 0;
   .ui.list {

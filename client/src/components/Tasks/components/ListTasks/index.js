@@ -114,7 +114,7 @@ class ListTasks extends React.Component {
                     />
                   )}
                 </div>
-                <Icon size="big" name="trash" onClick={() => this.deleteTask(task.id)} />
+                <Icon size="large" name="trash" onClick={() => this.deleteTask(task.id)} />
               </List.Item>
             ))}
           </List>
