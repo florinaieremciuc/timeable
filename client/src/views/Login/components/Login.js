@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Form, Input, Button, Segment } from 'semantic-ui-react';
+import { Form, Input, Button, Segment, Container } from 'semantic-ui-react';
 import { Redirect, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -45,7 +45,6 @@ class LoginForm extends React.Component {
           <Form.Field
             id="username"
             control={Input}
-            label="Type in youur username"
             name="username"
             type="text"
             placeholder="Username"
@@ -61,7 +60,6 @@ class LoginForm extends React.Component {
             required
             id="password"
             control={Input}
-            label="Fill out the password"
           />
         </Form.Group>
         <Form.Field
@@ -73,9 +71,13 @@ class LoginForm extends React.Component {
           compact
           onClick={this.submit}
         />
-        <Segment inverted>
-          {"Don't have an account?"}&nbsp;
-          <Link to="/new_team">Create your team!</Link>
+        <Segment>
+          <Container>
+            {"Don't have an account?"}&nbsp;
+            <Link to="/new_team">
+              <strong>Create your team!</strong>
+            </Link>
+          </Container>
         </Segment>
       </Form>
     );

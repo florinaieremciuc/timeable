@@ -1,0 +1,8 @@
+@import "../../utilities/base";
+
+.login.ui.container {
+  padding-top: 5vh;
+  .ui.button {
+    margin: 0 $base-spacing-xsm;
+  }
+}
