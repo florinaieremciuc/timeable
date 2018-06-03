@@ -10,6 +10,8 @@ import { updateAssigneeAttempt } from '../../../../State/Tasks/update/actions';
 import { taskPropType } from '../../../../State/Tasks/create/reducer';
 import { userPropType } from '../../../../State/Users/login/reducers';
 
+import './style.css';
+
 // priority:
 // 0 - idea
 // 1 - thermometer half
@@ -81,31 +83,37 @@ class ListTasks extends React.Component {
           <List divided inverted relaxed>
             {this.props.tasks.map(task => (
               <List.Item key={task.id}>
-                <List.Icon name={ListTasks.selectIcon(task)} />
-                <List.Content>
-                  <List.Header>{task.name}</List.Header>
-                  {task.description}
-                </List.Content>
-                {task.assignee ? (
-                  <Label tag>
-                    {this.getAssignee(task.assignee).length > 0 &&
-                      this.getAssignee(task.assignee)[0].first_name +
-                        ' ' +
-                        this.getAssignee(task.assignee)[0].last_name +
-                        ' (' +
-                        this.getAssignee(task.assignee)[0].role +
-                        ')'}
-                  </Label>
-                ) : (
-                  <Dropdown
-                    onChange={(e, { value, text }) =>
-                      this.handleChange(e, { value, text }, task.id)
-                    }
-                    options={options}
-                    placeholder="Choose an option"
-                    selection
-                  />
-                )}
+                <div className="task-details">
+                  <List.Icon name={ListTasks.selectIcon(task)} />
+                  Name:&nbsp;
+                  <List.Header>
+                    <Label>{task.name}</Label>
+                  </List.Header>
+                  <List.Content>
+                    Description:&nbsp;<strong>{task.description}</strong>
+                    &nbsp;&nbsp;
+                  </List.Content>
+                  Assignee:&nbsp;{task.assignee ? (
+                    <Label>
+                      {this.getAssignee(task.assignee).length > 0 &&
+                        this.getAssignee(task.assignee)[0].first_name +
+                          ' ' +
+                          this.getAssignee(task.assignee)[0].last_name +
+                          ' (' +
+                          this.getAssignee(task.assignee)[0].role +
+                          ')'}
+                    </Label>
+                  ) : (
+                    <Dropdown
+                      onChange={(e, { value, text }) =>
+                        this.handleChange(e, { value, text }, task.id)
+                      }
+                      options={options}
+                      placeholder="Choose an option"
+                      selection
+                    />
+                  )}
+                </div>
                 <Icon size="big" name="trash" onClick={() => this.deleteTask(task.id)} />
               </List.Item>
             ))}
