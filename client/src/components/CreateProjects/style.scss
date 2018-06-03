@@ -1,0 +1,24 @@
+@import "../../utilities/base";
+
+.tasks {
+  .ui.header {
+    display: flex;
+    justify-content: space-between;
+    margin: $base-spacing-xs;
+  }
+  .ui.form {
+    padding: 5% 10%;
+    .fields {
+      flex-direction: column;
+      .field {
+        padding: $base-spacing-xsm;
+        + div {
+          padding: $base-spacing-xsm;
+        }
+        &.submit {
+          padding: $base-spacing-xsm;
+        }
+      }
+    }
+  }
+}

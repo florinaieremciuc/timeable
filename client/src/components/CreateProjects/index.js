@@ -1,16 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Form, Input, Button } from 'semantic-ui-react';
-import { Redirect } from 'react-router-dom';
+import { Form, Input, Button, Header, Icon } from 'semantic-ui-react';
+import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
+import _ from 'lodash';
 import 'react-router-modal/css/react-router-modal.css';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import { createProjectAttempt } from '../../State/Projects/create/actions';
-import { getData, newProjectPropType } from '../../State/Projects/create/reducer';
+import { getData } from '../../State/Projects/create/reducer';
 import { getTeam } from '../../State/Users/login/reducers';
+
+import './style.css';
 
 class CreateProject extends React.Component {
   constructor(props) {
@@ -50,8 +53,10 @@ class CreateProject extends React.Component {
     const {
       name, description, deadline, team,
     } = this.state;
-    this.setState({ redirect: !this.state.redirect });
-    await this.props.createProjectAttempt(name, description, deadline, team);
+    if (!_.isNil(this.state.name) && !_.isNil(this.state.deadline)) {
+      this.setState({ redirect: !this.state.redirect });
+      await this.props.createProjectAttempt(name, description, deadline, team);
+    }
   }
   render() {
     if (this.state.redirect) {
@@ -59,42 +64,48 @@ class CreateProject extends React.Component {
     }
     return (
       <Form onSubmit={this.submit}>
+        <Header>
+          Create a new project
+          <Link to="/">
+            <Icon name="close" />
+          </Link>
+        </Header>
         <Form.Group widths="equal">
           <Form.Field
             id="name"
             control={Input}
-            label="Type in the project name"
             name="name"
             type="text"
-            placeholder="Name"
+            placeholder="Name *"
             onChange={event => this.handleChangeName(event)}
             required
           />
           <Form.Field
             id="description"
             control={Input}
-            label="Type in the description"
             name="description"
             type="text"
             placeholder="Description"
             onChange={event => this.handleChangeDescription(event)}
           />
           <DatePicker
+            required
             id="deadline"
             selected={this.state.deadline}
             onChange={this.handleChangeDeadline}
             minDate={moment()}
-            placeholderText="Select the deadline"
+            placeholderText="Select the deadline *"
+          />
+          <Form.Field
+            className="submit"
+            control={Button}
+            content="Send"
+            id="submit"
+            type="submit"
+            compact
+            onClick={this.submit}
           />
         </Form.Group>
-        <Form.Field
-          control={Button}
-          content="Send"
-          id="submit"
-          type="submit"
-          compact
-          onClick={this.submit}
-        />
       </Form>
     );
   }
@@ -108,5 +119,4 @@ export default connect(mapStateToProps, { createProjectAttempt })(CreateProject)
 CreateProject.propTypes = {
   createProjectAttempt: PropTypes.func.isRequired,
   team: PropTypes.number.isRequired,
-  // newproject: newProjectPropType.isRequired,
 };
