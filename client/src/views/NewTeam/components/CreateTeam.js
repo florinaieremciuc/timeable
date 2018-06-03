@@ -42,10 +42,9 @@ class CreateTeamForm extends React.Component {
           <Form.Field
             id="name"
             control={Input}
-            label="Type in team name"
             name="name"
             type="text"
-            placeholder="Name"
+            placeholder="Name *"
             onChange={event => this.handleChangeName(event)}
             required
           />
