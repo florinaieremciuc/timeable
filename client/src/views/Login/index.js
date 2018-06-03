@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container } from 'semantic-ui-react';
+import { Container, Divider } from 'semantic-ui-react';
 
 import Header from '../../components/Header';
 import LoginForm from './components/Login';
@@ -10,6 +10,7 @@ const Login = () => (
     <Header />
     <Container className="login">
       <h1>Login</h1>
+      <Divider />
       <LoginForm />
     </Container>
   </div>

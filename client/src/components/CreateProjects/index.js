@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Form, Input, Button, Header, Icon } from 'semantic-ui-react';
+import { Form, Input, Button, Header, Icon, Divider } from 'semantic-ui-react';
 import { Link, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
@@ -70,6 +70,7 @@ class CreateProject extends React.Component {
             <Icon name="close" />
           </Link>
         </Header>
+        <Divider />
         <Form.Group widths="equal">
           <Form.Field
             id="name"
