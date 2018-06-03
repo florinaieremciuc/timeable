@@ -3,6 +3,9 @@
 .ui.container.teams {
   display: flex;
   flex-direction: column;
+  h1 {
+    margin: $base-spacing-xmd 0;
+  }
   .members {
     display: flex;
     align-items: center;

@@ -1,6 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Container, Form, Input, Button, Select, Card, Segment, List } from 'semantic-ui-react';
+import {
+  Container,
+  Form,
+  Input,
+  Button,
+  Select,
+  Card,
+  Segment,
+  List,
+} from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import _ from 'lodash';

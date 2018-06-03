@@ -154,6 +154,8 @@ a {
 .ui.container.teams {
   display: flex;
   flex-direction: column; }
+  .ui.container.teams h1 {
+    margin: 20px 0; }
   .ui.container.teams .members {
     display: flex;
     align-items: center;
