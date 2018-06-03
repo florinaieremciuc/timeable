@@ -147,7 +147,6 @@ class Teams extends React.Component {
       return <Redirect to="/" />;
     }
 
-    console.log('user teams', this.props);
     return (
       <Container className="teams">
         <h1>Team</h1>
