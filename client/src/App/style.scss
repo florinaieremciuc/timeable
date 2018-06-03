@@ -1,29 +1,41 @@
 @import "../utilities/base";
 .App {
   text-align: center;
+  .App-header {
+    background-color: #222;
+    height: 25vh;
+    padding: 0 20px;
+    color: white;
+    display: flex;
+    align-content: flex-start;
+  }
+
+  .App-logo {
+    /* animation: App-logo-spin infinite 20s linear; */
+    height: 100px;
+  }
+
+  .App-title {
+    font-size: 1.5em;
+  }
+
+  .App-intro {
+    font-size: large;
+  }
+
+  .welcome {
+    padding: 5%;
+    .buttons {
+      display: flex;
+      justify-content: center;
+      align-items: baseline;
+      * {
+        margin: 0 10px;
+      }
+    }
+  }
 }
 
-.App-header {
-  background-color: #222;
-  height: 25vh;
-  padding: 0 20px;
-  color: white;
-  display: flex;
-  align-content: flex-start;
-}
-
-.App-logo {
-  /* animation: App-logo-spin infinite 20s linear; */
-  height: 100px;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
 /* 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }

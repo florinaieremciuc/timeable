@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Container, Button, Label } from 'semantic-ui-react';
+import { Container, Button, Label, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
@@ -22,15 +22,20 @@ class App extends Component {
           username={username}
         />
         {_.isNil(this.props.isAuthenticated) || this.props.isAuthenticated === false ? (
-          <Container>
-            New to Timeable?
-            <Link to="/new_team">
-              <Button> Create a team </Button>
-            </Link>
-            or log in and yadayada:
-            <Link to="/login">
-              <Label color="teal">Login</Label>
-            </Link>
+          <Container className="welcome">
+            <h1>
+              <Icon size="large" center name="tasks" />
+              New to Timeable?
+            </h1>
+            <div className="buttons">
+              <Link to="/new_team">
+                <Button> Create a team </Button>
+              </Link>
+              <h2>or log in and yadayada:</h2>
+              <Link to="/login">
+                <Label size="large">Login</Label>
+              </Link>
+            </div>
           </Container>
         ) : (
           <Dashboard path={match.path} />
