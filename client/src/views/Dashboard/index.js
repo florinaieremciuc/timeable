@@ -7,6 +7,8 @@ import Teams from './components/Teams';
 import Events from './components/Events';
 import Menu from '../../components/Menu';
 
+import './style.css';
+
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
@@ -35,7 +37,7 @@ class Dashboard extends React.Component {
     const { visible } = this.state;
 
     return (
-      <div>
+      <div className="dashboard">
         <Icon name="content" size="big" className="side-menu" onClick={this.toggleVisibility} />
         <Sidebar.Pushable as="div">
           <Menu visible={visible} />
