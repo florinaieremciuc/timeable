@@ -3,19 +3,22 @@ import { connect } from 'react-redux';
 import { Container, Form, Input, Button, Select, Card, Segment, List } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 
 import { getAssignedTasksAttempt } from '../../../../State/Tasks/get/actions';
 import {
-  taskPropType,
   getItems as getTasks,
   isAttempting as loadingTasks,
 } from '../../../../State/Tasks/get/reducer';
+import { taskPropType } from '../../../../State/Tasks/create/reducer';
 
 import { addMembers } from '../../../../services/Teams';
 import { getMembersAttempt } from '../../../../State/Users/team/actions';
 import { getItems as getMembers } from '../../../../State/Users/team/reducer';
 
 import { getUserData as getUser, userPropType } from '../../../../State/Users/login/reducers';
+
+import './style.css';
 
 class Teams extends React.Component {
   static selectIcon(task) {
@@ -37,7 +40,7 @@ class Teams extends React.Component {
     super(props);
     this.state = {
       min: 0,
-      max: 8,
+      max: 5,
       inputCount: 1,
       members: [],
       redirect: false,
@@ -129,47 +132,54 @@ class Teams extends React.Component {
   }
 
   async submit() {
-    const teamLeadFullName = this.props.user.firstname + ' ' + this.props.user.lastname;
-    this.setState({ redirect: !this.state.redirect });
-    await addMembers(this.props.user.team, teamLeadFullName, this.state.members);
+    const { user } = this.props;
+    const { members } = this.state;
+    const teamLeadFullName = user.firstname + ' ' + user.lastname;
+    if (members.length > 0 && !_.isNil(user)) {
+      this.setState({ redirect: !this.state.redirect });
+      await addMembers(user.team, teamLeadFullName, this.state.members);
+    }
   }
 
   render() {
     const { user, teamMembers } = this.props;
-    console.log('teams', this.props);
     if (this.state.redirect) {
-      return <Redirect to="/projects" />;
+      return <Redirect to="/" />;
     }
 
     return (
-      <Container>
+      <Container className="teams">
         <h1>Team</h1>
-        {teamMembers.map(member => (
-          <Card key={member.id}>
-            <Card.Header
-              content={member.first_name + ' ' + member.last_name + '(' + member.role + ')'}
-            />
-            <Card.Content>
-              <Segment inverted>
-                {this.getUserTasks(member.id).length > 0 ? (
-                  <List divided inverted relaxed>
-                    {this.getUserTasks(member.id).map(task => (
-                      <List.Item key={task.id}>
-                        <List.Icon name={Teams.selectIcon(task)} />
-                        <List.Content>
-                          <List.Header>{task.name}</List.Header>
-                          {task.description}
-                        </List.Content>
-                      </List.Item>
-                    ))}
-                  </List>
-                ) : (
-                  'No tasks here man'
-                )}
-              </Segment>
-            </Card.Content>
-          </Card>
-        ))}
+        <div className="members">
+          {teamMembers.map(member => (
+            <Card key={member.id}>
+              <Card.Header
+                content={member.first_name + ' ' + member.last_name + '(' + member.role + ')'}
+              />
+              <Card.Content>
+                <Segment inverted>
+                  {this.getUserTasks(member.id).length > 0 ? (
+                    <List divided inverted relaxed>
+                      <strong> Tasks: </strong>
+                      {this.getUserTasks(member.id).map(task => (
+                        <List.Item key={task.id}>
+                          <List.Icon name={Teams.selectIcon(task)} />
+                          <List.Content>
+                            <List.Header>{task.name}</List.Header>
+                            {task.description}
+                          </List.Content>
+                        </List.Item>
+                      ))}
+                    </List>
+                  ) : (
+                    'No tasks here man'
+                  )}
+                </Segment>
+              </Card.Content>
+            </Card>
+          ))}
+        </div>
+
         {user.role === 'teamlead' && (
           <Form onSubmit={this.submit}>
             <Form.Group widths="equal">
@@ -186,15 +196,15 @@ class Teams extends React.Component {
                 onClick={this.removeInputs}
                 disabled={this.state.inputCount <= this.state.min}
               />
+              <Form.Field
+                control={Button}
+                content="Send"
+                id="submit"
+                type="submit"
+                compact
+                onClick={this.submit}
+              />
             </Form.Group>
-            <Form.Field
-              control={Button}
-              content="Send"
-              id="submit"
-              type="submit"
-              compact
-              onClick={this.submit}
-            />
           </Form>
         )}
       </Container>

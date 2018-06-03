@@ -1,0 +1,46 @@
+@import "../../../../utilities/base";
+
+.ui.container.teams {
+  display: flex;
+  flex-direction: column;
+  .members {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .ui.card {
+      .ui.segment.inverted {
+        background: $header-bg-color;
+        display: flex;
+        justify-content: flex-start;
+        .ui.divided.inverted.list {
+          width: 100%;
+          text-align: start;
+          strong {
+            color: $header-text-color !important;
+          }
+          .item {
+            justify-content: flex-start;
+            .content {
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+              text-align: start;
+            }
+          }
+        }
+      }
+    }
+  }
+  .ui.form {
+    .equal.width.fields {
+      display: flex;
+      flex-wrap: wrap;
+      > div {
+        padding: $base-spacing-xs;
+      }
+      .field {
+        width: unset;
+      }
+    }
+  }
+}
