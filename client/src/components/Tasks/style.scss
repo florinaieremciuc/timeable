@@ -5,5 +5,9 @@
     height: 99vh;
     width: 99vw;
     padding: 20px 10px;
+    .divider {
+      margin-top: $base-spacing-xsm;
+      margin-bottom: $base-spacing-md;
+    }
   }
 }

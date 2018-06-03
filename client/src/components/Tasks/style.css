@@ -2,3 +2,6 @@
   height: 99vh;
   width: 99vw;
   padding: 20px 10px; }
+  .react-router-modal__container.tasks .react-router-modal__modal .divider {
+    margin-top: 10px;
+    margin-bottom: 24px; }

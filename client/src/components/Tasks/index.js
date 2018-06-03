@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Icon, Container, Header } from 'semantic-ui-react';
+import { Icon, Container, Header, Divider } from 'semantic-ui-react';
 import 'react-router-modal/css/react-router-modal.css';
 
 import { openModal, closeModal } from './action';
@@ -10,6 +10,8 @@ import AddTask from './components/AddTask';
 
 import { getTasksAttempt } from '../../State/Tasks/get/actions';
 import { getItems as getTasks, isAttempting as loadingTasks } from '../../State/Tasks/get/reducer';
+import { isAttemptingAssignee } from '../../State/Tasks/update/reducer';
+
 import ListTasks from './components/ListTasks';
 
 import { isAttempting as loadDelete } from '../../State/Tasks/delete/reducer';
@@ -30,7 +32,7 @@ class Tasks extends React.Component {
     this.props.getMembersAttempt(this.props.teamid);
   }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.loadCreate === 1) {
+    if (nextProps.loadCreate === 1 || nextProps.attemptUpdate === 1 || nextProps.loadDelete === 1) {
       nextProps.getTasksAttempt(nextProps.match.params.projectid);
     }
   }
@@ -43,11 +45,14 @@ class Tasks extends React.Component {
     return (
       <Container>
         <Header>
-          Activity list<Icon name="tasks" />
+          <h1>
+            <Icon name="tasks" />Activity list
+          </h1>
           <Link to="/">
             <Icon name="close" />
           </Link>
         </Header>
+        <Divider />
         <Container>
           <ListTasks
             open={modalVisible}
@@ -70,6 +75,7 @@ const mapStateToProps = state => ({
   loadCreate: loadCreate(state.newtask),
   loadDelete: loadDelete(state.deleteTask),
   loadingMembers: loadMembers(state.members),
+  attemptUpdate: isAttemptingAssignee(state.updateTask),
   members: getMembers(state.members),
   teamid: getTeam(state.user),
 });
@@ -91,6 +97,7 @@ Tasks.propTypes = {
   tasks: PropTypes.arrayOf(taskPropType).isRequired,
   loadCreate: PropTypes.number.isRequired,
   loadDelete: PropTypes.number.isRequired,
+  attemptUpdate: PropTypes.number.isRequired,
   getMembersAttempt: PropTypes.func.isRequired,
   teamid: PropTypes.number.isRequired,
   loadingMembers: PropTypes.number.isRequired,
