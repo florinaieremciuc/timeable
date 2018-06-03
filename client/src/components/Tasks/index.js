@@ -22,7 +22,7 @@ import {
   isAttempting as loadMembers,
   getItems as getMembers,
 } from '../../State/Users/team/reducer';
-import { getTeam, userPropType } from '../../State/Users/login/reducers';
+import { getTeam, getRole, userPropType } from '../../State/Users/login/reducers';
 
 import './style.css';
 
@@ -38,7 +38,7 @@ class Tasks extends React.Component {
   }
   render() {
     const {
-      modalVisible, match, members, loadingMembers, tasks,
+      modalVisible, match, members, loadingMembers, tasks, role,
     } = this.props;
     const tasksToList = tasks.filter(task => task.project === Number(match.params.projectid));
 
@@ -62,7 +62,7 @@ class Tasks extends React.Component {
             loadMembers={loadingMembers}
           />
         </Container>
-        <AddTask project={this.props.match.params.projectid} />
+        {role === 'teamlead' ? <AddTask project={this.props.match.params.projectid} /> : null}
       </Container>
     );
   }
@@ -78,6 +78,7 @@ const mapStateToProps = state => ({
   attemptUpdate: isAttemptingAssignee(state.updateTask),
   members: getMembers(state.members),
   teamid: getTeam(state.user),
+  role: getRole(state.user),
 });
 export default connect(mapStateToProps, {
   openModal,
@@ -100,6 +101,7 @@ Tasks.propTypes = {
   attemptUpdate: PropTypes.number.isRequired,
   getMembersAttempt: PropTypes.func.isRequired,
   teamid: PropTypes.number.isRequired,
+  role: PropTypes.string.isRequired,
   loadingMembers: PropTypes.number.isRequired,
   members: PropTypes.arrayOf(userPropType).isRequired,
 };

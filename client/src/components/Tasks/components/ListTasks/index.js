@@ -8,7 +8,7 @@ import { deleteTaskAttempt } from '../../../../State/Tasks/delete/actions';
 import { updateAssigneeAttempt } from '../../../../State/Tasks/update/actions';
 
 import { taskPropType } from '../../../../State/Tasks/create/reducer';
-import { userPropType } from '../../../../State/Users/login/reducers';
+import { userPropType, getRole } from '../../../../State/Users/login/reducers';
 
 import './style.css';
 
@@ -34,10 +34,6 @@ class ListTasks extends React.Component {
   }
   constructor(props) {
     super(props);
-    this.state = {
-      // wantToDelete: false,
-      // toDelete: null,
-    };
     this.getAssignee = this.getAssignee.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.deleteTask = this.deleteTask.bind(this);
@@ -49,33 +45,37 @@ class ListTasks extends React.Component {
   handleChange(e, { value }, id) {
     this.props.updateAssigneeAttempt(id, value);
   }
+  dropdown(task) {
+    const { role, members } = this.props;
+    if (role === 'teamlead') {
+      const options = [];
+      members.map((member, i) => {
+        const option = {};
+        option.key = i;
+        option.text = member.first_name + ' ' + member.last_name + ' (' + member.role + ')';
+        option.value = member.id;
+        options.push(option);
+        return null;
+      });
+
+      return (
+        <Dropdown
+          onChange={(e, { value, text }) => this.handleChange(e, { value, text }, task.id)}
+          options={options}
+          placeholder="Choose an option"
+          selection
+        />
+      );
+    }
+    return <Label>None</Label>;
+  }
   deleteTask(id) {
-    // this.setState({ wantToDelete: true, toDelete: id });
     _.remove(this.props.tasks, task => task.id !== id);
-    // console.log('out', _.filter(this.props.tasks, task => task.id !== id));
-    // console.log('tasks', this.props.tasks);
     this.props.deleteTaskAttempt(id);
   }
 
   render() {
-    // console.log('props din list', this.props);
-    // const tasks = this.props.tasks.slice();
-    // tasks.slice(this.props.tasks);
-    // if (this.state.wantToDelete) {
-    //   _.remove(this.props.tasks, task => task.id === this.state.toDelete);
-    //   this.setState({ wantToDelete: false, toDelete: null });
-    // }
-
-    // const options = this.props.loadMembers === 0 && this.props.members.slice();
-    const options = [];
-    this.props.members.map((member, i) => {
-      const option = {};
-      option.key = i;
-      option.text = member.first_name + ' ' + member.last_name + ' (' + member.role + ')';
-      option.value = member.id;
-      options.push(option);
-      return null;
-    });
+    const { role } = this.props;
 
     return (
       <Segment inverted>
@@ -104,17 +104,12 @@ class ListTasks extends React.Component {
                           ')'}
                     </Label>
                   ) : (
-                    <Dropdown
-                      onChange={(e, { value, text }) =>
-                        this.handleChange(e, { value, text }, task.id)
-                      }
-                      options={options}
-                      placeholder="Choose an option"
-                      selection
-                    />
+                    this.dropdown(task)
                   )}
                 </div>
-                <Icon size="large" name="trash" onClick={() => this.deleteTask(task.id)} />
+                {role === 'teamlead' ? (
+                  <Icon size="large" name="trash" onClick={() => this.deleteTask(task.id)} />
+                ) : null}
               </List.Item>
             ))}
           </List>
@@ -125,9 +120,13 @@ class ListTasks extends React.Component {
     );
   }
 }
-export default connect(null, { deleteTaskAttempt, updateAssigneeAttempt })(ListTasks);
+const mapStateToProps = state => ({
+  role: getRole(state.user),
+});
+export default connect(mapStateToProps, { deleteTaskAttempt, updateAssigneeAttempt })(ListTasks);
 
 ListTasks.propTypes = {
+  role: PropTypes.string.isRequired,
   deleteTaskAttempt: PropTypes.func.isRequired,
   updateAssigneeAttempt: PropTypes.func.isRequired,
   members: PropTypes.arrayOf(userPropType).isRequired,

@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 import { deleteProjectAttempt } from '../../../../State/Projects/delete/actions';
+import { isAttempting as isAttemptingDelete } from '../../../../State/Projects/delete/reducer';
 import {
   getData,
   isAttempting as projectLoading,
@@ -18,19 +19,25 @@ import { getTeam, getRole } from '../../../../State/Users/login/reducers';
 import './style.css';
 
 class Projects extends React.Component {
+  constructor(props) {
+    super(props);
+    this.delete = this.delete.bind(this);
+  }
+
   componentWillMount() {
     this.props.getProjectsAttempt(this.props.teamid);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!_.isNil(nextProps.project) && _.isNil(nextProps.project.id)) {
+    console.log('next props', nextProps);
+    if ((!_.isNil(nextProps.project) && _.isNil(nextProps.project.id)) || nextProps.loadDelete) {
       nextProps.getProjectsAttempt(nextProps.teamid);
     }
   }
 
   delete(id) {
-    this.props.deleteProjectAttempt(id);
     _.remove(this.props.projects, project => project.id === id);
+    this.props.deleteProjectAttempt(id);
   }
 
   render() {
@@ -52,7 +59,9 @@ class Projects extends React.Component {
                 <Card key={project.id}>
                   <Card.Header>
                     <Header content={project.name} />
-                    <Icon size="big" name="trash" onClick={() => this.delete(project.id)} />
+                    {role === 'teamlead' ? (
+                      <Icon size="big" name="trash" onClick={() => this.delete(project.id)} />
+                    ) : null}
                   </Card.Header>
                   <Card.Content extra>
                     <Icon name="calendar outline" />
@@ -76,6 +85,7 @@ class Projects extends React.Component {
 const mapStateToProps = state => ({
   project: getData(state.project),
   loadingProject: projectLoading(state.project),
+  loadDelete: isAttemptingDelete(state.deleteProject),
   loading: isAttempting(state.projects),
   projects: getItems(state.projects),
   teamid: getTeam(state.user),
@@ -88,6 +98,7 @@ Projects.propTypes = {
   projects: PropTypes.arrayOf(projectsPropType).isRequired,
   getProjectsAttempt: PropTypes.func.isRequired,
   deleteProjectAttempt: PropTypes.func.isRequired,
+  loadDelete: PropTypes.number.isRequired,
   teamid: PropTypes.number.isRequired,
   role: PropTypes.string.isRequired,
 };
