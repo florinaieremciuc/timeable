@@ -24,7 +24,7 @@ class App extends Component {
         {_.isNil(this.props.isAuthenticated) || this.props.isAuthenticated === false ? (
           <Container className="welcome">
             <h1>
-              <Icon size="large" center name="tasks" />
+              <Icon size="large" name="tasks" />
               New to Timeable?
             </h1>
             <div className="buttons">
