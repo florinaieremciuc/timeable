@@ -106,7 +106,7 @@ class RegistrationForm extends React.Component {
           control={Input}
           name="username"
           type="text"
-          placeholder="Username"
+          placeholder="Username *"
           onChange={event => this.handleChangeUsername(event)}
           required
         />
@@ -115,7 +115,7 @@ class RegistrationForm extends React.Component {
           control={Input}
           name="firstname"
           type="text"
-          placeholder="First name"
+          placeholder="First name *"
           onChange={event => this.handleChangeFirstName(event)}
           required
         />
@@ -124,7 +124,7 @@ class RegistrationForm extends React.Component {
           control={Input}
           name="lastname"
           type="text"
-          placeholder="Last name"
+          placeholder="Last name *"
           onChange={event => this.handleChangeLastName(event)}
           required
         />
@@ -134,7 +134,7 @@ class RegistrationForm extends React.Component {
             control={Input}
             name="email"
             type="email"
-            placeholder="Email address"
+            placeholder="Email address *"
             onChange={event => this.handleChangeEmail(event)}
             required
           />
@@ -144,7 +144,7 @@ class RegistrationForm extends React.Component {
           control={Input}
           name="phone"
           type="text"
-          placeholder="Phone number"
+          placeholder="Phone number *"
           onChange={event => this.handleChangePhone(event)}
           required
         />
@@ -153,7 +153,7 @@ class RegistrationForm extends React.Component {
           control={Input}
           name="password"
           type="password"
-          placeholder="Password"
+          placeholder="Password *"
           onChange={event => this.handleChangePassword(event)}
           required
         />
@@ -162,7 +162,7 @@ class RegistrationForm extends React.Component {
           control={Input}
           name="confirmpass"
           type="password"
-          placeholder="Confirm password"
+          placeholder="Confirm password *"
           onChange={event => this.handleChangeConfirmPassword(event)}
           required
         />
@@ -178,7 +178,10 @@ class RegistrationForm extends React.Component {
     );
   }
 }
-export default connect(null, { registerAttempt })(RegistrationForm);
+export default connect(
+  null,
+  { registerAttempt },
+)(RegistrationForm);
 RegistrationForm.propTypes = {
   params: PropTypes.shape({
     role: PropTypes.string,
