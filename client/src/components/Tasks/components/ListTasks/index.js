@@ -78,7 +78,7 @@ class ListTasks extends React.Component {
     const { role } = this.props;
 
     return (
-      <Segment inverted>
+      <Segment inverted className="tasks-list">
         {this.props.tasks.length > 0 ? (
           <List divided inverted relaxed>
             {this.props.tasks.map(task => (
