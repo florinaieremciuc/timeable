@@ -28,8 +28,8 @@ export const createTask = (name, description, estimate, priority, status, projec
 /**
  * Call API to get assigned tasks.
  */
-export const getAssignedTasks = () =>
-  fetch(`${config.API_URL}/tasks`, {
+export const getAssignedTasks = teamid =>
+  fetch(`${config.API_URL}/tasks/assigned/${teamid}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

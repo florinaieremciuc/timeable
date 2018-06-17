@@ -5,9 +5,9 @@ const router = express.Router();
 const tasksController = require('../controllers/tasks');
 
 /* GET assigned tasks */
-router.get('/', (req, res) => {
+router.get('/assigned/:teamid', (req, res) => {
   tasksController
-    .getAssigned()
+    .getAssigned(req.params.teamid)
     .then(tasks => res.send(tasks))
     .catch(err => res.send(err));
 });
@@ -29,9 +29,9 @@ router.get('/:id', (req, res) => {
 });
 
 /* GET unassigned tasks */
-router.get('/not_assigned', (req, res) => {
+router.get('/not_assigned/:teamid', (req, res) => {
   tasksController
-    .getUnassigned()
+    .getUnassigned(req.params.teamid)
     .then(tasks => res.send(tasks))
     .catch(err => res.send(err));
 });

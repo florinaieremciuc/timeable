@@ -23,9 +23,11 @@ module.exports = {
         return tasks;
       });
   },
-  getAssigned() {
-    console.log('Get tasks that have been assigned to anyone');
+  getAssigned(teamid) {
+    console.log(`Get tasks that have been assigned to anyone, from team ${teamid}`);
     return knex('tasks')
+      .innerJoin('users', 'tasks.assignee', 'users.id')
+      .where('users.team', teamid)
       .whereNotNull('assignee')
       .then((tasks) => {
         if (!tasks || tasks.length === 0) return { error: 'No tasks assigned' };
