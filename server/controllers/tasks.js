@@ -21,18 +21,19 @@ module.exports = {
       .then((tasks) => {
         if (!tasks) return { error: 'There are no tasks here' };
         return tasks;
-      });
+      })
+      .catch(error => error);
   },
   getAssigned(teamid) {
     console.log(`Get tasks that have been assigned to anyone, from team ${teamid}`);
     return knex('tasks')
       .innerJoin('users', 'tasks.assignee', 'users.id')
       .where('users.team', teamid)
-      .whereNotNull('assignee')
       .then((tasks) => {
         if (!tasks || tasks.length === 0) return { error: 'No tasks assigned' };
         return tasks;
-      });
+      })
+      .catch(error => error);
   },
   getUnassigned() {
     console.log('Get tasks that have not been assigned to ppl');
