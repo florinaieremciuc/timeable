@@ -31,7 +31,7 @@ class App extends Component {
               <Link to="/new_team">
                 <Button> Create a team </Button>
               </Link>
-              <h2>or log in and yadayada:</h2>
+              <h2>or log in and start working on your projects:</h2>
               <Link to="/login">
                 <Label size="large">Login</Label>
               </Link>
