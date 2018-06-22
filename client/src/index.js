@@ -26,14 +26,14 @@ ReactDOM.render(
         <div>
           <Switch>
             <Route exact path="/" component={App} />
+            <Route exact path="/projects" component={App} />
+            <Route exact path="/teams" component={App} />
+            <Route exact path="/events" component={App} />
             <Route exact path="/new_team" component={NewTeam} />
             <Route exact path="/new_user/:teamId/:role" component={Register} />
             <Route path="/new_user/:teamId/:role/:encryptEmail" component={Register} />
             <Route exact path="/new_user/:teamId" component={Register} />
             <Route exact path="/login" component={Login} />
-            <Route exact path="/projects" component={App} />
-            <Route exact path="/teams" component={App} />
-            <Route exact path="/events" component={App} />
             <Route exact path="/profile/:userId" component={Profile} />
             <ModalRoute exact path="/tasks/:projectid" component={Tasks} parentPath="/" />
             <ModalRoute exact path="/projects/new" component={CreateProject} parentPath="/" />
