@@ -23,11 +23,13 @@ class CreateProject extends React.Component {
       description: null,
       deadline: null,
       team: null,
+      startDate: null,
       redirect: false,
     };
 
     this.handleChangeName = this.handleChangeName.bind(this);
     this.handleChangeDescription = this.handleChangeDescription.bind(this);
+    this.handleChangeStartDate = this.handleChangeStartDate.bind(this);
     this.handleChangeDeadline = this.handleChangeDeadline.bind(this);
 
     this.submit = this.submit.bind(this);
@@ -45,17 +47,20 @@ class CreateProject extends React.Component {
   handleChangeDescription(text) {
     this.setState({ description: text.target.value });
   }
+  handleChangeStartDate(date) {
+    this.setState({ startDate: date });
+  }
   handleChangeDeadline(date) {
     this.setState({ deadline: date });
   }
 
   async submit() {
     const {
-      name, description, deadline, team,
+      name, description, deadline, team, startDate,
     } = this.state;
     if (!_.isNil(this.state.name) && !_.isNil(this.state.deadline)) {
       this.setState({ redirect: !this.state.redirect });
-      await this.props.createProjectAttempt(name, description, deadline, team);
+      await this.props.createProjectAttempt(name, description, deadline, team, startDate);
     }
   }
   render() {
@@ -91,10 +96,18 @@ class CreateProject extends React.Component {
           />
           <DatePicker
             required
+            id="startDate"
+            selected={this.state.startDate}
+            onChange={this.handleChangeStartDate}
+            minDate={moment()}
+            placeholderText="Select the start date - optional"
+          />
+          <DatePicker
+            required
             id="deadline"
             selected={this.state.deadline}
             onChange={this.handleChangeDeadline}
-            minDate={moment()}
+            minDate={_.isNil(this.state.startDate) ? moment() : this.state.startDate}
             placeholderText="Select the deadline *"
           />
           <Form.Field
@@ -115,7 +128,10 @@ const mapStateToProps = state => ({
   newproject: getData(state.project),
   team: getTeam(state.user),
 });
-export default connect(mapStateToProps, { createProjectAttempt })(CreateProject);
+export default connect(
+  mapStateToProps,
+  { createProjectAttempt },
+)(CreateProject);
 
 CreateProject.propTypes = {
   createProjectAttempt: PropTypes.func.isRequired,

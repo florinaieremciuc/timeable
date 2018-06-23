@@ -162,7 +162,7 @@ a {
     flex-direction: column; }
     .tasks .ui.form .fields .field {
       padding: 10px; }
-      .tasks .ui.form .fields .field + div {
+      .tasks .ui.form .fields .field ~ div {
         padding: 10px; }
       .tasks .ui.form .fields .field.submit {
         padding: 10px; }
