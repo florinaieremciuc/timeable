@@ -7,12 +7,13 @@ import config from './../config';
  * @param {String} deadline
  * @param {Number} team
  */
-export const createProject = (name, description, deadline, team) => {
+export const createProject = (name, description, deadline, team, startDate) => {
   const params = {
     name,
     description,
     deadline,
     team,
+    startDate,
   };
   return fetch(`${config.API_URL}/projects/create_project`, {
     method: 'POST',
