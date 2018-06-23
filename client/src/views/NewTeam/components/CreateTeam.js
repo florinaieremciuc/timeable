@@ -26,8 +26,11 @@ class CreateTeamForm extends React.Component {
     }
   }
 
-  handleChangeName(text) {
-    this.setState({ name: text.target.value });
+  handleChangeName(event) {
+    const { value } = event.target;
+    this.setState({
+      name: value[0] && value[0].search(/\s/g) === -1 ? value : '',
+    });
   }
 
   async submit() {
@@ -48,6 +51,7 @@ class CreateTeamForm extends React.Component {
             name="name"
             type="text"
             placeholder="Name *"
+            value={this.state.name}
             onChange={event => this.handleChangeName(event)}
             required
           />
@@ -68,7 +72,10 @@ class CreateTeamForm extends React.Component {
 const mapStateToProps = state => ({
   newteam: getTeam(state.team),
 });
-export default connect(mapStateToProps, { createTeamAttempt })(CreateTeamForm);
+export default connect(
+  mapStateToProps,
+  { createTeamAttempt },
+)(CreateTeamForm);
 
 CreateTeamForm.propTypes = {
   newteam: newTeamPropType,
