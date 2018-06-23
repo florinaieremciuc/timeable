@@ -153,3 +153,5 @@ a {
 
 .dashboard {
   height: 100vh; }
+  .dashboard .pushable {
+    height: unset; }

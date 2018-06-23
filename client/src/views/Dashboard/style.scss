@@ -2,4 +2,7 @@
 
 .dashboard {
   height: 100vh;
+  .pushable {
+    height: unset;
+  }
 }
