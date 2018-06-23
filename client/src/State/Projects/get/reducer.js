@@ -1,18 +1,9 @@
-import PropTypes from 'prop-types';
 import { combineReducers } from 'redux';
 import Immutable from 'seamless-immutable';
 import _ from 'lodash';
 
 import * as types from './actions';
 import { LOGOUT } from '../../Users/login/actions';
-
-export const projectsPropType = PropTypes.shape({
-  id: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  description: PropTypes.string,
-  deadline: PropTypes.string.isRequired,
-  team: PropTypes.number.isRequired,
-});
 
 export const INITIAL_STATE = Immutable({
   items: [],

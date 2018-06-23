@@ -7,15 +7,22 @@ import { createProject } from '../../../services/Projects';
  * @param {*} Action payload that contains the `name` field
  */
 export default function* createProjectSaga({
-  name, description, deadline, team,
+  name, description, deadline, team, startDate,
 }) {
   try {
-    const response = yield call(createProject, name.toLowerCase(), description, deadline, team);
+    const response = yield call(
+      createProject,
+      name.toLowerCase(),
+      description,
+      deadline,
+      team,
+      startDate,
+    );
     // verify if the authentication was successful
     if (response && response.errno) {
       yield put(createProjectFailure(response));
     } else if (response && response[0]) {
-      yield put(createProjectSuccess(response[0], name, description, deadline, team));
+      yield put(createProjectSuccess(response[0], name, description, deadline, team, startDate));
     } else {
       yield put(createProjectFailure('Unable to log in, please contact support.'));
     }

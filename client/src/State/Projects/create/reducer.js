@@ -3,12 +3,13 @@ import { combineReducers } from 'redux';
 import Immutable from 'seamless-immutable';
 import * as types from './actions';
 
-export const newProjectPropType = PropTypes.shape({
+export const projectPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   description: PropTypes.string,
   deadline: PropTypes.string.isRequired,
   team: PropTypes.number.isRequired,
+  startDate: PropTypes.string.isRequired,
 });
 
 export const INITIAL_STATE = Immutable({
@@ -18,6 +19,7 @@ export const INITIAL_STATE = Immutable({
     description: null,
     deadline: null,
     team: null,
+    startDate: null,
   },
   sync: {
     attempting: 0,
@@ -40,6 +42,7 @@ const data = (state = INITIAL_STATE.data, action) => {
       description: null,
       deadline: action.deadline,
       team: action.team,
+      startDate: action.startDate,
     };
     if (action.description) {
       newProjectData.description = action.description;
