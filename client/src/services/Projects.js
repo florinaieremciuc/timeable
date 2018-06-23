@@ -29,7 +29,19 @@ export const createProject = (name, description, deadline, team, startDate) => {
  * @param {Number} teamid
  */
 export const getProjects = teamid =>
-  fetch(`${config.API_URL}/projects/${teamid}`, {
+  fetch(`${config.API_URL}/projects/team/${teamid}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).then(response => response.json());
+
+/**
+ * Call API to get a non-teamlead user's projects.
+ * @param {Number} teamid
+ */
+export const getUserProjects = userId =>
+  fetch(`${config.API_URL}/projects/user/${userId}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -51,5 +63,6 @@ export const deleteProject = id =>
 export default {
   createProject,
   getProjects,
+  getUserProjects,
   deleteProject,
 };

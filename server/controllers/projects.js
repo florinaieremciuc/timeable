@@ -22,6 +22,13 @@ module.exports = {
         return projects;
       });
   },
+  getUserProjects(userId) {
+    console.log(`Get user's ${userId} projects list`);
+    return knex('projects')
+      .join('tasks', 'projects.id', 'tasks.project')
+      .where('tasks.assignee', userId)
+      .groupBy('projects.name');
+  },
   getOne(id) {
     console.log(`Get project w id ${id}`);
     return knex('projects')

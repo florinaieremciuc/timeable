@@ -5,9 +5,17 @@ const router = express.Router();
 const projectsController = require('../controllers/projects');
 
 /* GET list of projects from a team. */
-router.get('/:teamid', (req, res) => {
+router.get('/team/:teamid', (req, res) => {
   projectsController
     .getAll(req.params.teamid)
+    .then(projects => res.send(projects))
+    .catch(err => res.send(err));
+});
+
+/* GET projects related to non-teamlead users */
+router.get('/user/:userId', (req, res) => {
+  projectsController
+    .getUserProjects(req.params.userId)
     .then(projects => res.send(projects))
     .catch(err => res.send(err));
 });

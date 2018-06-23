@@ -23,6 +23,9 @@ const items = (state = INITIAL_STATE.items, action) => {
   case types.GET_PROJECTS_REQUEST: {
     return state;
   }
+  case types.GET_USER_PROJECTS_REQUEST: {
+    return state;
+  }
   case types.GET_PROJECTS_SUCCESS: {
     if (Array.isArray(action.projects)) {
       return _.unionBy(state, action.projects, 'id');
@@ -45,6 +48,11 @@ const items = (state = INITIAL_STATE.items, action) => {
 const sync = (state = INITIAL_STATE.sync, action) => {
   switch (action.type) {
   case types.GET_PROJECTS_REQUEST:
+    return {
+      attempting: 1,
+      error: null,
+    };
+  case types.GET_USER_PROJECTS_REQUEST:
     return {
       attempting: 1,
       error: null,
