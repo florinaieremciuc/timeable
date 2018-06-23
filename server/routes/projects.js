@@ -28,6 +28,7 @@ router.post('/create_project', (req, res) => {
       description: req.body.description,
       deadline: req.body.deadline,
       team: req.body.team,
+      startDate: req.body.startDate,
     })
     .then(project => res.send(project))
     .catch(err => res.send(err));

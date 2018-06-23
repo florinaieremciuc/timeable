@@ -2,7 +2,7 @@ const knex = require('knex')(require('../knexfile'));
 
 module.exports = {
   create({
-    name, description, deadline, team,
+    name, description, deadline, team, startDate,
   }) {
     console.log(`Add project ${name}`);
     return knex('projects').insert({
@@ -10,6 +10,7 @@ module.exports = {
       description,
       deadline,
       team,
+      startDate,
     });
   },
   getAll(teamid) {
