@@ -163,7 +163,7 @@ a {
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
-    justify-content: space-between; }
+    justify-content: space-around; }
     .projects .ui.container.projects-list .ui.card .header {
       display: flex;
       justify-content: center;

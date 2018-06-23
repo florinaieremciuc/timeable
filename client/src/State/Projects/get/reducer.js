@@ -27,10 +27,7 @@ const items = (state = INITIAL_STATE.items, action) => {
     return state;
   }
   case types.GET_PROJECTS_SUCCESS: {
-    if (Array.isArray(action.projects)) {
-      return _.unionBy(state, action.projects, 'id');
-    }
-    return _.unionBy(state, [action.projects], 'id');
+    return action.projects;
   }
   case types.GET_PROJECTS_FAILURE:
   case LOGOUT:

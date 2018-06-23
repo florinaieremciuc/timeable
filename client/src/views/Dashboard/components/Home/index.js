@@ -4,17 +4,21 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import Moment from 'react-moment';
 
 import { deleteProjectAttempt } from '../../../../State/Projects/delete/actions';
 import { isAttempting as isAttemptingDelete } from '../../../../State/Projects/delete/reducer';
 import {
   getData,
   isAttempting as projectLoading,
-  newProjectPropType,
+  projectPropType,
 } from '../../../../State/Projects/create/reducer';
-import { getItems, isAttempting, projectsPropType } from '../../../../State/Projects/get/reducer';
-import { getProjectsAttempt } from '../../../../State/Projects/get/actions';
-import { getTeam, getRole } from '../../../../State/Users/login/reducers';
+import { getItems, isAttempting } from '../../../../State/Projects/get/reducer';
+import {
+  getProjectsAttempt,
+  getUsersProjectsAttempt,
+} from '../../../../State/Projects/get/actions';
+import { getTeam, getRole, getUserId } from '../../../../State/Users/login/reducers';
 
 import './style.css';
 
@@ -25,11 +29,15 @@ class Projects extends React.Component {
   }
 
   componentWillMount() {
-    this.props.getProjectsAttempt(this.props.teamid);
+    const { role, teamid, user } = this.props;
+    if (role === 'teamlead') {
+      this.props.getProjectsAttempt(teamid);
+    } else {
+      this.props.getUsersProjectsAttempt(user);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('next props', nextProps);
     if ((!_.isNil(nextProps.project) && _.isNil(nextProps.project.id)) || nextProps.loadDelete) {
       nextProps.getProjectsAttempt(nextProps.teamid);
     }
@@ -64,8 +72,14 @@ class Projects extends React.Component {
                     ) : null}
                   </Card.Header>
                   <Card.Content extra>
-                    <Icon name="calendar outline" />
-                    {project.deadline}
+                    {project.startDate ? (
+                      <div>
+                        <Icon name="calendar check outline" />
+                        <Moment format="YYYY-MM-DD">{project.startDate}</Moment>
+                      </div>
+                    ) : null}
+                    <Icon name="calendar times outline" />
+                    <Moment format="YYYY-MM-DD">{project.deadline}</Moment>
                   </Card.Content>
                   <Card.Content description={project.description}>
                     <Link to={`/tasks/${project.id}`}>
@@ -88,17 +102,23 @@ const mapStateToProps = state => ({
   loadDelete: isAttemptingDelete(state.deleteProject),
   loading: isAttempting(state.projects),
   projects: getItems(state.projects),
+  user: getUserId(state.user),
   teamid: getTeam(state.user),
   role: getRole(state.user),
 });
-export default connect(mapStateToProps, { getProjectsAttempt, deleteProjectAttempt })(Projects);
+export default connect(
+  mapStateToProps,
+  { getProjectsAttempt, getUsersProjectsAttempt, deleteProjectAttempt },
+)(Projects);
 
 Projects.propTypes = {
-  project: newProjectPropType,
-  projects: PropTypes.arrayOf(projectsPropType).isRequired,
+  project: projectPropType,
+  projects: PropTypes.arrayOf(projectPropType).isRequired,
   getProjectsAttempt: PropTypes.func.isRequired,
+  getUsersProjectsAttempt: PropTypes.func.isRequired,
   deleteProjectAttempt: PropTypes.func.isRequired,
   loadDelete: PropTypes.number.isRequired,
+  user: PropTypes.number.isRequired,
   teamid: PropTypes.number.isRequired,
   role: PropTypes.string.isRequired,
 };

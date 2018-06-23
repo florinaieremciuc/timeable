@@ -23,7 +23,7 @@ class CreateProject extends React.Component {
       description: null,
       deadline: null,
       team: null,
-      startDate: null,
+      startDate: moment(),
       redirect: false,
     };
 

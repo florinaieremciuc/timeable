@@ -155,3 +155,5 @@ a {
   height: 100vh; }
   .dashboard .pushable {
     height: unset; }
+    .dashboard .pushable > .pusher {
+      min-height: 100vh; }
