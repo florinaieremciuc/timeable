@@ -106,7 +106,7 @@ export const updateStatus = (id, status) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(params),
-  }).then(response => response.json());
+  }).then(response => response);
 };
 
 /**
@@ -125,7 +125,7 @@ export const updateDuration = (id, duration) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(params),
-  }).then(response => response.json());
+  }).then(response => response);
 };
 
 export default {

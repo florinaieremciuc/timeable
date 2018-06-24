@@ -26,7 +26,19 @@ module.exports = {
   },
   getAssigned(teamid) {
     console.log(`Get tasks that have been assigned to anyone, from team ${teamid}`);
-    return knex('tasks')
+    return knex
+      .select(
+        'tasks.id',
+        'name',
+        'duration',
+        'description',
+        'status',
+        'priority',
+        'project',
+        'estimate',
+        'assignee',
+      )
+      .from('tasks')
       .innerJoin('users', 'tasks.assignee', 'users.id')
       .where('users.team', teamid)
       .then((tasks) => {

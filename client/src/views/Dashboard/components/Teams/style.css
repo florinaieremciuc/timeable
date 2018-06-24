@@ -163,12 +163,17 @@ a {
     .ui.container.teams .members .ui.card .ui.segment.inverted {
       background: #222;
       display: flex;
-      justify-content: flex-start; }
+      justify-content: flex-start;
+      color: #ffff !important; }
       .ui.container.teams .members .ui.card .ui.segment.inverted .ui.divided.inverted.list {
         width: 100%;
         text-align: start; }
-        .ui.container.teams .members .ui.card .ui.segment.inverted .ui.divided.inverted.list strong {
-          color: #c8c8c8 !important; }
+        .ui.container.teams .members .ui.card .ui.segment.inverted .ui.divided.inverted.list strong,
+        .ui.container.teams .members .ui.card .ui.segment.inverted .ui.divided.inverted.list .header {
+          color: #ffffff !important; }
+        .ui.container.teams .members .ui.card .ui.segment.inverted .ui.divided.inverted.list div {
+          color: #c8c8c8 !important;
+          margin-top: 2px; }
         .ui.container.teams .members .ui.card .ui.segment.inverted .ui.divided.inverted.list .item {
           justify-content: flex-start; }
           .ui.container.teams .members .ui.card .ui.segment.inverted .ui.divided.inverted.list .item .content {
@@ -178,6 +183,7 @@ a {
             text-align: start; }
   .ui.container.teams .ui.form .equal.width.fields {
     display: flex;
+    flex-direction: column;
     flex-wrap: wrap; }
     .ui.container.teams .ui.form .equal.width.fields > div {
       padding: 5px; }

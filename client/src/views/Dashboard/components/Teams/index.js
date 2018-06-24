@@ -1,6 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Container, Form, Input, Button, Select, Card, Segment, List } from 'semantic-ui-react';
+import {
+  Container,
+  Form,
+  Input,
+  Button,
+  Select,
+  Card,
+  Segment,
+  List,
+  Dropdown,
+} from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
@@ -11,6 +21,8 @@ import {
   isAttempting as loadingTasks,
 } from '../../../../State/Tasks/get/reducer';
 import { taskPropType } from '../../../../State/Tasks/create/reducer';
+
+import { updateStatusAttempt } from '../../../../State/Tasks/update/actions';
 
 import { addMembers } from '../../../../services/Teams';
 import { getMembersAttempt } from '../../../../State/Users/team/actions';
@@ -36,6 +48,21 @@ class Teams extends React.Component {
     }
   }
 
+  static selectStatus(status) {
+    switch (status) {
+    case 'to_do':
+      return 'TO DO';
+    case 'doing':
+      return 'DOING';
+    case 'testing':
+      return 'TESTING';
+    case 'DONE':
+      return 'DONE';
+    default:
+      return null;
+    }
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -53,11 +80,12 @@ class Teams extends React.Component {
 
     this.handleAddMember = this.handleAddMember.bind(this);
     this.handleChangeRole = this.handleChangeRole.bind(this);
+    this.handleChangeStatus = this.handleChangeStatus.bind(this);
     this.submit = this.submit.bind(this);
   }
 
   componentWillMount() {
-    this.props.getAssignedTasksAttempt();
+    this.props.getAssignedTasksAttempt(this.props.user.team);
     this.props.getMembersAttempt(this.props.user.team);
   }
 
@@ -130,6 +158,27 @@ class Teams extends React.Component {
     });
     this.setState({ members });
   }
+  handleChangeStatus(event, data, taskId) {
+    if (data.value) this.props.updateStatusAttempt(taskId, data.value);
+  }
+  updateStatus(taskId, status, assignee, user) {
+    if (assignee === user) {
+      return (
+        <Dropdown
+          name="update-status"
+          value={status}
+          options={[
+            { key: 0, text: 'DOING', value: 'doing' },
+            { key: 1, text: 'TESTING', value: 'testing' },
+            { key: 2, text: 'DONE', value: 'done' },
+          ]}
+          onChange={(event, data) => this.handleChangeStatus(event, data, taskId)}
+          required
+        />
+      );
+    }
+    return <div>{Teams.selectStatus(status)}</div>;
+  }
 
   async submit() {
     const { user } = this.props;
@@ -172,7 +221,8 @@ class Teams extends React.Component {
                           <List.Icon name={Teams.selectIcon(task)} />
                           <List.Content>
                             <List.Header>{task.name}</List.Header>
-                            {task.description}
+                            <div>{task.description}</div>
+                            <div>{this.updateStatus(task.id, task.status, task.assignee, user.id)}</div>
                           </List.Content>
                         </List.Item>
                       ))}
@@ -189,7 +239,6 @@ class Teams extends React.Component {
         {user.role === 'teamlead' && (
           <Form onSubmit={this.submit}>
             <Form.Group widths="equal">
-              {this.inputs()}
               <Form.Field
                 control={Button}
                 content="Add member"
@@ -210,6 +259,7 @@ class Teams extends React.Component {
                 compact
                 onClick={this.submit}
               />
+              {this.inputs()}
             </Form.Group>
           </Form>
         )}
@@ -224,12 +274,17 @@ const mapStateToProps = state => ({
   teamMembers: getMembers(state.members),
   user: getUser(state.user),
 });
-export default connect(mapStateToProps, { getMembersAttempt, getAssignedTasksAttempt })(Teams);
+export default connect(mapStateToProps, {
+  getMembersAttempt,
+  getAssignedTasksAttempt,
+  updateStatusAttempt,
+})(Teams);
 
 Teams.propTypes = {
   tasks: PropTypes.arrayOf(taskPropType).isRequired,
   user: userPropType.isRequired,
   getMembersAttempt: PropTypes.func.isRequired,
   getAssignedTasksAttempt: PropTypes.func.isRequired,
+  updateStatusAttempt: PropTypes.func.isRequired,
   teamMembers: PropTypes.arrayOf(userPropType).isRequired,
 };

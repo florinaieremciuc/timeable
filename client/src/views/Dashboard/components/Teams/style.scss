@@ -15,11 +15,17 @@
         background: $header-bg-color;
         display: flex;
         justify-content: flex-start;
+        color: #ffff !important;
         .ui.divided.inverted.list {
           width: 100%;
           text-align: start;
-          strong {
+          strong,
+          .header {
+            color: $color-white !important;
+          }
+          div {
             color: $header-text-color !important;
+            margin-top: $base-spacing-xxs;
           }
           .item {
             justify-content: flex-start;
@@ -37,6 +43,7 @@
   .ui.form {
     .equal.width.fields {
       display: flex;
+      flex-direction: column;
       flex-wrap: wrap;
       > div {
         padding: $base-spacing-xs;

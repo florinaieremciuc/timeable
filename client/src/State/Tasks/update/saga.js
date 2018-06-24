@@ -32,8 +32,8 @@ export function* updateStatusSaga({ id, status }) {
     const response = yield call(updateStatus, id, status);
     if (response && response.errno) {
       yield put(updateStatusFailure(response));
-    } else if (response && response[0]) {
-      yield put(updateStatusSuccess(response[0]));
+    } else if (response && response.ok) {
+      yield put(updateStatusSuccess(response.ok));
     } else {
       yield put(updateStatusFailure('Unable to update task, please contact support.'));
     }

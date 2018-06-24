@@ -23,16 +23,16 @@ export const UPDATE_STATUS_SUCCESS = 'UPDATE_STATUS_SUCCESS';
 export const UPDATE_STATUS_FAILURE = 'UPDATE_STATUS_FAILURE';
 
 export const updateStatusAttempt = (id, status) => ({
-  type: UPDATE_ASSIGNEE_REQUEST,
+  type: UPDATE_STATUS_REQUEST,
   id,
   status,
 });
 export const updateStatusSuccess = success => ({
-  type: UPDATE_ASSIGNEE_SUCCESS,
+  type: UPDATE_STATUS_SUCCESS,
   success,
 });
 export const updateStatusFailure = error => ({
-  type: UPDATE_ASSIGNEE_FAILURE,
+  type: UPDATE_STATUS_FAILURE,
   error,
 });
 
@@ -42,15 +42,15 @@ export const UPDATE_DURATION_SUCCESS = 'UPDATE_DURATION_SUCCESS';
 export const UPDATE_DURATION_FAILURE = 'UPDATE_DURATION_FAILURE';
 
 export const updateDurationAttempt = (id, duration) => ({
-  type: UPDATE_ASSIGNEE_REQUEST,
+  type: UPDATE_DURATION_REQUEST,
   id,
   duration,
 });
 export const updateDurationSuccess = success => ({
-  type: UPDATE_ASSIGNEE_SUCCESS,
+  type: UPDATE_DURATION_SUCCESS,
   success,
 });
 export const updateDurationFailure = error => ({
-  type: UPDATE_ASSIGNEE_FAILURE,
+  type: UPDATE_DURATION_FAILURE,
   error,
 });
