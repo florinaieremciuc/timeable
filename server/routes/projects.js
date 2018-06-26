@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-const projectsController = require('../controllers/projects');
+const projectsController = require('../models/projects');
 
 /* GET list of projects from a team. */
 router.get('/team/:teamid', (req, res) => {

@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-const usersController = require('../controllers/users');
+const usersController = require('../models/users');
 
 /* CREATE a user */
 router.post('/create_user', (req, res) => {

@@ -4,7 +4,7 @@ const CryptoJS = require('crypto-js'); // native node package
 const router = express.Router();
 const nodemailer = require('nodemailer');
 
-const teamsController = require('../controllers/teams');
+const teamsController = require('../models/teams');
 
 /* GET list of teams. */
 router.get('/', (req, res) => {
@@ -51,10 +51,10 @@ router.post('/add_members', (req, res) => {
         from: '"Timeable 👻" <admin@timeable.com>', // sender address
         to: email, // list of receivers
         subject: 'Join Timeable', // Subject line
-        text: 'Hello! Some douche wants you in its team. Join here: yolo/id', // plain text body
+        // text: 'Hello! Some douche wants you in its team. Join here: yolo/id', // plain text body
         html: `<h3>Hi there!</h3><br/> 
-            <p>Some douche called <b>${req.body.teamLead}</b> 
-            wants you to join their team. <br/>
+            <p><b>${req.body.teamLead}</b> 
+            wants you to join their team as a <em>${role} developer</em>. <br/>
             <a href="http://localhost:5000/new_user/${req.body.team}/${role}/${encryptEmail}">
             Click here!
             </a>.

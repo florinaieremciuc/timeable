@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-const tasksController = require('../controllers/tasks');
+const tasksController = require('../models/tasks');
 
 /* GET assigned tasks */
 router.get('/assigned/:teamid', (req, res) => {
