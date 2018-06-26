@@ -61,7 +61,6 @@ const UsersTasks = (props) => {
     return <div>{selectStatus(status)}</div>;
   };
 
-  console.log('tasks ', tasks);
   const getUserTasks = id => tasks.filter(task => task.user_id === id);
   return (
     <Card key={member.id}>
