@@ -4,14 +4,14 @@ import Immutable from 'seamless-immutable';
 import * as types from './actions';
 
 export const userPropType = PropTypes.shape({
-  id: PropTypes.number.isRequired,
-  username: PropTypes.string.isRequired,
-  firstname: PropTypes.string.isRequired,
-  lastname: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
-  phone: PropTypes.string.isRequired,
-  role: PropTypes.string.isRequired,
-  team: PropTypes.number.isRequired,
+  id: PropTypes.number,
+  username: PropTypes.string,
+  firstname: PropTypes.string,
+  lastname: PropTypes.string,
+  email: PropTypes.string,
+  phone: PropTypes.string,
+  role: PropTypes.string,
+  team: PropTypes.number,
 });
 
 export const INITIAL_STATE = Immutable({
