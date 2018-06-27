@@ -10,6 +10,11 @@ import { routerMiddleware } from 'react-router-redux';
 
 import sagas from './sagas';
 
+// CRD from risks
+import newRisk from './State/Risks/create/reducer';
+import risks from './State/Risks/get/reducer';
+import deleteRisk from './State/Risks/delete/reducer';
+
 // CRUD ops for tasks
 import updateTask from './State/Tasks/update/reducer';
 import deleteTask from './State/Tasks/delete/reducer';
@@ -36,6 +41,27 @@ import modalVisible from './components/Tasks/reducer';
 const history = createHistory();
 const defaultState = {
   modalVisible: false,
+  newRisk: {
+    data: null,
+    sync: {
+      attempting: 0,
+      error: null,
+    },
+  },
+  risks: {
+    items: [],
+    sync: {
+      attempting: 0,
+      error: null,
+    },
+  },
+  deleteRisk: {
+    sync: {
+      attempting: 0,
+      error: null,
+      success: null,
+    },
+  },
   userById: {
     item: {},
     sync: {
@@ -140,6 +166,9 @@ const rootPersistConfig = {
   storage,
   blacklist: [
     'modalVisible',
+    'newRisk',
+    'risks',
+    'deleteRisk',
     'userById',
     'updateTask',
     'deleteTask',
@@ -161,6 +190,9 @@ const persistConfig = {
 
 const rootReducer = persistCombineReducers(rootPersistConfig, {
   modalVisible,
+  newRisk,
+  risks,
+  deleteRisk,
   userById,
   updateTask,
   deleteTask,
@@ -171,7 +203,13 @@ const rootReducer = persistCombineReducers(rootPersistConfig, {
   project,
   teams,
   team,
-  registrationsStatus,
+  registrationsStatus: persistReducer(
+    {
+      key: 'registrationsStatus',
+      ...persistConfig,
+    },
+    registrationsStatus,
+  ),
   user: persistReducer(
     {
       key: 'user',
