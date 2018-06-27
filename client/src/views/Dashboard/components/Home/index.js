@@ -61,39 +61,40 @@ class Projects extends React.Component {
           </Link>
         ) : null}
         <Container className="projects-list">
-          {projects.map((project) => {
-            if (project.id) {
-              return (
-                <Card key={project.id}>
-                  <Card.Header>
-                    <Header content={project.name} />
-                    {role === 'teamlead' ? (
-                      <Icon size="big" name="trash" onClick={() => this.delete(project.id)} />
-                    ) : null}
-                  </Card.Header>
-                  <Card.Content extra>
-                    {project.startDate ? (
-                      <div>
-                        <Icon name="calendar check outline" />
-                        <Moment format="YYYY-MM-DD">{project.startDate}</Moment>
-                      </div>
-                    ) : null}
-                    <Icon name="calendar times outline" />
-                    <Moment format="YYYY-MM-DD">{project.deadline}</Moment>
-                  </Card.Content>
-                  <Card.Content description={project.description}>
-                    <Link to={`/tasks/${project.id}`}>
-                      <Button>Activity list</Button>
-                    </Link>
-                    <Link to={`/risks/${project.id}`}>
-                      <Icon name="rain" />
-                    </Link>
-                  </Card.Content>
-                </Card>
-              );
-            }
-            return null;
-          })}
+          {projects.length > 0 &&
+            projects.map((project) => {
+              if (project.id) {
+                return (
+                  <Card key={project.id}>
+                    <Card.Header>
+                      <Header content={project.name} />
+                      {role === 'teamlead' ? (
+                        <Icon size="big" name="trash" onClick={() => this.delete(project.id)} />
+                      ) : null}
+                    </Card.Header>
+                    <Card.Content extra>
+                      {project.startDate ? (
+                        <div>
+                          <Icon name="calendar check outline" />
+                          <Moment format="YYYY-MM-DD">{project.startDate}</Moment>
+                        </div>
+                      ) : null}
+                      <Icon name="calendar times outline" />
+                      <Moment format="YYYY-MM-DD">{project.deadline}</Moment>
+                    </Card.Content>
+                    <Card.Content description={project.description}>
+                      <Link to={`/tasks/${project.id}`}>
+                        <Button>Activity list</Button>
+                      </Link>
+                      <Link to={`/risks/${project.id}`}>
+                        <Icon name="rain" size="big" />
+                      </Link>
+                    </Card.Content>
+                  </Card>
+                );
+              }
+              return null;
+            })}
         </Container>
       </div>
     );

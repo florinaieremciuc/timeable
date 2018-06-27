@@ -12,12 +12,12 @@ import registerServiceWorker from './registerServiceWorker';
 import { store, persistor } from './store';
 
 import CreateProject from './components/CreateProjects';
+import Risks from './components/Risks';
 import Tasks from './components/Tasks';
 import App from './App/App';
 import NewTeam from './views/NewTeam';
 import Login from './views/Login';
 import Register from './views/Register';
-import Profile from './views/Profile';
 
 ReactDOM.render(
   <Provider store={store}>
@@ -29,13 +29,16 @@ ReactDOM.render(
             <Route exact path="/projects" component={App} />
             <Route exact path="/teams" component={App} />
             <Route exact path="/events" component={App} />
+            <Route exact path="/profile/:username" component={App} />
+
             <Route exact path="/new_team" component={NewTeam} />
             <Route exact path="/new_user/:teamId/:role" component={Register} />
             <Route path="/new_user/:teamId/:role/:encryptEmail" component={Register} />
             <Route exact path="/new_user/:teamId" component={Register} />
             <Route exact path="/login" component={Login} />
-            <Route exact path="/profile/:userId" component={Profile} />
+
             <ModalRoute exact path="/tasks/:projectid" component={Tasks} parentPath="/" />
+            <ModalRoute exact path="/risks/:projectid" component={Risks} parentPath="/" />
             <ModalRoute exact path="/projects/new" component={CreateProject} parentPath="/" />
           </Switch>
           <ModalContainer containerClassName="react-router-modal__container tasks" />
