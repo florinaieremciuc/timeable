@@ -79,10 +79,13 @@ class Projects extends React.Component {
                           <Moment format="YYYY-MM-DD">{project.startDate}</Moment>
                         </div>
                       ) : null}
-                      <Icon name="calendar times outline" />
-                      <Moment format="YYYY-MM-DD">{project.deadline}</Moment>
+                      <div>
+                        <Icon name="calendar times outline" />
+                        <Moment format="YYYY-MM-DD">{project.deadline}</Moment>
+                      </div>
                     </Card.Content>
-                    <Card.Content description={project.description}>
+                    <Card.Description content={project.description} />
+                    <Card.Content>
                       <Link to={`/tasks/${project.id}`}>
                         <Button>Activity list</Button>
                       </Link>

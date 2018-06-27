@@ -175,3 +175,5 @@ a {
     .projects .ui.container.projects-list .ui.card .extra.content,
     .projects .ui.container.projects-list .ui.card .content {
       padding: 10px 0; }
+    .projects .ui.container.projects-list .ui.card .description {
+      padding: 10px; }
