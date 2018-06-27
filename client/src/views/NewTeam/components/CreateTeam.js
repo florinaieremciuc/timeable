@@ -70,7 +70,7 @@ class CreateTeamForm extends React.Component {
   }
 }
 const mapStateToProps = state => ({
-  newteam: getTeam(state.team),
+  newteam: getTeam(state.newteam),
 });
 export default connect(
   mapStateToProps,

@@ -35,8 +35,8 @@ export const addMembers = (team, teamLead, members) => {
 /**
  * Call API to get teams.
  */
-export const getTeams = () =>
-  fetch(`${config.API_URL}/teams/`, {
+export const getTeam = teamid =>
+  fetch(`${config.API_URL}/teams/${teamid}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -46,5 +46,5 @@ export const getTeams = () =>
 export default {
   createTeam,
   addMembers,
-  getTeams,
+  getTeam,
 };

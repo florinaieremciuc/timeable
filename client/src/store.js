@@ -21,14 +21,14 @@ import deleteTask from './State/Tasks/delete/reducer';
 import tasks from './State/Tasks/get/reducer';
 import newtask from './State/Tasks/create/reducer';
 
-// CRUD ops for teams
+// CRUD ops for projects
 import deleteProject from './State/Projects/delete/reducer';
 import projects from './State/Projects/get/reducer';
 import project from './State/Projects/create/reducer';
 
 // CRud ops for teams
-import teams from './State/Teams/get/reducer';
-import team from './State/Teams/create/reducer';
+import team from './State/Teams/get/reducer';
+import newteam from './State/Teams/create/reducer';
 
 // ops for user
 import registrationsStatus from './State/Users/register/reducers';
@@ -125,14 +125,14 @@ const defaultState = {
       error: null,
     },
   },
-  teams: {
+  team: {
     items: [],
     sync: {
       attempting: 0,
       error: null,
     },
   },
-  team: {
+  newteam: {
     data: null,
     sync: {
       attempting: 0,
@@ -177,8 +177,8 @@ const rootPersistConfig = {
     'deleteProject',
     'projects',
     'project',
-    'teams',
     'team',
+    'newteam',
     'registrationsStatus',
     'members',
   ],
@@ -199,10 +199,16 @@ const rootReducer = persistCombineReducers(rootPersistConfig, {
   tasks,
   newtask,
   deleteProject,
-  projects,
+  projects: persistReducer(
+    {
+      key: 'projects',
+      ...persistConfig,
+    },
+    projects,
+  ),
   project,
-  teams,
   team,
+  newteam,
   registrationsStatus: persistReducer(
     {
       key: 'registrationsStatus',
@@ -217,7 +223,13 @@ const rootReducer = persistCombineReducers(rootPersistConfig, {
     },
     user,
   ),
-  members,
+  members: persistReducer(
+    {
+      key: 'members',
+      ...persistConfig,
+    },
+    members,
+  ),
   // form: formReducer
   // registerForm: formReducer,
   // loginForm: formReducer
