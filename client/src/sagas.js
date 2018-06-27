@@ -1,5 +1,9 @@
 import { fork } from 'redux-saga/effects';
 
+import watchCreateRiskAttempt from './State/Risks/create/watcher';
+import watchGetRisksAttempt from './State/Risks/get/watcher';
+import watchDeleteRiskAttempt from './State/Risks/delete/watcher';
+
 import {
   watchUpdateAssigneeAttempt,
   watchUpdateStatusAttempt,
@@ -23,6 +27,10 @@ import watchGetUserAttempt from './State/Users/user/watcher';
 
 // start the daemons
 export default function* root() {
+  yield fork(watchCreateRiskAttempt);
+  yield fork(watchGetRisksAttempt);
+  yield fork(watchDeleteRiskAttempt);
+
   yield fork(watchUpdateDurationAttempt);
   yield fork(watchUpdateStatusAttempt);
   yield fork(watchUpdateAssigneeAttempt);
