@@ -1,0 +1,29 @@
+@import "../../../../utilities/base";
+
+.ui.inverted.segment.risks-list {
+  color: $header-text-color !important;
+  background: $header-bg-color;
+  margin: $base-spacing 0;
+  .ui.list {
+    .item {
+      display: flex;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: $base-spacing-xsm 0;
+      .content,
+      .header {
+        color: $header-text-color !important;
+      }
+      .risk-details {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        color: $header-text-color !important;
+        .content {
+          margin: 0 $base-spacing-xmd;
+        }
+      }
+    }
+  }
+}
