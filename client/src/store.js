@@ -36,13 +36,13 @@ import user from './State/Users/login/reducers';
 import members from './State/Users/team/reducer';
 import userById from './State/Users/user/reducer';
 
-import modalVisible from './components/Tasks/reducer';
+import modalVisible from './components/Modal/reducer';
 
 const history = createHistory();
 const defaultState = {
   modalVisible: false,
   newRisk: {
-    data: null,
+    data: {},
     sync: {
       attempting: 0,
       error: null,
