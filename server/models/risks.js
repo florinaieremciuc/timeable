@@ -5,7 +5,7 @@ module.exports = {
     description, category, probability, impact, response, project,
   }) {
     console.log(`Add risk ${description}`);
-    return knex('tasks').insert({
+    return knex('risks').insert({
       description,
       category,
       probability,
@@ -39,7 +39,7 @@ module.exports = {
   },
   delete(id) {
     console.log(`Delete risk w id ${id}`);
-    return knex('risk')
+    return knex('risks')
       .where('id', id)
       .del();
   },
