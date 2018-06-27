@@ -2,11 +2,11 @@ const express = require('express');
 
 const router = express.Router();
 
-const usersController = require('../models/users');
+const usersModel = require('../models/users');
 
 /* CREATE a user */
 router.post('/create_user', (req, res) => {
-  usersController
+  usersModel
     .createUser({
       username: req.body.username,
       password: req.body.password,
@@ -29,7 +29,7 @@ router.post('/create_user', (req, res) => {
 
 /* GET team members */
 router.get('/team/:teamid', (req, res) => {
-  usersController
+  usersModel
     .getTeam(req.params.teamid)
     .then(members => res.send({ members }))
     .catch((err) => {
@@ -40,7 +40,7 @@ router.get('/team/:teamid', (req, res) => {
 
 /* GET all users */
 router.get('/', (req, res) => {
-  usersController
+  usersModel
     .getAll()
     .then(response => res.send(response))
     .catch((err) => {
@@ -51,7 +51,7 @@ router.get('/', (req, res) => {
 
 /* GET a user */
 router.get('/:id', (req, res) => {
-  usersController
+  usersModel
     .getOne(req.params.id)
     .then(user => res.send({ user }))
     .catch((error) => {
@@ -62,7 +62,7 @@ router.get('/:id', (req, res) => {
 
 /* LOG in */
 router.post('/login', (req, res) => {
-  usersController
+  usersModel
     .authenticate({
       username: req.body.username,
       password: req.body.password,
@@ -78,7 +78,7 @@ router.post('/login', (req, res) => {
 
 /* UPDATE a user */
 // router.get("/update/:id/:name", (req, res) => {
-//   usersController
+//   usersModel
 //     .update(req.params.id, req.params.name)
 //     .then(
 //       // response is gt 0 if it finds an org with the given id
@@ -89,7 +89,7 @@ router.post('/login', (req, res) => {
 
 /* DELETE a user */
 router.get('/delete/:id', (req, res) => {
-  usersController
+  usersModel
     .delete(req.params.id)
     .then(() => res.sendStatus(200))
     .catch(err => console.log('Error: ', err));

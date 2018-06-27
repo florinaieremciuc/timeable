@@ -2,11 +2,11 @@ const express = require('express');
 
 const router = express.Router();
 
-const tasksController = require('../models/tasks');
+const tasksModel = require('../models/tasks');
 
 /* GET assigned tasks */
 router.get('/assigned/:teamid', (req, res) => {
-  tasksController
+  tasksModel
     .getAssigned(req.params.teamid)
     .then(tasks => res.send(tasks))
     .catch(err => res.send(err));
@@ -14,7 +14,7 @@ router.get('/assigned/:teamid', (req, res) => {
 
 /* GET list of tasks from a project. */
 router.get('/:projectid', (req, res) => {
-  tasksController
+  tasksModel
     .getAll(req.params.projectid)
     .then(tasks => res.send(tasks))
     .catch(err => res.send(err));
@@ -22,7 +22,7 @@ router.get('/:projectid', (req, res) => {
 
 /* GET a task */
 router.get('/:id', (req, res) => {
-  tasksController
+  tasksModel
     .getOne(req.params.id)
     .then(task => res.send(task))
     .catch(err => res.send(err));
@@ -30,7 +30,7 @@ router.get('/:id', (req, res) => {
 
 /* GET unassigned tasks */
 router.get('/not_assigned/:teamid', (req, res) => {
-  tasksController
+  tasksModel
     .getUnassigned(req.params.teamid)
     .then(tasks => res.send(tasks))
     .catch(err => res.send(err));
@@ -38,7 +38,7 @@ router.get('/not_assigned/:teamid', (req, res) => {
 
 /* CREATE a task */
 router.post('/add_task', (req, res) => {
-  tasksController
+  tasksModel
     .create({
       name: req.body.name,
       description: req.body.description,
@@ -55,7 +55,7 @@ router.post('/add_task', (req, res) => {
 /* UPDATE a task */
 // add assignee
 router.post('/update/assignee', (req, res) => {
-  tasksController
+  tasksModel
     .addAssignee(req.body.id, req.body.assignee)
     .then(
       // response is gt 0 if it finds a project with the given id
@@ -64,21 +64,21 @@ router.post('/update/assignee', (req, res) => {
 });
 // add duration
 router.post('/update/duration', (req, res) => {
-  tasksController
+  tasksModel
     .addDuration(req.body.id, req.body.duration)
     .then(response => (response > 0 ? res.sendStatus(200) : res.sendStatus(404)))
     .catch(err => console.log('Error: ', err));
 });
 // change status
 router.post('/update/status', (req, res) => {
-  tasksController
+  tasksModel
     .changeStatus(req.body.id, req.body.status)
     .then(response => (response > 0 ? res.sendStatus(200) : res.sendStatus(404)))
     .catch(err => console.log('Error: ', err));
 });
 // change priority
 router.post('/update/priority', (req, res) => {
-  tasksController
+  tasksModel
     .changePriority(req.body.id, req.body.priority)
     .then(response => (response > 0 ? res.sendStatus(200) : res.sendStatus(404)))
     .catch(err => console.log('Error: ', err));
@@ -86,7 +86,7 @@ router.post('/update/priority', (req, res) => {
 
 /* DELETE a project */
 router.delete('/delete/:id', (req, res) => {
-  tasksController
+  tasksModel
     .delete(req.params.id)
     .then(() => {
       res.sendStatus(200);

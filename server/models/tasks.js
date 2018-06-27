@@ -16,7 +16,10 @@ module.exports = {
   },
   getAll(projectid) {
     console.log(`Get task list from ${projectid} project`);
-    return knex('tasks')
+    return knex
+      .select('tasks.id', 'name', 'duration', 'description', 'status', 'priority', 'estimate', 'user_id', 'project')
+      .from('tasks')
+      .leftJoin('users_tasks', 'tasks.id', 'users_tasks.task_id')
       .where('project', projectid)
       .then((tasks) => {
         if (!tasks) return { error: 'There are no tasks here' };

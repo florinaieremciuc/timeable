@@ -4,11 +4,11 @@ const CryptoJS = require('crypto-js'); // native node package
 const router = express.Router();
 const nodemailer = require('nodemailer');
 
-const teamsController = require('../models/teams');
+const teamsModel = require('../models/teams');
 
 /* GET list of teams. */
 router.get('/', (req, res) => {
-  teamsController
+  teamsModel
     .getAll()
     .then(teams => res.send(teams))
     .catch(err => res.send(err));
@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 
 /* GET a team */
 router.get('/:id', (req, res) => {
-  teamsController
+  teamsModel
     .getOne(req.params.id)
     .then(team => res.send(team))
     .catch(err => res.send(err));
@@ -24,7 +24,7 @@ router.get('/:id', (req, res) => {
 
 /* CREATE a team */
 router.post('/create_team', (req, res) => {
-  teamsController
+  teamsModel
     .create({ name: req.body.name })
     .then(team => res.send(team))
     .catch(err => res.send(err));
@@ -77,7 +77,7 @@ router.post('/add_members', (req, res) => {
 // TO TEST
 /* UPDATE a team */
 router.get('/update/:id/:name', (req, res) => {
-  teamsController
+  teamsModel
     .update(req.params.id, req.params.name)
     .then(
       // response is gt 0 if it finds a team with the given id
@@ -87,7 +87,7 @@ router.get('/update/:id/:name', (req, res) => {
 
 /* DELETE a team */
 router.get('/delete/:id', (req, res) => {
-  teamsController
+  teamsModel
     .delete(req.params.id)
     .then(() => res.sendStatus(200))
     .catch(err => console.log('Error: ', err));

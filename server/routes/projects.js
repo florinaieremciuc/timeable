@@ -2,11 +2,11 @@ const express = require('express');
 
 const router = express.Router();
 
-const projectsController = require('../models/projects');
+const projectsModel = require('../models/projects');
 
 /* GET list of projects from a team. */
 router.get('/team/:teamid', (req, res) => {
-  projectsController
+  projectsModel
     .getAll(req.params.teamid)
     .then(projects => res.send(projects))
     .catch(err => res.send(err));
@@ -14,7 +14,7 @@ router.get('/team/:teamid', (req, res) => {
 
 /* GET projects related to non-teamlead users */
 router.get('/user/:userId', (req, res) => {
-  projectsController
+  projectsModel
     .getUserProjects(req.params.userId)
     .then(projects => res.send(projects))
     .catch(err => res.send(err));
@@ -22,7 +22,7 @@ router.get('/user/:userId', (req, res) => {
 
 /* GET a project */
 router.get('/:id', (req, res) => {
-  projectsController
+  projectsModel
     .getOne(req.params.id)
     .then(project => res.send(project))
     .catch(err => res.send(err));
@@ -30,7 +30,7 @@ router.get('/:id', (req, res) => {
 
 /* CREATE a project */
 router.post('/create_project', (req, res) => {
-  projectsController
+  projectsModel
     .create({
       name: req.body.name,
       description: req.body.description,
@@ -45,7 +45,7 @@ router.post('/create_project', (req, res) => {
 // TO TEST
 /* UPDATE a project */
 router.get('/update/:id/:name', (req, res) => {
-  projectsController
+  projectsModel
     .update(req.params.id, req.params.name)
     .then(
       // response is gt 0 if it finds a project with the given id
@@ -55,7 +55,7 @@ router.get('/update/:id/:name', (req, res) => {
 
 /* DELETE a project */
 router.delete('/delete/:id', (req, res) => {
-  projectsController
+  projectsModel
     .delete(req.params.id)
     .then(() => {
       res.sendStatus(200);
