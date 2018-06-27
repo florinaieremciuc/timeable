@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Projects from './components/Home';
 import Teams from './components/Teams';
 import Events from './components/Events';
+import Profile from './components/Profile';
 import Menu from '../../components/Menu';
 
 import './style.css';
@@ -19,6 +20,8 @@ class Dashboard extends React.Component {
 
   setView() {
     switch (this.props.path) {
+    case '/profile/:username':
+      return <Profile />;
     case '/teams':
       return <Teams />;
     case '/events':
