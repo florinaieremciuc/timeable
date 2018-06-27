@@ -85,6 +85,9 @@ class Projects extends React.Component {
                     <Link to={`/tasks/${project.id}`}>
                       <Button>Activity list</Button>
                     </Link>
+                    <Link to={`/risks/${project.id}`}>
+                      <Icon name="rain" />
+                    </Link>
                   </Card.Content>
                 </Card>
               );
