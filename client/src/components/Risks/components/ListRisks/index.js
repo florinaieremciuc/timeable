@@ -1,5 +1,5 @@
 import React from 'react';
-import { Segment, List, Icon, Label } from 'semantic-ui-react';
+import { Icon, Table } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
@@ -10,22 +10,24 @@ import { riskPropType } from '../../../../State/Risks/create/reducer';
 
 import './style.css';
 
-// priority:
-// 0 - idea
-// 1 - thermometer half
-// 2 - thermometer three quarters
-// 3 - bug
+/** probability
+ * 1 - unlikely to occur
+ * 2 - may or may not occur
+ * 3 - likely to occur
+/** impact
+ * 1 - minimal
+ * 2 - moderate
+ * 3 - significant
+ */
 class ListRisks extends React.Component {
-  static selectIcon(risk) {
-    switch (risk.priority) {
-    case '0':
-      return 'idea';
+  static selectText(risk, check) {
+    switch (risk) {
     case '1':
-      return 'thermometer half';
+      return check ? 'Unlikely to occur' : 'Minimal';
     case '2':
-      return 'thermometer three quarters';
+      return check ? 'May or may not occur' : 'Moderate';
     case '3':
-      return 'bug';
+      return check ? 'Likely to occur' : 'Significant';
     default:
       return null;
     }
@@ -42,51 +44,43 @@ class ListRisks extends React.Component {
 
   render() {
     const { role, risks } = this.props;
-
     return (
-      <Segment inverted className="risks-list">
+      <div>
         {risks.length > 0 ? (
-          <List divided inverted relaxed>
-            {risks.map(risk => (
-              <List.Item key={risk.id}>
-                <div className="risk-details">
-                  <List.Icon name={ListRisks.selectIcon(risk)} />
-                  Name:&nbsp;
-                  <List.Header>
-                    <Label>{risk.description}</Label>
-                  </List.Header>
-                  <List.Content>
-                    Description:&nbsp;<strong>{risk.description}</strong>
-                    &nbsp;&nbsp;
-                  </List.Content>
-                  {/*                  Assignee:&nbsp;{risk.assignees.length > 0 ? (
-                    risk.assignees.map(assignee => (
-                      assignee[0] &&
-                      <Label key={assignee[0].id}>
-                        {
-                          assignee[0].first_name +
-                          ' ' +
-                          assignee[0].last_name +
-                          ' (' +
-                          assignee[0].role +
-                          ')'}
-                      </Label>
-                    ))
-                  ) : (
-                    null
-                  )}
-                */}
-                </div>
-                {role === 'teamlead' ? (
-                  <Icon size="large" name="trash" onClick={() => this.deleteRisk(risk.id)} />
-                ) : null}
-              </List.Item>
-            ))}
-          </List>
+          <Table celled inverted selectable className="risks-list">
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell>Description</Table.HeaderCell>
+                <Table.HeaderCell>Category</Table.HeaderCell>
+                <Table.HeaderCell>Probability</Table.HeaderCell>
+                <Table.HeaderCell>Impact</Table.HeaderCell>
+                <Table.HeaderCell>Response</Table.HeaderCell>
+                {role === 'teamlead' ? <Table.HeaderCell>Delete</Table.HeaderCell> : null}
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              {risks.map(risk => (
+                <Table.Row>
+                  <Table.Cell style={{ textTransform: 'capitalize' }}>
+                    {risk.description}
+                  </Table.Cell>
+                  <Table.Cell style={{ textTransform: 'capitalize' }}>{risk.category}</Table.Cell>
+                  <Table.Cell>{ListRisks.selectText(risk.probability, true)}</Table.Cell>
+                  <Table.Cell>{ListRisks.selectText(risk.impact)}</Table.Cell>
+                  <Table.Cell style={{ textTransform: 'capitalize' }}>{risk.response}</Table.Cell>
+                  {role === 'teamlead' ? (
+                    <Table.Cell>
+                      <Icon size="large" name="trash" onClick={() => this.deleteRisk(risk.id)} />
+                    </Table.Cell>
+                  ) : null}
+                </Table.Row>
+              ))}
+            </Table.Body>
+          </Table>
         ) : (
           'No risks here man'
         )}
-      </Segment>
+      </div>
     );
   }
 }

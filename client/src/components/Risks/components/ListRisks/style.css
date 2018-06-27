@@ -151,23 +151,23 @@ a {
   padding: 0;
   box-sizing: border-box; }
 
-.ui.inverted.segment.risks-list {
+.ui.inverted.table.risks-list {
   color: #c8c8c8 !important;
   background: #222;
   margin: 16px 0; }
-  .ui.inverted.segment.risks-list .ui.list .item {
+  .ui.inverted.table.risks-list .ui.list .item {
     display: flex;
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin: 10px 0; }
-    .ui.inverted.segment.risks-list .ui.list .item .content,
-    .ui.inverted.segment.risks-list .ui.list .item .header {
+    .ui.inverted.table.risks-list .ui.list .item .content,
+    .ui.inverted.table.risks-list .ui.list .item .header {
       color: #c8c8c8 !important; }
-    .ui.inverted.segment.risks-list .ui.list .item .risk-details {
+    .ui.inverted.table.risks-list .ui.list .item .risk-details {
       display: flex;
       align-items: center;
       width: 100%;
       color: #c8c8c8 !important; }
-      .ui.inverted.segment.risks-list .ui.list .item .risk-details .content {
+      .ui.inverted.table.risks-list .ui.list .item .risk-details .content {
         margin: 0 20px; }
