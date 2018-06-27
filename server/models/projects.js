@@ -25,8 +25,9 @@ module.exports = {
   getUserProjects(userId) {
     console.log(`Get user's ${userId} projects list`);
     return knex('projects')
-      .join('tasks', 'projects.id', 'tasks.project')
-      .where('tasks.assignee', userId)
+      .innerJoin('tasks', 'projects.id', 'tasks.project')
+      .innerJoin('users_tasks', 'users_tasks.task_id', 'tasks.id')
+      .where('users_tasks.user_id', userId)
       .groupBy('projects.name');
   },
   getOne(id) {
