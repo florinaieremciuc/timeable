@@ -3,13 +3,13 @@ import { combineReducers } from 'redux';
 import Immutable from 'seamless-immutable';
 import * as types from './actions';
 
-export const teamsPropType = PropTypes.shape({
+export const teamPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
 });
 
 export const INITIAL_STATE = Immutable({
-  items: [],
+  data: {},
   sync: {
     attempting: 0,
     error: null,
@@ -17,19 +17,19 @@ export const INITIAL_STATE = Immutable({
 });
 
 /**
- * Reducer for the teams application state.
+ * Reducer for the team application state.
  * @param {*} state
  * @param {*} action
  */
-const items = (state = INITIAL_STATE.items, action) => {
+const data = (state = INITIAL_STATE.data, action) => {
   switch (action.type) {
-  case types.GET_TEAMS_REQUEST: {
+  case types.GET_TEAM_REQUEST: {
     return state;
   }
-  case types.GET_TEAMS_SUCCESS: {
-    return action.teams;
+  case types.GET_TEAM_SUCCESS: {
+    return action.team;
   }
-  case types.GET_TEAMS_FAILURE:
+  case types.GET_TEAM_FAILURE:
   default:
     return state;
   }
@@ -42,17 +42,17 @@ const items = (state = INITIAL_STATE.items, action) => {
  */
 const sync = (state = INITIAL_STATE.sync, action) => {
   switch (action.type) {
-  case types.GET_TEAMS_REQUEST:
+  case types.GET_TEAM_REQUEST:
     return {
       attempting: 1,
       error: null,
     };
-  case types.GET_TEAMS_SUCCESS:
+  case types.GET_TEAM_SUCCESS:
     return {
       attempting: 0,
       error: null,
     };
-  case types.GET_TEAMS_FAILURE:
+  case types.GET_TEAM_FAILURE:
     return {
       attempting: 0,
       error: action.error,
@@ -62,11 +62,11 @@ const sync = (state = INITIAL_STATE.sync, action) => {
   }
 };
 
-export const getItems = state => state.items;
+export const getTeam = state => state.data;
 export const getError = state => state.sync.error;
 export const isAttempting = state => state.sync.attempting;
 
 export default combineReducers({
-  items,
+  data,
   sync,
 });

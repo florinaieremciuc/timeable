@@ -1,22 +1,22 @@
 import { put, call } from 'redux-saga/effects';
-import { getTeamsSuccess, getTeamsFailure } from './actions';
-import { getTeams } from '../../../services/Teams';
+import { getTeamSuccess, getTeamFailure } from './actions';
+import { getTeam } from '../../../services/Teams';
 
 /**
- * Yield a call to the API for getting the teams list.
+ * Yield a call to the API for getting the team list.
  * @param {*} Action payload that contains the `name` field
  */
-export default function* getTeamsSaga() {
+export default function* getTeamSaga(team) {
   try {
-    const response = yield call(getTeams);
+    const response = yield call(getTeam, team.teamid);
     if (response && response.error) {
-      yield put(getTeamsFailure(response));
+      yield put(getTeamFailure(response));
     } else if (response && Array(response)) {
-      yield put(getTeamsSuccess(response));
+      yield put(getTeamSuccess(response));
     } else {
-      yield put(getTeamsFailure('Unable to log in, please contact support.'));
+      yield put(getTeamFailure('Unable to log in, please contact support.'));
     }
   } catch (e) {
-    yield put(getTeamsFailure('Unable to connect to the server.'));
+    yield put(getTeamFailure('Unable to connect to the server.'));
   }
 }

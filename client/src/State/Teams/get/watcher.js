@@ -1,10 +1,10 @@
 import { takeEvery } from 'redux-saga/effects';
-import getTeamsSaga from './saga';
-import { GET_TEAMS_REQUEST } from './actions';
+import getTeamSaga from './saga';
+import { GET_TEAM_REQUEST } from './actions';
 
 /**
- * Watches for GET_TEAMS_REQUEST action type asynchronously
+ * Watches for GET_TEAM_REQUEST action type asynchronously
  */
-export default function* watchGetTeamsAttempt() {
-  yield takeEvery(GET_TEAMS_REQUEST, getTeamsSaga);
+export default function* watchGetTeamAttempt() {
+  yield takeEvery(GET_TEAM_REQUEST, getTeamSaga);
 }
