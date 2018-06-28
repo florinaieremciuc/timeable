@@ -34,6 +34,7 @@ import newteam from './State/Teams/create/reducer';
 import registrationsStatus from './State/Users/register/reducers';
 import user from './State/Users/login/reducers';
 import members from './State/Users/team/reducer';
+import assignees from './State/Users/assignees/reducer';
 import userById from './State/Users/user/reducer';
 
 import modalVisible from './components/Modal/reducer';
@@ -158,6 +159,13 @@ const defaultState = {
       error: null,
     },
   },
+  assignees: {
+    items: [],
+    sync: {
+      attempting: 0,
+      error: null,
+    },
+  },
   // form: {}
 };
 
@@ -181,6 +189,7 @@ const rootPersistConfig = {
     'newteam',
     'registrationsStatus',
     'members',
+    'assignees',
   ],
 };
 
@@ -230,6 +239,7 @@ const rootReducer = persistCombineReducers(rootPersistConfig, {
     },
     members,
   ),
+  assignees,
   // form: formReducer
   // registerForm: formReducer,
   // loginForm: formReducer

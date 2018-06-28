@@ -71,6 +71,18 @@ export const getMembers = teamid =>
   }).then(response => response.json());
 
 /**
+ * Call API to get assignees to tasks.
+ * @param {Number} teamid
+ */
+export const getAssignees = teamid =>
+  fetch(`${config.API_URL}/users/task/${teamid}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).then(response => response.json());
+
+/**
  * Call API to get user.
  * @param {Number} id
  */
@@ -86,5 +98,6 @@ export default {
   signInUser,
   registerUser,
   getMembers,
+  getAssignees,
   getUser,
 };
