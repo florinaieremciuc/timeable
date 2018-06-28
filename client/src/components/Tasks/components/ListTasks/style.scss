@@ -4,9 +4,8 @@
   color: $header-text-color !important;
   background: $header-bg-color;
   margin: $base-spacing 0;
-  .ui.list {
+  .ui.list.divided.inverted {
     .item {
-      display: flex;
       display: flex;
       align-items: center;
       justify-content: space-between;

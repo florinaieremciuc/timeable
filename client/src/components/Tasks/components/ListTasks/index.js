@@ -6,9 +6,15 @@ import _ from 'lodash';
 
 import { deleteTaskAttempt } from '../../../../State/Tasks/delete/actions';
 import { updateAssigneeAttempt } from '../../../../State/Tasks/update/actions';
+import { isAttemptingAssignee } from '../../../../State/Tasks/update/reducer';
+
+import { getAssigneesAttempt } from '../../../../State/Users/assignees/actions';
+import { getItems as getAssignees } from '../../../../State/Users/assignees/reducer';
 
 import { taskPropType } from '../../../../State/Tasks/create/reducer';
-import { userPropType, getRole } from '../../../../State/Users/login/reducers';
+import { userPropType, getRole, getTeam } from '../../../../State/Users/login/reducers';
+
+import Assignees from '../Assignees';
 
 import './style.css';
 
@@ -20,28 +26,34 @@ import './style.css';
 class ListTasks extends React.Component {
   static selectIcon(task) {
     switch (task.priority) {
-    case '0':
-      return 'idea';
-    case '1':
-      return 'thermometer half';
-    case '2':
-      return 'thermometer three quarters';
-    case '3':
-      return 'bug';
-    default:
-      return null;
+      case '0':
+        return 'idea';
+      case '1':
+        return 'thermometer half';
+      case '2':
+        return 'thermometer three quarters';
+      case '3':
+        return 'bug';
+      default:
+        return null;
     }
   }
   constructor(props) {
     super(props);
-    this.getAssignee = this.getAssignee.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.deleteTask = this.deleteTask.bind(this);
   }
 
-  getAssignee(id) {
-    return this.props.members.filter(member => member.id === id);
+  componentWillMount() {
+    this.props.getAssigneesAttempt(this.props.team);
   }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.loadUpdate > 0) {
+      nextProps.getAssigneesAttempt(nextProps.team);
+    }
+  }
+
   handleChange(e, { value }, id) {
     this.props.updateAssigneeAttempt(id, value);
   }
@@ -75,14 +87,14 @@ class ListTasks extends React.Component {
   }
 
   render() {
-    const { role } = this.props;
+    const { role, tasks, assignees, members } = this.props;
 
     return (
       <Segment inverted className="tasks-list">
-        {this.props.tasks.length > 0 ? (
+        {tasks.length > 0 ? (
           <List divided inverted relaxed>
-            {this.props.tasks.map(task => (
-              <List.Item key={task.id}>
+            {tasks.map(task => (
+              <List.Item key={task.estimate}>
                 <div className="task-details">
                   <List.Icon name={ListTasks.selectIcon(task)} />
                   Name:&nbsp;
@@ -93,19 +105,16 @@ class ListTasks extends React.Component {
                     Description:&nbsp;<strong>{task.description}</strong>
                     &nbsp;&nbsp;
                   </List.Content>
-                  Assignee:&nbsp;{task.assignee ? (
-                    <Label>
-                      {this.getAssignee(task.assignee).length > 0 &&
-                        this.getAssignee(task.assignee)[0].first_name +
-                          ' ' +
-                          this.getAssignee(task.assignee)[0].last_name +
-                          ' (' +
-                          this.getAssignee(task.assignee)[0].role +
-                          ')'}
-                    </Label>
-                  ) : (
-                    this.dropdown(task)
-                  )}
+                  <Assignees
+                    assignees={
+                      assignees.length > 0 &&
+                      assignees.filter(assignee => assignee.task_id === task.id)
+                    }
+                  />
+                  {assignees.filter(assignee => assignee.task_id === task.id).length ===
+                  members.length
+                    ? null
+                    : this.dropdown(task)}
                 </div>
                 {role === 'teamlead' ? (
                   <Icon size="large" name="trash" onClick={() => this.deleteTask(task.id)} />
@@ -122,13 +131,23 @@ class ListTasks extends React.Component {
 }
 const mapStateToProps = state => ({
   role: getRole(state.user),
+  team: getTeam(state.user),
+  assignees: getAssignees(state.assignees),
+  loadUpdate: isAttemptingAssignee(state.updateTask),
 });
-export default connect(mapStateToProps, { deleteTaskAttempt, updateAssigneeAttempt })(ListTasks);
+export default connect(
+  mapStateToProps,
+  { deleteTaskAttempt, updateAssigneeAttempt, getAssigneesAttempt },
+)(ListTasks);
 
 ListTasks.propTypes = {
   role: PropTypes.string.isRequired,
+  team: PropTypes.number.isRequired,
   deleteTaskAttempt: PropTypes.func.isRequired,
   updateAssigneeAttempt: PropTypes.func.isRequired,
+  loadUpdate: PropTypes.number.isRequired,
+  getAssigneesAttempt: PropTypes.func.isRequired,
+  assignees: PropTypes.arrayOf(userPropType).isRequired,
   members: PropTypes.arrayOf(userPropType).isRequired,
   tasks: PropTypes.arrayOf(taskPropType).isRequired,
 };
