@@ -105,6 +105,13 @@ module.exports = {
       task_id: id,
     });
   },
+  removeAssignee(task, assignee) {
+    console.log(`Remove entry from users_tasks for task having id ${task} w assignee ${assignee}`);
+    return knex('users_tasks')
+      .where('task_id', task)
+      .andWhere('user_id', assignee)
+      .delete();
+  },
   addDuration(id, duration) {
     console.log(`Updating task having id ${id} w duration ${duration}`);
     return knex('tasks')

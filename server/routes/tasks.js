@@ -51,12 +51,20 @@ router.post('/add_task', (req, res) => {
     .catch(err => res.send(err));
 });
 
-// TO TEST
 /* UPDATE a task */
 // add assignee
 router.post('/update/assignee', (req, res) => {
   tasksModel
     .addAssignee(req.body.id, req.body.assignee)
+    .then(
+      // response is gt 0 if it finds a project with the given id
+      response => (response > 0 ? res.sendStatus(200) : res.sendStatus(404)))
+    .catch(err => console.log('Error: ', err));
+});
+// remove assignee
+router.delete('/remove/assignee', (req, res) => {
+  tasksModel
+    .removeAssignee(req.body.task, req.body.assignee)
     .then(
       // response is gt 0 if it finds a project with the given id
       response => (response > 0 ? res.sendStatus(200) : res.sendStatus(404)))
