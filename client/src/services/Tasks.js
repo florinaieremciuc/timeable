@@ -91,6 +91,26 @@ export const updateAssignee = (id, assignee) => {
 };
 
 /**
+ * Call API to delete task assignee.
+ * @param {number} id
+ * @param {number} assignee - userid
+ */
+export const removeAssignee = (task, assignee) => {
+  const params = {
+    task,
+    assignee,
+  };
+  console.log('BA ESTI PROST', task, assignee);
+  return fetch(`${config.API_URL}/tasks/remove/assignee`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(params),
+  }).then(response => response);
+};
+
+/**
  * Call API to update task status.
  * @param {number} id
  * @param {string} status
@@ -133,6 +153,7 @@ export default {
   getTasks,
   deleteTask,
   updateAssignee,
+  removeAssignee,
   updateStatus,
   updateDuration,
 };
