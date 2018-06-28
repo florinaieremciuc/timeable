@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import { deleteTaskAttempt } from '../../../../State/Tasks/delete/actions';
+import { deleteTaskAttempt, deleteAssigneeAttempt } from '../../../../State/Tasks/delete/actions';
+import { isAttemptingDeleteAssignee, isAttemptingDeleteTask } from '../../../../State/Tasks/delete/reducer';
 import { updateAssigneeAttempt } from '../../../../State/Tasks/update/actions';
 import { isAttemptingAssignee } from '../../../../State/Tasks/update/reducer';
 
@@ -26,16 +27,16 @@ import './style.css';
 class ListTasks extends React.Component {
   static selectIcon(task) {
     switch (task.priority) {
-      case '0':
-        return 'idea';
-      case '1':
-        return 'thermometer half';
-      case '2':
-        return 'thermometer three quarters';
-      case '3':
-        return 'bug';
-      default:
-        return null;
+    case '0':
+      return 'idea';
+    case '1':
+      return 'thermometer half';
+    case '2':
+      return 'thermometer three quarters';
+    case '3':
+      return 'bug';
+    default:
+      return null;
     }
   }
   constructor(props) {
@@ -49,7 +50,8 @@ class ListTasks extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.loadUpdate > 0) {
+    const { loadUpdate, loadDeteleTask, loadDeleteAssignee } = nextProps;
+    if (loadUpdate > 0 || loadDeteleTask > 0 || loadDeleteAssignee > 0) {
       nextProps.getAssigneesAttempt(nextProps.team);
     }
   }
@@ -87,7 +89,12 @@ class ListTasks extends React.Component {
   }
 
   render() {
-    const { role, tasks, assignees, members } = this.props;
+    const {
+      role,
+      tasks,
+      assignees,
+      members,
+    } = this.props;
 
     return (
       <Segment inverted className="tasks-list">
@@ -105,14 +112,16 @@ class ListTasks extends React.Component {
                     Description:&nbsp;<strong>{task.description}</strong>
                     &nbsp;&nbsp;
                   </List.Content>
-                  <Assignees
+                  {assignees.length > 0 && <Assignees
+                    deleteAssignee={this.props.deleteAssigneeAttempt}
                     assignees={
                       assignees.length > 0 &&
                       assignees.filter(assignee => assignee.task_id === task.id)
                     }
-                  />
-                  {assignees.filter(assignee => assignee.task_id === task.id).length ===
-                  members.length
+                  />}
+                  {assignees.length > 0 &&
+                    assignees.filter(assignee =>
+                      assignee.task_id === task.id).length === members.length
                     ? null
                     : this.dropdown(task)}
                 </div>
@@ -134,18 +143,28 @@ const mapStateToProps = state => ({
   team: getTeam(state.user),
   assignees: getAssignees(state.assignees),
   loadUpdate: isAttemptingAssignee(state.updateTask),
+  loadDeteleTask: isAttemptingDeleteTask(state.deleteFromTask),
+  loadDeleteAssignee: isAttemptingDeleteAssignee(state.deleteFromTask)
 });
 export default connect(
   mapStateToProps,
-  { deleteTaskAttempt, updateAssigneeAttempt, getAssigneesAttempt },
+  {
+    deleteTaskAttempt,
+    deleteAssigneeAttempt,
+    updateAssigneeAttempt,
+    getAssigneesAttempt,
+  },
 )(ListTasks);
 
 ListTasks.propTypes = {
   role: PropTypes.string.isRequired,
   team: PropTypes.number.isRequired,
   deleteTaskAttempt: PropTypes.func.isRequired,
+  deleteAssigneeAttempt: PropTypes.func.isRequired,
   updateAssigneeAttempt: PropTypes.func.isRequired,
   loadUpdate: PropTypes.number.isRequired,
+  loadDeteleTask: PropTypes.number.isRequired,
+  loadDeleteAssignee: PropTypes.number.isRequired,
   getAssigneesAttempt: PropTypes.func.isRequired,
   assignees: PropTypes.arrayOf(userPropType).isRequired,
   members: PropTypes.arrayOf(userPropType).isRequired,

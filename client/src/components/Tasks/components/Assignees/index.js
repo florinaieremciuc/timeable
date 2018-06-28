@@ -1,6 +1,7 @@
 import React from 'react';
 import { Label, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 
 import { userPropType } from '../../../../State/Users/login/reducers';
 
@@ -8,6 +9,10 @@ import './styles.css';
 
 const Assignees = (props) => {
   const { assignees } = props;
+  const removeAssignee = (task, assignee) => {
+    _.remove(assignees, item => item.id !== assignee);
+    props.deleteAssignee(task, assignee);
+  };
   return (
     <div className="assignees">
       Assignees:&nbsp;{assignees.length > 0
@@ -15,7 +20,10 @@ const Assignees = (props) => {
           assignee && (
             <Label key={assignee.id}>
               {assignee.first_name + ' ' + assignee.last_name + ' (' + assignee.role + ')'}
-              <Icon name="close" />
+              <Icon
+                name="close"
+                onClick={() => removeAssignee(assignee.task_id, assignee.id)}
+              />
             </Label>
           ))
         : null}
@@ -25,4 +33,5 @@ const Assignees = (props) => {
 export default Assignees;
 Assignees.propTypes = {
   assignees: PropTypes.arrayOf(userPropType).isRequired,
+  deleteAssignee: PropTypes.func.isRequired,
 };

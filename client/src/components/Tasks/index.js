@@ -13,7 +13,7 @@ import { getItems as getTasks, isAttempting as loadingTasks } from '../../State/
 
 import ListTasks from './components/ListTasks';
 
-import { isAttempting as loadDelete } from '../../State/Tasks/delete/reducer';
+import { isAttemptingDeleteTask as loadDelete } from '../../State/Tasks/delete/reducer';
 import { taskPropType, isAttempting as loadCreate } from '../../State/Tasks/create/reducer';
 
 import { getMembersAttempt } from '../../State/Users/team/actions';
@@ -72,7 +72,7 @@ const mapStateToProps = state => ({
   tasks: getTasks(state.tasks),
   loadingTasks: loadingTasks(state.tasks),
   loadCreate: loadCreate(state.newtask),
-  loadDelete: loadDelete(state.deleteTask),
+  loadDelete: loadDelete(state.deleteFromTask),
   loadingMembers: loadMembers(state.members),
   members: getMembers(state.members),
   teamid: getTeam(state.user),
