@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Segment, List, Dropdown } from 'semantic-ui-react';
+import { Card, Segment, List, Dropdown, Select, Popup } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
 import { userPropType } from '../../../../../../State/Users/login/reducers';
@@ -11,13 +11,13 @@ const UsersTasks = (props) => {
   const selectIcon = (task) => {
     switch (task.priority) {
     case '0':
-      return 'idea';
+      return { name: 'idea', text: 'Low priority' };
     case '1':
-      return 'thermometer half';
+      return { name: 'thermometer half', text: 'Moderate priority' };
     case '2':
-      return 'thermometer three quarters';
+      return { name: 'thermometer three quarters', text: 'Medium priority' };
     case '3':
-      return 'bug';
+      return { name: 'bug', text: 'High priority' };
     default:
       return null;
     }
@@ -28,13 +28,13 @@ const UsersTasks = (props) => {
     case 'to_do':
       return 'TO DO';
     case 'doing':
-      return 'DOING';
+      return 'IN PROGRESS';
     case 'testing':
       return 'TESTING';
     case 'DONE':
       return 'DONE';
     default:
-      return null;
+      return 'TO_DO';
     }
   };
 
@@ -45,11 +45,13 @@ const UsersTasks = (props) => {
   const updateStatus = (taskId, status, assignee, userid) => {
     if (assignee === userid) {
       return (
-        <Dropdown
+        <Select
           name="update-status"
+          defaultValue="TO DO"
+          placeholder="ro do"
           value={status}
           options={[
-            { key: 0, text: 'DOING', value: 'doing' },
+            { key: 0, text: 'IN PROGRESS', value: 'doing' },
             { key: 1, text: 'TESTING', value: 'testing' },
             { key: 2, text: 'DONE', value: 'done' },
           ]}
@@ -58,7 +60,7 @@ const UsersTasks = (props) => {
         />
       );
     }
-    return <div>{selectStatus(status)}</div>;
+    return <div>Status: {selectStatus(status)}</div>;
   };
 
   const getUserTasks = id => tasks.filter(task => task.user_id === id);
@@ -80,11 +82,16 @@ const UsersTasks = (props) => {
               <strong> Tasks: </strong>
               {getUserTasks(member.id).map(task => (
                 <List.Item key={task.id}>
-                  <List.Icon name={selectIcon(task)} />
+                  <Popup
+                    trigger={<List.Icon name={selectIcon(task).name} />}
+                    content={selectIcon(task).text}
+                  />
                   <List.Content>
-                    <List.Header>{task.name}</List.Header>
-                    <div>{task.description}</div>
-                    <div>{updateStatus(task.id, task.status, task.assignee, user.id)}</div>
+                    <Popup
+                      trigger={<List.Header>{task.name}</List.Header>}
+                      content={task.description}
+                    />
+                    <div>{updateStatus(task.id, task.status, task.user_id, user.id)}</div>
                   </List.Content>
                 </List.Item>
               ))}

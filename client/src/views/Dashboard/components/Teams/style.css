@@ -175,12 +175,16 @@ a {
           color: #c8c8c8 !important;
           margin-top: 2px; }
         .ui.container.teams .members .ui.card .ui.segment.inverted .ui.divided.inverted.list .item {
-          justify-content: flex-start; }
+          display: flex;
+          align-items: center; }
           .ui.container.teams .members .ui.card .ui.segment.inverted .ui.divided.inverted.list .item .content {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
             text-align: start; }
+            .ui.container.teams .members .ui.card .ui.segment.inverted .ui.divided.inverted.list .item .content span,
+            .ui.container.teams .members .ui.card .ui.segment.inverted .ui.divided.inverted.list .item .content div.text {
+              color: #222222 !important; }
   .ui.container.teams .ui.form .equal.width.fields {
     display: flex;
     flex-direction: column;

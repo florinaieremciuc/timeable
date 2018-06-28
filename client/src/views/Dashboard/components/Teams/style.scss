@@ -28,12 +28,17 @@
             margin-top: $base-spacing-xxs;
           }
           .item {
-            justify-content: flex-start;
+            display: flex;
+            align-items: center;
             .content {
               display: flex;
               flex-direction: column;
               align-items: flex-start;
               text-align: start;
+              span,
+              div.text {
+                color: #222222 !important;
+              }
             }
           }
         }

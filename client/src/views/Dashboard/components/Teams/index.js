@@ -11,6 +11,7 @@ import {
 import { taskPropType } from '../../../../State/Tasks/create/reducer';
 
 import { updateStatusAttempt } from '../../../../State/Tasks/update/actions';
+import { isAttemptingStatus } from '../../../../State/Tasks/update/reducer';
 
 import { getMembersAttempt } from '../../../../State/Users/team/actions';
 import { getItems as getMembers } from '../../../../State/Users/team/reducer';
@@ -27,9 +28,14 @@ class Teams extends React.Component {
     this.props.getMembersAttempt(this.props.user.team);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.attemptStatusUpdate > 0) {
+      this.props.getAssignedTasksAttempt(nextProps.user.team);
+    }
+  }
+
   render() {
     const { user, teamMembers, tasks } = this.props;
-    console.log('props teams', this.props);
     return (
       <Container className="teams">
         <h1>Team</h1>
@@ -56,6 +62,7 @@ const mapStateToProps = state => ({
   loadTasks: loadingTasks(state.tasks),
   teamMembers: getMembers(state.members),
   user: getUser(state.user),
+  attemptStatusUpdate: isAttemptingStatus(state.updateTask),
 });
 export default connect(
   mapStateToProps,
@@ -75,5 +82,6 @@ Teams.propTypes = {
   getMembersAttempt: PropTypes.func.isRequired,
   getAssignedTasksAttempt: PropTypes.func.isRequired,
   updateStatusAttempt: PropTypes.func.isRequired,
+  attemptStatusUpdate: PropTypes.number.isRequired,
   teamMembers: PropTypes.arrayOf(userPropType),
 };
