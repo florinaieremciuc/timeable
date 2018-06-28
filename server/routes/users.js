@@ -49,6 +49,14 @@ router.get('/', (req, res) => {
     });
 });
 
+/* GET TASK ASSIGNEES */
+router.get('/task/:teamid', (req, res) => {
+  usersModel
+    .getAssignedToTask(req.params.teamid)
+    .then(assignees => res.send({ assignees }))
+    .catch(error => res.send(error));
+});
+
 /* GET a user */
 router.get('/:id', (req, res) => {
   usersModel

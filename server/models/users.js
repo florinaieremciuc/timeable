@@ -66,6 +66,22 @@ module.exports = {
         return members;
       });
   },
+  getAssignedToTask(teamid) {
+    console.log(`Get team ${teamid} users assigned to tasks`);
+    return knex
+      .select('users.id', 'username', 'first_name', 'last_name', 'role', 'team', 'task_id')
+      .from('users')
+      .innerJoin('users_tasks', 'users_tasks.user_id', 'users.id')
+      .where('users.team', teamid)
+      .groupBy('users.username', 'users_tasks.task_id')
+      .orderBy('users_tasks.task_id')
+      .then((assignees) => {
+        if (!assignees || assignees.length === 0) {
+          return { response: 'No users assigned to this task' };
+        }
+        return assignees;
+      });
+  },
   getOne(id) {
     console.log(`Get user w id ${id}`);
     return knex('users')
