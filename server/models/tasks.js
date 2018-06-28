@@ -17,10 +17,21 @@ module.exports = {
   getAll(projectid) {
     console.log(`Get task list from ${projectid} project`);
     return knex
-      .select('tasks.id', 'name', 'duration', 'description', 'status', 'priority', 'estimate', 'user_id', 'project')
+      .select(
+        'tasks.id',
+        'name',
+        'duration',
+        'description',
+        'status',
+        'priority',
+        'estimate',
+        'user_id',
+        'project',
+      )
       .from('tasks')
       .leftJoin('users_tasks', 'tasks.id', 'users_tasks.task_id')
       .where('project', projectid)
+      .groupBy('name')
       .then((tasks) => {
         if (!tasks) return { error: 'There are no tasks here' };
         return tasks;
@@ -32,7 +43,7 @@ module.exports = {
     return knex
       .select(
         'tasks.id',
-        'name',
+        'tasks.name',
         'duration',
         'description',
         'status',
@@ -49,6 +60,7 @@ module.exports = {
       .innerJoin('users_tasks', 'tasks.id', 'users_tasks.task_id')
       .innerJoin('users', 'users_tasks.user_id', 'users.id')
       .where('users.team', teamid)
+      .groupBy('tasks.name')
       .then((tasks) => {
         if (!tasks || tasks.length === 0) return { error: 'No tasks assigned' };
         return tasks;
