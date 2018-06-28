@@ -17,7 +17,7 @@ import deleteRisk from './State/Risks/delete/reducer';
 
 // CRUD ops for tasks
 import updateTask from './State/Tasks/update/reducer';
-import deleteTask from './State/Tasks/delete/reducer';
+import deleteFromTask from './State/Tasks/delete/reducer';
 import tasks from './State/Tasks/get/reducer';
 import newtask from './State/Tasks/create/reducer';
 
@@ -84,11 +84,15 @@ const defaultState = {
       error: null,
     },
   },
-  deleteTask: {
-    sync: {
+  deleteFromTask: {
+    deleteTask: {
       attempting: 0,
       error: null,
       success: null,
+    },
+    deleteAssignee: {
+      attempting: 0,
+      error: null,
     },
   },
   tasks: {
@@ -179,7 +183,7 @@ const rootPersistConfig = {
     'deleteRisk',
     'userById',
     'updateTask',
-    'deleteTask',
+    'deleteFromTask',
     'tasks',
     'newtask',
     'deleteProject',
@@ -204,7 +208,7 @@ const rootReducer = persistCombineReducers(rootPersistConfig, {
   deleteRisk,
   userById,
   updateTask,
-  deleteTask,
+  deleteFromTask,
   tasks,
   newtask,
   deleteProject,

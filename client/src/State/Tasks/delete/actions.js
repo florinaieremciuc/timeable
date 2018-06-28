@@ -16,3 +16,22 @@ export const deleteTaskFailure = error => ({
   type: DELETE_TASK_FAILURE,
   error,
 });
+
+// DELETE ASSIGNEE
+export const DELETE_ASSIGNEE_REQUEST = 'DELETE_ASSIGNEE_REQUEST';
+export const DELETE_ASSIGNEE_SUCCESS = 'DELETE_ASSIGNEE_SUCCESS';
+export const DELETE_ASSIGNEE_FAILURE = 'DELETE_ASSIGNEE_FAILURE';
+
+export const deleteAssigneeAttempt = (task, assignee) => ({
+  type: DELETE_ASSIGNEE_REQUEST,
+  task,
+  assignee,
+});
+export const deleteAssigneeSuccess = success => ({
+  type: DELETE_ASSIGNEE_SUCCESS,
+  success,
+});
+export const deleteAssigneeFailure = error => ({
+  type: DELETE_ASSIGNEE_FAILURE,
+  error,
+});

@@ -3,19 +3,18 @@ import Immutable from 'seamless-immutable';
 import * as types from './actions';
 
 export const INITIAL_STATE = Immutable({
-  sync: {
+  deleteTask: {
     attempting: 0,
     error: null,
     success: null,
   },
+  deleteAssignee: {
+    attempting: 0,
+    error: null,
+  },
 });
 
-/**
- * Reducer for the authenticate attempt status application state.
- * @param {*} state
- * @param {*} action
- */
-const sync = (state = INITIAL_STATE.sync, action) => {
+const deleteTask = (state = INITIAL_STATE.deleteTask, action) => {
   switch (action.type) {
   case types.DELETE_TASK_REQUEST:
     return {
@@ -40,10 +39,36 @@ const sync = (state = INITIAL_STATE.sync, action) => {
   }
 };
 
-export const getError = state => state.sync.error;
-export const getSuccess = state => state.sync.success;
-export const isAttempting = state => state.sync.attempting;
+const deleteAssignee = (state = INITIAL_STATE.deleteAssignee, action) => {
+  switch (action.type) {
+  case types.DELETE_ASSIGNEE_REQUEST:
+    return {
+      attempting: 1,
+      error: null,
+    };
+  case types.DELETE_ASSIGNEE_SUCCESS:
+    return {
+      attempting: 0,
+      error: null,
+    };
+  case types.DELETE_ASSIGNEE_FAILURE:
+    return {
+      attempting: 0,
+      error: action.error,
+    };
+  default:
+    return state;
+  }
+};
+
+export const getErrorDeleteTask = state => state.deleteTask.error;
+export const getSuccessDeleteTask = state => state.deleteTask.success;
+export const isAttemptingDeleteTask = state => state.deleteTask.attempting;
+
+export const getErrorDeleteAssignee = state => state.deleteAssignee.error;
+export const isAttemptingDeleteAssignee = state => state.deleteAssignee.attempting;
 
 export default combineReducers({
-  sync,
+  deleteTask,
+  deleteAssignee,
 });
