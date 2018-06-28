@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Segment, List, Dropdown, Select, Popup } from 'semantic-ui-react';
+import { Card, Segment, List, Select, Popup } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
 import { userPropType } from '../../../../../../State/Users/login/reducers';
@@ -47,8 +47,6 @@ const UsersTasks = (props) => {
       return (
         <Select
           name="update-status"
-          defaultValue="TO DO"
-          placeholder="ro do"
           value={status}
           options={[
             { key: 0, text: 'IN PROGRESS', value: 'doing' },
