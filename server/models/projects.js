@@ -24,7 +24,19 @@ module.exports = {
   },
   getUserProjects(userId) {
     console.log(`Get user's ${userId} projects list`);
-    return knex('projects')
+    return knex
+      .select(
+        'projects.id',
+        'projects.name',
+        'startDate',
+        'deadline',
+        'status',
+        'projects.description',
+        'estimate',
+        'priority',
+        'projects.team',
+      )
+      .from('projects')
       .innerJoin('tasks', 'projects.id', 'tasks.project')
       .innerJoin('users_tasks', 'users_tasks.task_id', 'tasks.id')
       .where('users_tasks.user_id', userId)
