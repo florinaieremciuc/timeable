@@ -47,14 +47,15 @@ class Risks extends React.Component {
         </Header>
         <Divider />
         <Container>
+          {role === 'teamlead' ? <AddRisk project={this.props.match.params.projectid} /> : null}
           <ListRisks
+            editable
             open={modalVisible}
             project={match.params.projectid}
             risks={risksToList}
             role={role}
           />
         </Container>
-        {role === 'teamlead' ? <AddRisk project={this.props.match.params.projectid} /> : null}
       </Container>
     );
   }
