@@ -20,8 +20,10 @@
 
 .ui.sidebar.menu.left.thin {
   background: #222;
-  color: #c8c8c8;
-  width: 190px; }
+  width: 190px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; }
   .ui.sidebar.menu.left.thin .ui.item.dropdown {
     display: flex;
     flex-direction: row-reverse;

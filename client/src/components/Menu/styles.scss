@@ -24,8 +24,10 @@
 }
 .ui.sidebar.menu.left.thin {
   background: $header-bg-color;
-  color: $header-text-color;
   width: 190px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   .ui.item.dropdown {
     display: flex;
     flex-direction: row-reverse;
