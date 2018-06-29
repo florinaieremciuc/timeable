@@ -45,6 +45,7 @@ class Events extends React.Component {
       <div className="events">
         <h1>Events List</h1>
         <BigCalendar
+          popup
           events={events}
           step={60}
           showMultiDayTimes
