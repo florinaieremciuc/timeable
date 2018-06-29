@@ -43,7 +43,7 @@ class ListRisks extends React.Component {
   }
 
   render() {
-    const { role, risks } = this.props;
+    const { role, risks, editable } = this.props;
     return (
       <div>
         {risks.length > 0 ? (
@@ -55,7 +55,9 @@ class ListRisks extends React.Component {
                 <Table.HeaderCell>Probability</Table.HeaderCell>
                 <Table.HeaderCell>Impact</Table.HeaderCell>
                 <Table.HeaderCell>Response</Table.HeaderCell>
-                {role === 'teamlead' ? <Table.HeaderCell>Delete</Table.HeaderCell> : null}
+                {role === 'teamlead' && editable ? (
+                  <Table.HeaderCell>Delete</Table.HeaderCell>
+                ) : null}
               </Table.Row>
             </Table.Header>
             <Table.Body>
@@ -68,7 +70,7 @@ class ListRisks extends React.Component {
                   <Table.Cell>{ListRisks.selectText(risk.probability, true)}</Table.Cell>
                   <Table.Cell>{ListRisks.selectText(risk.impact)}</Table.Cell>
                   <Table.Cell style={{ textTransform: 'capitalize' }}>{risk.response}</Table.Cell>
-                  {role === 'teamlead' ? (
+                  {role === 'teamlead' && editable ? (
                     <Table.Cell>
                       <Icon size="large" name="trash" onClick={() => this.deleteRisk(risk.id)} />
                     </Table.Cell>
@@ -93,4 +95,5 @@ ListRisks.propTypes = {
   role: PropTypes.string.isRequired,
   deleteRiskAttempt: PropTypes.func.isRequired,
   risks: PropTypes.arrayOf(riskPropType).isRequired,
+  editable: PropTypes.bool.isRequired,
 };
