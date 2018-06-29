@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import Projects from './components/Home';
 import Teams from './components/Teams';
+import Risks from './components/Risks';
 import Events from './components/Events';
 import Profile from './components/Profile';
 import Menu from '../../components/Menu';
@@ -24,6 +25,8 @@ class Dashboard extends React.Component {
       return <Profile />;
     case '/teams':
       return <Teams />;
+    case '/risks-overview/:projectid':
+      return <Risks projectid={this.props.project} />;
     case '/events':
       return <Events />;
     case '/':
@@ -53,4 +56,5 @@ class Dashboard extends React.Component {
 export default Dashboard;
 Dashboard.propTypes = {
   path: PropTypes.string.isRequired,
+  project: PropTypes.number.isRequired,
 };
