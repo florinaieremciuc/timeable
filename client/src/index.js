@@ -29,6 +29,7 @@ ReactDOM.render(
             <Route exact path="/projects" component={App} />
             <Route exact path="/teams" component={App} />
             <Route exact path="/events" component={App} />
+            <Route exact path="/calendar" component={App} />
             <Route exact path="/profile/:username" component={App} />
             <Route exact path="/risks-overview/:projectid" component={App} />
 
