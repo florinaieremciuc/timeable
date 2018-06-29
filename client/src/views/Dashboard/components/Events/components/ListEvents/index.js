@@ -3,6 +3,7 @@ import { Icon, Table } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import Moment from 'react-moment';
 
 import { deleteEventAttempt } from '../../../../../../State/Events/delete/actions';
 
@@ -43,7 +44,9 @@ class ListEvents extends React.Component {
                 <Table.Row>
                   <Table.Cell style={{ textTransform: 'capitalize' }}>{event.name}</Table.Cell>
                   <Table.Cell style={{ textTransform: 'capitalize' }}>{event.topic}</Table.Cell>
-                  <Table.Cell style={{ textTransform: 'capitalize' }}>{event.date}</Table.Cell>
+                  <Table.Cell style={{ textTransform: 'capitalize' }}>
+                    <Moment parse="YYYY-MM-DD HH:mm">{event.date}</Moment>
+                  </Table.Cell>
                   <Table.Cell style={{ textTransform: 'capitalize' }}>{event.details}</Table.Cell>
                   <Table.Cell style={{ textTransform: 'capitalize' }}>{event.place}</Table.Cell>
                   <Table.Cell style={{ textTransform: 'capitalize' }}>{event.extra}</Table.Cell>

@@ -145,6 +145,11 @@ class AddEvent extends React.Component {
             <DatePicker
               required
               id="date"
+              showTimeSelect
+              timeFormat="HH:mm"
+              timeIntervals={15}
+              dateFormat="LLL"
+              timeCaption="time"
               onChange={this.handleChangeDate}
               minDate={moment()}
               placeholderText="Select the date"
@@ -189,6 +194,6 @@ export default connect(
   { createEventAttempt },
 )(AddEvent);
 AddEvent.propTypes = {
-  project: PropTypes.string.isRequired,
   createEventAttempt: PropTypes.func.isRequired,
+  team: PropTypes.number.isRequired,
 };
