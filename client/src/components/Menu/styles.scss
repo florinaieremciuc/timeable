@@ -1,13 +1,50 @@
 @import "../../utilities/variables";
 
-.ui.sidebar.menu.left {
-  background: $header-bg-color;
-  color: $header-text-color;
-}
 .icon.side-menu {
   position: absolute;
   z-index: 1;
   left: 4%;
   top: 5.5%;
   background: none;
+}
+.ui.vertical.menu .dropdown.item .menu {
+  left: 0;
+  &.transition.visible {
+    border-top-right-radius: 0;
+    width: 90%;
+    top: 182%;
+    right: 0;
+    left: 0;
+    background: #5c5c5c;
+    margin-left: 32px;
+    .item a {
+      color: rgba(255, 255, 255, 0.9) !important;
+    }
+  }
+}
+.ui.sidebar.menu.left.thin {
+  background: $header-bg-color;
+  color: $header-text-color;
+  width: 190px;
+  .ui.item.dropdown {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    &:hover,
+    &:active,
+    &:visited,
+    &:focus,
+    &:focus-within {
+      background: none;
+    }
+    div.text {
+      color: rgba(255, 255, 255, 0.9) !important;
+    }
+    .icon {
+      font-size: 1em !important;
+      margin: 0 $base-spacing-xs !important;
+    }
+  }
 }

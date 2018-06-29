@@ -1,18 +1,46 @@
 import React, { Component } from 'react';
-import { Sidebar, Menu, Icon } from 'semantic-ui-react';
+import { Sidebar, Menu, Icon, Dropdown, List } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import _ from 'lodash';
+
+import { isAttempting as isAttemptingDelete } from '../../State/Projects/delete/reducer';
+import {
+  getData,
+  isAttempting as projectLoading,
+  projectPropType,
+} from '../../State/Projects/create/reducer';
+import { getItems, isAttempting } from '../../State/Projects/get/reducer';
+import { getProjectsAttempt, getUsersProjectsAttempt } from '../../State/Projects/get/actions';
+import { getTeam, getRole, getUserId, getUsername } from '../../State/Users/login/reducers';
 
 import './styles.css';
 
 class Sidemenu extends Component {
+  componentWillMount() {
+    const { role, teamid, user } = this.props;
+    if (role === 'teamlead') {
+      this.props.getProjectsAttempt(teamid);
+    } else {
+      this.props.getUsersProjectsAttempt(user);
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if ((!_.isNil(nextProps.project) && _.isNil(nextProps.project.id)) || nextProps.loadDelete) {
+      nextProps.getProjectsAttempt(nextProps.teamid);
+    }
+  }
+
   render() {
+    const { username, visible, projects } = this.props;
     return (
       <Sidebar
         as={Menu}
         animation="push"
         width="thin"
-        visible={this.props.visible}
+        visible={visible}
         icon="labeled"
         vertical
         inverted
@@ -29,10 +57,30 @@ class Sidemenu extends Component {
             Team
           </Link>
         </Menu.Item>
+        <Menu.Item name="risks">
+          <Dropdown item icon="rain" text="Risks">
+            <Dropdown.Menu>
+              {projects.map(project => (
+                <Dropdown.Item>
+                  <Link to={`/risks-overview/${project.id}`}>
+                    <Icon name="hashtag" />
+                    {project.name}
+                  </Link>
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
+        </Menu.Item>
         <Menu.Item name="checked calendar">
           <Link to="/events">
             <Icon name="checked calendar" />
-            Clendar
+            Calendar
+          </Link>
+        </Menu.Item>
+        <Menu.Item name="profile">
+          <Link to={`/profile/${username}`}>
+            <Icon name="user" />
+            Profile
           </Link>
         </Menu.Item>
       </Sidebar>
@@ -40,7 +88,34 @@ class Sidemenu extends Component {
   }
 }
 
-export default Sidemenu;
+const mapStateToProps = state => ({
+  project: getData(state.project),
+  loadingProject: projectLoading(state.project),
+  loading: isAttempting(state.projects),
+  loadDelete: isAttemptingDelete(state.deleteProject),
+  projects: getItems(state.projects),
+  user: getUserId(state.user),
+  teamid: getTeam(state.user),
+  role: getRole(state.user),
+  username: getUsername(state.user),
+});
+export default connect(
+  mapStateToProps,
+  { getProjectsAttempt, getUsersProjectsAttempt },
+)(Sidemenu);
+
 Sidemenu.propTypes = {
   visible: PropTypes.bool.isRequired,
+  project: projectPropType,
+  projects: PropTypes.arrayOf(projectPropType).isRequired,
+  loadDelete: PropTypes.number.isRequired,
+  getProjectsAttempt: PropTypes.func.isRequired,
+  getUsersProjectsAttempt: PropTypes.func.isRequired,
+  user: PropTypes.number.isRequired,
+  teamid: PropTypes.number.isRequired,
+  role: PropTypes.string.isRequired,
+  username: PropTypes.string.isRequired,
+};
+Sidemenu.defaultProps = {
+  project: null,
 };
