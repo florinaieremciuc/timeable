@@ -38,7 +38,7 @@ class App extends Component {
             </div>
           </Container>
         ) : (
-          <Dashboard path={match.path} />
+          <Dashboard path={match.path} project={match.params.projectid} />
         )}
       </div>
     );
@@ -49,7 +49,10 @@ const mapStateToProps = state => ({
   isAuthenticated: isAuthenticated(state.user),
   username: getUsername(state.user),
 });
-export default connect(mapStateToProps, { logout })(App);
+export default connect(
+  mapStateToProps,
+  { logout },
+)(App);
 
 App.propTypes = {
   isAuthenticated: PropTypes.bool.isRequired,
