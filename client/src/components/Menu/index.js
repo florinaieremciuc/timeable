@@ -51,12 +51,29 @@ class Sidemenu extends Component {
             Projects
           </Link>
         </Menu.Item>
+
         <Menu.Item name="users">
           <Link to="/teams">
             <Icon name="users" />
             Team
           </Link>
         </Menu.Item>
+
+        <Menu.Item name="targets">
+          <Dropdown item icon="check circle" text="Targets">
+            <Dropdown.Menu>
+              {projects.map(project => (
+                <Dropdown.Item>
+                  <Link to={`/targets-overview/${project.id}`}>
+                    <Icon name="hashtag" />
+                    {project.name}
+                  </Link>
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
+        </Menu.Item>
+
         <Menu.Item name="risks">
           <Dropdown item icon="rain" text="Risks">
             <Dropdown.Menu>
@@ -71,12 +88,51 @@ class Sidemenu extends Component {
             </Dropdown.Menu>
           </Dropdown>
         </Menu.Item>
-        <Menu.Item name="checked calendar">
+
+        <Menu.Item name="activities">
+          <Dropdown item icon="tasks" text="Activities">
+            <Dropdown.Menu>
+              {projects.map(project => (
+                <Dropdown.Item>
+                  <Link to={`/activities-overview/${project.id}`}>
+                    <Icon name="hashtag" />
+                    {project.name}
+                  </Link>
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
+        </Menu.Item>
+
+        <Menu.Item name="devices">
+          <Dropdown item icon="computer" text="Devices">
+            <Dropdown.Menu>
+              {projects.map(project => (
+                <Dropdown.Item>
+                  <Link to={`/devices-overview/${project.id}`}>
+                    <Icon name="hashtag" />
+                    {project.name}
+                  </Link>
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
+        </Menu.Item>
+
+        <Menu.Item name="events">
           <Link to="/events">
-            <Icon name="checked calendar" />
+            <Icon name="calendar check" />
+            Events
+          </Link>
+        </Menu.Item>
+
+        <Menu.Item name="calendar">
+          <Link to="/calendar">
+            <Icon name="calendar alternate" />
             Calendar
           </Link>
         </Menu.Item>
+
         <Menu.Item name="profile">
           <Link to={`/profile/${username}`}>
             <Icon name="user" />
