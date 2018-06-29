@@ -1,0 +1,9 @@
+@import "../../../../utilities/base";
+.calendar {
+  height: 80vh;
+  width: 80vw;
+  margin-left: 10%;
+  h1 {
+    margin: $base-spacing-xmd 0;
+  }
+}

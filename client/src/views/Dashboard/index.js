@@ -6,6 +6,7 @@ import Projects from './components/Home';
 import Teams from './components/Teams';
 import Risks from './components/Risks';
 import Events from './components/Events';
+import Calendar from './components/Calendar';
 import Profile from './components/Profile';
 import Menu from '../../components/Menu';
 
@@ -20,15 +21,18 @@ class Dashboard extends React.Component {
   }
 
   setView() {
-    switch (this.props.path) {
+    const { path, project } = this.props;
+    switch (path) {
     case '/profile/:username':
       return <Profile />;
     case '/teams':
       return <Teams />;
     case '/risks-overview/:projectid':
-      return <Risks projectid={this.props.project} />;
+      return <Risks projectid={project} />;
     case '/events':
       return <Events />;
+    case '/calendar':
+      return <Calendar />;
     case '/':
       return <Projects />;
     default:
