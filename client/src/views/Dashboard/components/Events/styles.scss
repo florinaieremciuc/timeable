@@ -1,0 +1,14 @@
+@import "../../../../utilities/base";
+
+.events {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  h1 {
+    margin: $base-spacing-xmd 0;
+  }
+  table.ui.celled.table {
+    margin: $base-spacing-xmd 0;
+    width: 90vw;
+  }
+}

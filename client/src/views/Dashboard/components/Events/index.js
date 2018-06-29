@@ -1,78 +1,70 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import moment from 'moment';
-import BigCalendar from 'react-big-calendar';
-import 'react-big-calendar/lib/css/react-big-calendar.css';
 
-import { projectPropType } from '../../../../State/Projects/create/reducer';
-import { getItems, isAttempting } from '../../../../State/Projects/get/reducer';
 import {
-  getProjectsAttempt,
-  getUsersProjectsAttempt,
-} from '../../../../State/Projects/get/actions';
-import { getTeam, getRole, getUserId } from '../../../../State/Users/login/reducers';
+  isAttempting as attemptCreate,
+  eventPropType,
+} from '../../../../State/Events/create/reducer';
+import { getEventsAttempt } from '../../../../State/Events/get/actions';
+import {
+  getItems as getEvents,
+  isAttempting as attemptGet,
+} from '../../../../State/Events/get/reducer';
+import { isAttempting as attemptDelete } from '../../../../State/Events/delete/reducer';
 
-import './style.css';
+import { getTeam, getRole } from '../../../../State/Users/login/reducers';
+
+import AddEvent from './components/AddEvent';
+import ListEvents from './components/ListEvents';
+
+import './styles.css';
 
 class Events extends React.Component {
-  static allViews() {
-    return Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k]);
+  componentWillMount() {
+    const { teamid } = this.props;
+    this.props.getEventsAttempt(teamid);
   }
 
-  componentWillMount() {
-    const { role, teamid, user } = this.props;
-    if (role === 'teamlead') {
-      this.props.getProjectsAttempt(teamid);
-    } else {
-      this.props.getUsersProjectsAttempt(user);
+  componentWillReceiveProps(nextProps) {
+    const {
+      loadCreate, loadDelete, loadGet, teamid,
+    } = nextProps;
+    if (loadCreate > 0 || loadDelete > 0 || loadGet > 0) {
+      nextProps.getEventsAttempt(teamid);
     }
   }
 
   render() {
-    BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
-    const { projects } = this.props;
-    const events = projects.map((project) => {
-      const item = Object.assign({
-        id: project.id,
-        title: project.name,
-        start: new Date(project.startDate),
-        end: new Date(project.deadline),
-      });
-      return item;
-    });
+    const { teamid, events, role } = this.props;
     return (
       <div className="events">
-        <h1>Events List</h1>
-        <BigCalendar
-          popup
-          events={events}
-          step={60}
-          showMultiDayTimes
-          defaultDate={new Date()}
-          views={Events.allViews}
-        />
+        <h1>Events</h1>
+        {role === 'teamlead' ? <AddEvent team={teamid} /> : null}
+        <ListEvents events={events} role={role} />
       </div>
     );
   }
 }
 const mapStateToProps = state => ({
-  loading: isAttempting(state.projects),
-  projects: getItems(state.projects),
-  user: getUserId(state.user),
+  loadCreate: attemptCreate(state.event),
+  events: getEvents(state.events),
+  loadGet: attemptGet(state.events),
+  loadDelete: attemptDelete(state.deleteEvent),
   teamid: getTeam(state.user),
   role: getRole(state.user),
 });
 export default connect(
   mapStateToProps,
-  { getProjectsAttempt, getUsersProjectsAttempt },
+  { getEventsAttempt },
 )(Events);
 
 Events.propTypes = {
-  projects: PropTypes.arrayOf(projectPropType).isRequired,
-  getProjectsAttempt: PropTypes.func.isRequired,
-  getUsersProjectsAttempt: PropTypes.func.isRequired,
-  user: PropTypes.number.isRequired,
   teamid: PropTypes.number.isRequired,
   role: PropTypes.string.isRequired,
+  events: PropTypes.arrayOf(eventPropType).isRequired,
+  getEventsAttempt: PropTypes.func.isRequired,
+  loadCreate: PropTypes.number.isRequired,
+  loadDelete: PropTypes.number.isRequired,
+  loadGet: PropTypes.number.isRequired,
 };
