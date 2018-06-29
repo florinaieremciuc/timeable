@@ -17,6 +17,10 @@ import watchDeleteProjectAttempt from './State/Projects/delete/watcher';
 import { watchGetProjectsAttempt, watchGetUserProjectsAttempt } from './State/Projects/get/watcher';
 import watchCreateProjectAttempt from './State/Projects/create/watcher';
 
+import watchDeleteEventAttempt from './State/Events/delete/watcher';
+import watchGetEventsAttempt from './State/Events/get/watcher';
+import watchCreateEventAttempt from './State/Events/create/watcher';
+
 import watchGetTeamAttempt from './State/Teams/get/watcher';
 import watchCreateTeamAttempt from './State/Teams/create/watcher';
 
@@ -46,6 +50,10 @@ export default function* root() {
   yield fork(watchGetProjectsAttempt);
   yield fork(watchGetUserProjectsAttempt);
   yield fork(watchCreateProjectAttempt);
+
+  yield fork(watchDeleteEventAttempt);
+  yield fork(watchGetEventsAttempt);
+  yield fork(watchCreateEventAttempt);
 
   yield fork(watchGetTeamAttempt);
   yield fork(watchCreateTeamAttempt);

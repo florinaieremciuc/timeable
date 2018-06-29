@@ -10,6 +10,11 @@ import { routerMiddleware } from 'react-router-redux';
 
 import sagas from './sagas';
 
+// CRUD ops for events
+import deleteEvent from './State/Events/delete/reducer';
+import events from './State/Events/get/reducer';
+import event from './State/Events/create/reducer';
+
 // CRD from risks
 import newRisk from './State/Risks/create/reducer';
 import risks from './State/Risks/get/reducer';
@@ -42,6 +47,27 @@ import modalVisible from './components/Modal/reducer';
 const history = createHistory();
 const defaultState = {
   modalVisible: false,
+  deleteEvent: {
+    sync: {
+      attempting: 0,
+      error: null,
+      success: null,
+    },
+  },
+  events: {
+    items: [],
+    sync: {
+      attempting: 0,
+      error: null,
+    },
+  },
+  event: {
+    data: null,
+    sync: {
+      attempting: 0,
+      error: null,
+    },
+  },
   newRisk: {
     data: {},
     sync: {
@@ -178,6 +204,9 @@ const rootPersistConfig = {
   storage,
   blacklist: [
     'modalVisible',
+    'deleteEvent',
+    'events',
+    'event',
     'newRisk',
     'risks',
     'deleteRisk',
@@ -203,6 +232,15 @@ const persistConfig = {
 
 const rootReducer = persistCombineReducers(rootPersistConfig, {
   modalVisible,
+  deleteEvent,
+  events: persistReducer(
+    {
+      key: 'events',
+      ...persistConfig,
+    },
+    events,
+  ),
+  event,
   newRisk,
   risks,
   deleteRisk,
