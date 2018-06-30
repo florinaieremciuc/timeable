@@ -151,5 +151,5 @@ a {
   padding: 0;
   box-sizing: border-box; }
 
-.ui.small.modal.transition.visible.active {
+.add-event-form.ui.small.modal.transition.visible.active {
   margin-top: -90vh !important; }

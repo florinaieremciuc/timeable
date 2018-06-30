@@ -110,7 +110,7 @@ class AddEvent extends React.Component {
 
     return (
       <Modal
-        style={{ marginTop: '-90vh!important' }}
+        className="add-event-form"
         closeIcon
         dimmer={false}
         open={open}
