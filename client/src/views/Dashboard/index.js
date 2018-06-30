@@ -7,6 +7,7 @@ import Teams from './components/Teams';
 import Risks from './components/Risks';
 import Events from './components/Events';
 import Calendar from './components/Calendar';
+import Devices from './components/Devices';
 import Profile from './components/Profile';
 import Menu from '../../components/Menu';
 
@@ -29,6 +30,8 @@ class Dashboard extends React.Component {
       return <Teams />;
     case '/risks-overview/:projectid':
       return <Risks projectid={project} />;
+    case '/devices-overview/:projectid':
+      return <Devices projectid={project} />;
     case '/events':
       return <Events />;
     case '/calendar':
