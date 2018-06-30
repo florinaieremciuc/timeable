@@ -1,5 +1,9 @@
 import { fork } from 'redux-saga/effects';
 
+import watchCreateDeviceAttempt from './State/Devices/create/watcher';
+import watchGetDevicesAttempt from './State/Devices/get/watcher';
+import watchDeleteDeviceAttempt from './State/Devices/delete/watcher';
+
 import watchCreateRiskAttempt from './State/Risks/create/watcher';
 import watchGetRisksAttempt from './State/Risks/get/watcher';
 import watchDeleteRiskAttempt from './State/Risks/delete/watcher';
@@ -32,6 +36,10 @@ import watchGetUserAttempt from './State/Users/user/watcher';
 
 // start the daemons
 export default function* root() {
+  yield fork(watchCreateDeviceAttempt);
+  yield fork(watchGetDevicesAttempt);
+  yield fork(watchDeleteDeviceAttempt);
+
   yield fork(watchCreateRiskAttempt);
   yield fork(watchGetRisksAttempt);
   yield fork(watchDeleteRiskAttempt);
