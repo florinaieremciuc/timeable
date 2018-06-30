@@ -12,6 +12,7 @@ const projectsRoute = require('./routes/projects');
 const tasksRoute = require('./routes/tasks');
 const risksRoute = require('./routes/risks');
 const eventsRoute = require('./routes/events');
+const devicesRoute = require('./routes/devices');
 
 app.use([
   cors({
@@ -31,6 +32,7 @@ app.use('/projects', projectsRoute);
 app.use('/tasks', tasksRoute);
 app.use('/risks', risksRoute);
 app.use('/events', eventsRoute);
+app.use('/devices', devicesRoute);
 
 app.use((error, req, res, next) => {
   if (!error) {
