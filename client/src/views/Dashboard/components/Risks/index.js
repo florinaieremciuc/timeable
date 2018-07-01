@@ -2,11 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Icon, Button, Container, Header, Divider } from 'semantic-ui-react';
+import { Button, Container } from 'semantic-ui-react';
 import 'react-router-modal/css/react-router-modal.css';
 
 import { openModal, closeModal } from '../../../../components/Modal/action';
-import AddRisk from '../../../../components/Risks/components/AddRisk';
 
 import { getRole } from '../../../../State/Users/login/reducers';
 
@@ -47,7 +46,13 @@ class Risks extends React.Component {
         <h1>Risks overview</h1>
         <Container>
           {risks.length > 0 ? <RisksChart risks={risks} /> : null}
-          <ListRisks editable={false} open={modalVisible} project={projectid} risks={risksToList} role={role} />
+          <ListRisks
+            editable={false}
+            open={modalVisible}
+            project={projectid}
+            risks={risksToList}
+            role={role}
+          />
           {role === 'teamlead' ? (
             <Link to={`/risks/${projectid}`}>
               <Button>Edit risks</Button>
