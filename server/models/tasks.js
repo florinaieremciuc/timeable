@@ -60,7 +60,7 @@ module.exports = {
       .innerJoin('users_tasks', 'tasks.id', 'users_tasks.task_id')
       .innerJoin('users', 'users_tasks.user_id', 'users.id')
       .where('users.team', teamid)
-      .groupBy('tasks.name')
+      .groupBy('tasks.name', 'users_tasks.user_id')
       .then((tasks) => {
         if (!tasks || tasks.length === 0) return { error: 'No tasks assigned' };
         return tasks;
