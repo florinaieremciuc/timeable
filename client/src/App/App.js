@@ -38,7 +38,7 @@ class App extends Component {
             </div>
           </Container>
         ) : (
-          <Dashboard path={match.path} project={match.params.projectid} />
+          <Dashboard path={match.path} params={match.params} />
         )}
       </div>
     );

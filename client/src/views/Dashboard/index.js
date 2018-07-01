@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import Projects from './components/Home';
 import Teams from './components/Teams';
 import Risks from './components/Risks';
+import Activities from './components/Activities';
 import Events from './components/Events';
 import Calendar from './components/Calendar';
 import Devices from './components/Devices';
@@ -22,16 +23,18 @@ class Dashboard extends React.Component {
   }
 
   setView() {
-    const { path, project } = this.props;
+    const { path, params } = this.props;
     switch (path) {
     case '/profile/:username':
       return <Profile />;
     case '/teams':
       return <Teams />;
     case '/risks-overview/:projectid':
-      return <Risks projectid={project} />;
+      return <Risks projectid={params.project} />;
+    case '/tasks-overview/:user/:project':
+      return <Activities params={params} />;
     case '/devices-overview/:projectid':
-      return <Devices projectid={project} />;
+      return <Devices projectid={params.project} />;
     case '/events':
       return <Events />;
     case '/calendar':
@@ -63,5 +66,8 @@ class Dashboard extends React.Component {
 export default Dashboard;
 Dashboard.propTypes = {
   path: PropTypes.string.isRequired,
-  project: PropTypes.number.isRequired,
+  params: PropTypes.shape({
+    project: PropTypes.string.isRequired,
+    user: PropTypes.string,
+  }).isRequired,
 };

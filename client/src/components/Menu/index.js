@@ -34,7 +34,7 @@ class Sidemenu extends Component {
   }
 
   render() {
-    const { username, visible, projects } = this.props;
+    const { username, visible, projects, user } = this.props;
     return (
       <Sidebar
         as={Menu}
@@ -94,7 +94,7 @@ class Sidemenu extends Component {
             <Dropdown.Menu>
               {projects.map(project => (
                 <Dropdown.Item>
-                  <Link to={`/activities-overview/${project.id}`}>
+                  <Link to={`/tasks-overview/${user}/${project.id}`}>
                     <Icon name="hashtag" />
                     {project.name}
                   </Link>
