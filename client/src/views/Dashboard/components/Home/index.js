@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Header, Card, Icon, Button } from 'semantic-ui-react';
+import { Container, Header, Card, Icon, Button, Popup } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -69,7 +69,12 @@ class Projects extends React.Component {
                     <Card.Header>
                       <Header content={project.name} />
                       {role === 'teamlead' ? (
-                        <Icon size="big" name="trash" onClick={() => this.delete(project.id)} />
+                        <Popup
+                          trigger={
+                            <Icon size="big" name="trash" onClick={() => this.delete(project.id)} />
+                          }
+                          content="Delete project"
+                        />
                       ) : null}
                     </Card.Header>
                     <Card.Content extra>
@@ -86,11 +91,17 @@ class Projects extends React.Component {
                     </Card.Content>
                     <Card.Description content={project.description} />
                     <Card.Content>
-                      <Link to={`/tasks/${project.id}`}>
-                        <Button>Activity list</Button>
+                      <Link to={`/targets/${project.id}`}>
+                        <Popup trigger={<Icon name="target" size="big" />} content="Targets" />
                       </Link>
                       <Link to={`/risks/${project.id}`}>
-                        <Icon name="rain" size="big" />
+                        <Popup trigger={<Icon name="rain" size="big" />} content="Risks" />
+                      </Link>
+                      <Link to={`/tasks/${project.id}`}>
+                        <Popup
+                          trigger={<Icon name="clipboard list" size="big" />}
+                          content="Activity list"
+                        />
                       </Link>
                     </Card.Content>
                   </Card>
