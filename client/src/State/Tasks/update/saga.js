@@ -47,8 +47,8 @@ export function* updateDurationSaga({ id, duration }) {
     const response = yield call(updateDuration, id, duration);
     if (response && response.errno) {
       yield put(updateDurationFailure(response));
-    } else if (response && response[0]) {
-      yield put(updateDurationSuccess(response[0]));
+    } else if (response && response.ok) {
+      yield put(updateDurationSuccess(response.ok));
     } else {
       yield put(updateDurationFailure('Unable to update task, please contact support.'));
     }
