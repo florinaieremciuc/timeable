@@ -1,0 +1,14 @@
+@import "../../utilities/variables";
+
+.react-router-modal__container.targets {
+  z-index: 0;
+  .react-router-modal__modal {
+    height: 99vh;
+    width: 99vw;
+    padding: 20px 10px;
+    .divider {
+      margin-top: $base-spacing-xsm;
+      margin-bottom: $base-spacing-md;
+    }
+  }
+}
