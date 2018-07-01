@@ -37,6 +37,17 @@ export const getAssignedTasks = teamid =>
   }).then(response => response.json());
 
 /**
+ * Call API to get assigned tasks.
+ */
+export const getUsersTasksperProject = (user, project) =>
+  fetch(`${config.API_URL}/tasks/assigned_overview/${user}/${project}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).then(response => response.json());
+
+/**
  * Call API to get a projects's tasks.
  * @param {Number} projectid
  */
@@ -100,7 +111,6 @@ export const removeAssignee = (task, assignee) => {
     task,
     assignee,
   };
-  console.log('BA ESTI PROST', task, assignee);
   return fetch(`${config.API_URL}/tasks/remove/assignee`, {
     method: 'DELETE',
     headers: {
