@@ -27,6 +27,7 @@ class Profile extends React.Component {
     const {
       userData, projects, members, team,
     } = this.props;
+    const teamMates = members.filter(member => member.id !== userData.id);
     return (
       <div>
         <Container className="profile">
@@ -57,7 +58,7 @@ class Profile extends React.Component {
                 </Card.Content>
                 <Card.Content extra>
                   Your team mates:&nbsp;
-                  {members.map(member => (
+                  {teamMates.map(member => (
                     <Label style={{ textTransform: 'capitalize' }} key={member.id}>
                       {`${member.first_name} ${member.last_name}`}
                     </Label>
