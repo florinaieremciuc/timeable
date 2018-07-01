@@ -67,6 +67,21 @@ module.exports = {
       })
       .catch(error => error);
   },
+  getUsersTasksperProject(user, project) {
+    console.log(`Get user's ${user} tasks on project ${project}`);
+    return knex
+      .select('tasks.id', 'name', 'duration', 'description', 'status', 'priority', 'estimate')
+      .from('tasks')
+      .innerJoin('users_tasks', 'users_tasks.task_id', 'tasks.id')
+      .where('tasks.project', project)
+      .andWhere('users_tasks.user_id', user)
+      .groupBy('tasks.id')
+      .then((tasks) => {
+        if (!tasks || tasks.length === 0) return { error: 'No tasks assigned' };
+        return tasks;
+      })
+      .catch(error => error);
+  },
   getUnassigned(teamid) {
     console.log(`Get unassigned tasks from team having id ${teamid}`);
     const subQuery = knex.select('task_id').from('users_tasks');

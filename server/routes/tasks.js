@@ -12,6 +12,14 @@ router.get('/assigned/:teamid', (req, res) => {
     .catch(err => res.send(err));
 });
 
+/* GET assigned tasks */
+router.get('/assigned_overview/:user/:project', (req, res) => {
+  tasksModel
+    .getUsersTasksperProject(req.params.user, req.params.project)
+    .then(tasks => res.send(tasks))
+    .catch(err => res.send(err));
+});
+
 /* GET list of tasks from a project. */
 router.get('/:projectid', (req, res) => {
   tasksModel
