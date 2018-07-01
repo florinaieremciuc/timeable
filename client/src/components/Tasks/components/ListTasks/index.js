@@ -61,27 +61,30 @@ class ListTasks extends React.Component {
   }
   dropdown(task) {
     const { role, members } = this.props;
-    if (role === 'teamlead') {
-      const options = [];
-      members.map((member, i) => {
-        const option = {};
-        option.key = i;
-        option.text = member.first_name + ' ' + member.last_name + ' (' + member.role + ')';
-        option.value = member.id;
-        options.push(option);
-        return null;
-      });
-
-      return (
-        <Dropdown
-          onChange={(e, { value, text }) => this.handleChange(e, { value, text }, task.id)}
-          options={options}
-          placeholder="Choose an option"
-          selection
-        />
-      );
+    if (members.length > 1) {
+      if (role === 'teamlead') {
+        const options = [];
+        members.map((member, i) => {
+          const option = {};
+          option.key = i;
+          option.text = member.first_name + ' ' + member.last_name + ' (' + member.role + ')';
+          option.value = member.id;
+          options.push(option);
+          return null;
+        });
+        return (
+          <Dropdown
+            onChange={(e, { value, text }) => this.handleChange(e, { value, text }, task.id)}
+            options={options}
+            placeholder="Choose an option"
+            selection
+          />
+        );
+      }
+    } else {
+      return <Label>None</Label>;
     }
-    return <Label>None</Label>;
+    return null;
   }
   deleteTask(id) {
     _.remove(this.props.tasks, task => task.id !== id);
@@ -108,10 +111,11 @@ class ListTasks extends React.Component {
                   <List.Header>
                     <Label>{task.name}</Label>
                   </List.Header>
-                  <List.Content>
+                  {task.description &&
+                    <List.Content>
                     Description:&nbsp;<strong>{task.description}</strong>
                     &nbsp;&nbsp;
-                  </List.Content>
+                    </List.Content>}
                   {assignees.length > 0 && <Assignees
                     deleteAssignee={this.props.deleteAssigneeAttempt}
                     assignees={
