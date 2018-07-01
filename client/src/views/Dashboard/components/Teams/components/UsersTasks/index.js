@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Segment, List, Select, Popup } from 'semantic-ui-react';
+import { Card, Segment, List, Popup } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
 import { userPropType } from '../../../../../../State/Users/login/reducers';
@@ -31,34 +31,11 @@ const UsersTasks = (props) => {
       return 'IN PROGRESS';
     case 'testing':
       return 'TESTING';
-    case 'DONE':
+    case 'done':
       return 'DONE';
     default:
-      return 'TO_DO';
+      return 'TO DO';
     }
-  };
-
-  const handleChangeStatus = (event, data, taskId) => {
-    if (data.value) props.updateStatusAttempt(taskId, data.value);
-  };
-
-  const updateStatus = (taskId, status, assignee, userid) => {
-    if (assignee === userid) {
-      return (
-        <Select
-          name="update-status"
-          value={status}
-          options={[
-            { key: 0, text: 'IN PROGRESS', value: 'doing' },
-            { key: 1, text: 'TESTING', value: 'testing' },
-            { key: 2, text: 'DONE', value: 'done' },
-          ]}
-          onChange={(event, data) => handleChangeStatus(event, data, taskId)}
-          required
-        />
-      );
-    }
-    return <div>Status: {selectStatus(status)}</div>;
   };
 
   const getUserTasks = id => tasks.filter(task => task.user_id === id);
@@ -89,7 +66,17 @@ const UsersTasks = (props) => {
                       trigger={<List.Header>{task.name}</List.Header>}
                       content={task.description}
                     />
-                    <div>{updateStatus(task.id, task.status, task.user_id, user.id)}</div>
+                    <div>
+                      Estimate: <strong>{task.estimate}</strong>
+                    </div>
+                    {task.duration && (
+                      <div>
+                        Duration: <strong>{task.duration}</strong>
+                      </div>
+                    )}
+                    <div>
+                      Status: <strong>{selectStatus(task.status)}</strong>
+                    </div>
                   </List.Content>
                 </List.Item>
               ))}
@@ -111,5 +98,4 @@ UsersTasks.propTypes = {
   member: userPropType,
   user: userPropType.isRequired,
   tasks: PropTypes.arrayOf(taskPropType).isRequired,
-  updateStatusAttempt: PropTypes.func.isRequired,
 };
