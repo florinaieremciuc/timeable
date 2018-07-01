@@ -30,11 +30,11 @@ class Dashboard extends React.Component {
     case '/teams':
       return <Teams />;
     case '/risks-overview/:projectid':
-      return <Risks projectid={params.project} />;
+      return <Risks projectid={params.projectid} />;
     case '/tasks-overview/:user/:project':
       return <Activities params={params} />;
     case '/devices-overview/:projectid':
-      return <Devices projectid={params.project} />;
+      return <Devices projectid={params.projectid} />;
     case '/events':
       return <Events />;
     case '/calendar':
