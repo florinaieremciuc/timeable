@@ -4,8 +4,10 @@ import {
   getTasksFailure,
   getAssignedTasksSuccess,
   getAssignedTasksFailure,
+  getUsersTasksperProjectSuccess,
+  getUsersTasksperProjectFailure,
 } from './actions';
-import { getTasks, getAssignedTasks } from '../../../services/Tasks';
+import { getTasks, getAssignedTasks, getUsersTasksperProject } from '../../../services/Tasks';
 
 /**
  * Yield a call to the API for getting the tasks list.
@@ -42,5 +44,24 @@ export function* getAssignedTasksSaga(team) {
     }
   } catch (e) {
     yield put(getAssignedTasksFailure('Unable to connect to the server.'));
+  }
+}
+
+/**
+ * Yield a call to the API for getting the assigned tasks list.
+ * @param {*} Action payload that contains the `name` field
+ */
+export function* getUsersTasksperProjectSaga(action) {
+  try {
+    const response = yield call(getUsersTasksperProject, action.user, action.project);
+    if (response && response.error) {
+      yield put(getUsersTasksperProjectFailure(response));
+    } else if (response && Array(response)) {
+      yield put(getUsersTasksperProjectSuccess(response));
+    } else {
+      yield put(getUsersTasksperProjectFailure('Unable get assigned tasks.'));
+    }
+  } catch (e) {
+    yield put(getUsersTasksperProjectFailure('Unable to connect to the server.'));
   }
 }

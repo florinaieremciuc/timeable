@@ -14,7 +14,11 @@ import {
   watchUpdateDurationAttempt,
 } from './State/Tasks/update/watcher';
 import { watchDeleteTaskAttempt, watchDeleteAssigneeAttempt } from './State/Tasks/delete/watcher';
-import { watchGetTasksAttempt, watchGetAssignedTasksAttempt } from './State/Tasks/get/watcher';
+import {
+  watchGetTasksAttempt,
+  watchGetAssignedTasksAttempt,
+  watchGetUsersTasksperProjectAttempt,
+} from './State/Tasks/get/watcher';
 import watchCreateTaskAttempt from './State/Tasks/create/watcher';
 
 import watchDeleteProjectAttempt from './State/Projects/delete/watcher';
@@ -57,6 +61,7 @@ export default function* root() {
   yield fork(watchDeleteProjectAttempt);
   yield fork(watchGetProjectsAttempt);
   yield fork(watchGetUserProjectsAttempt);
+  yield fork(watchGetUsersTasksperProjectAttempt);
   yield fork(watchCreateProjectAttempt);
 
   yield fork(watchDeleteEventAttempt);

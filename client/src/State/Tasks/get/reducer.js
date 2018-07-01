@@ -25,14 +25,21 @@ const items = (state = INITIAL_STATE.items, action) => {
   case types.GET_ASSIGNED_TASKS_REQUEST: {
     return state;
   }
+  case types.GET_USERS_TASKS_PER_PROJECT_REQUEST: {
+    return state;
+  }
   case types.GET_TASKS_SUCCESS: {
     return action.tasks;
   }
   case types.GET_ASSIGNED_TASKS_SUCCESS: {
     return action.tasks;
   }
+  case types.GET_USERS_TASKS_PER_PROJECT_SUCCESS: {
+    return action.tasks;
+  }
   case types.GET_TASKS_FAILURE:
   case types.GET_ASSIGNED_TASKS_FAILURE:
+  case types.GET_USERS_TASKS_PER_PROJECT_FAILURE:
   case LOGOUT:
     return INITIAL_STATE.items;
   default:
@@ -57,6 +64,11 @@ const sync = (state = INITIAL_STATE.sync, action) => {
       attempting: 1,
       error: null,
     };
+  case types.GET_USERS_TASKS_PER_PROJECT_REQUEST:
+    return {
+      attempting: 1,
+      error: null,
+    };
   case types.GET_TASKS_SUCCESS:
     return {
       attempting: 0,
@@ -67,12 +79,22 @@ const sync = (state = INITIAL_STATE.sync, action) => {
       attempting: 0,
       error: null,
     };
+  case types.GET_USERS_TASKS_PER_PROJECT_SUCCESS:
+    return {
+      attempting: 0,
+      error: null,
+    };
   case types.GET_TASKS_FAILURE:
     return {
       attempting: 0,
       error: action.error,
     };
   case types.GET_ASSIGNED_TASKS_FAILURE:
+    return {
+      attempting: 0,
+      error: action.error,
+    };
+  case types.GET_USERS_TASKS_PER_PROJECT_FAILURE:
     return {
       attempting: 0,
       error: action.error,
