@@ -10,7 +10,13 @@ import { routerMiddleware } from 'react-router-redux';
 
 import sagas from './sagas';
 
-// CRD from risks
+// CRuD from targets
+import newTarget from './State/Targets/create/reducer';
+import targets from './State/Targets/get/reducer';
+import updateTarget from './State/Targets/update/reducer';
+import deleteTarget from './State/Targets/delete/reducer';
+
+// CRD from devices
 import newDevice from './State/Devices/create/reducer';
 import devices from './State/Devices/get/reducer';
 import deleteDevice from './State/Devices/delete/reducer';
@@ -52,6 +58,34 @@ import modalVisible from './components/Modal/reducer';
 const history = createHistory();
 const defaultState = {
   modalVisible: false,
+  newTarget: {
+    data: {},
+    sync: {
+      attempting: 0,
+      error: null,
+    },
+  },
+  targets: {
+    items: [],
+    sync: {
+      attempting: 0,
+      error: null,
+    },
+  },
+  updateTarget: {
+    sync: {
+      attempting: 0,
+      error: null,
+      success: null,
+    },
+  },
+  deleteTarget: {
+    sync: {
+      attempting: 0,
+      error: null,
+      success: null,
+    },
+  },
   newDevice: {
     data: {},
     sync: {
@@ -230,6 +264,10 @@ const rootPersistConfig = {
   storage,
   blacklist: [
     'modalVisible',
+    'newTarget',
+    'targets',
+    'updateTarget',
+    'deleteTarget',
     'newDevice',
     'devices',
     'deleteDevice',
@@ -261,6 +299,16 @@ const persistConfig = {
 
 const rootReducer = persistCombineReducers(rootPersistConfig, {
   modalVisible,
+  newTarget,
+  targets: persistReducer(
+    {
+      key: 'targets',
+      ...persistConfig,
+    },
+    targets,
+  ),
+  updateTarget,
+  deleteTarget,
   newDevice,
   devices: persistReducer(
     {
