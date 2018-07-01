@@ -12,6 +12,7 @@ import registerServiceWorker from './registerServiceWorker';
 import { store, persistor } from './store';
 
 import CreateProject from './components/CreateProjects';
+import Targets from './components/Targets';
 import Risks from './components/Risks';
 import Tasks from './components/Tasks';
 import App from './App/App';
@@ -41,6 +42,7 @@ ReactDOM.render(
             <Route exact path="/new_user/:teamId" component={Register} />
             <Route exact path="/login" component={Login} />
 
+            <ModalRoute exact path="/targets/:projectid" component={Targets} parentPat="/" />
             <ModalRoute exact path="/tasks/:projectid" component={Tasks} parentPath="/" />
             <ModalRoute exact path="/risks/:projectid" component={Risks} parentPath="/" />
             <ModalRoute exact path="/projects/new" component={CreateProject} parentPath="/" />
