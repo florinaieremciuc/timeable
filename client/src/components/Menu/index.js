@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { projectPropType } from '../../State/Projects/create/reducer';
 import { getUsersProjects } from '../../State/Projects/get/reducer';
 import { getUserProjectsAttempt } from '../../State/Projects/get/actions';
-import { getUserId, getUsername } from '../../State/Users/login/reducers';
+import { getUserId, getUsername, getRole } from '../../State/Users/login/reducers';
 
 import './styles.css';
 
@@ -19,7 +19,7 @@ class Sidemenu extends Component {
 
   render() {
     const {
-      username, visible, projects, user,
+      username, visible, projects, user, role,
     } = this.props;
 
     return (
@@ -46,35 +46,39 @@ class Sidemenu extends Component {
           </Link>
         </Menu.Item>
 
-        <Menu.Item name="targets">
-          <Dropdown item icon="check circle" text="Targets">
-            <Dropdown.Menu>
-              {projects.map(project => (
-                <Dropdown.Item>
-                  <Link to={`/targets-overview/${project.id}`}>
-                    <Icon name="hashtag" />
-                    {project.name}
-                  </Link>
-                </Dropdown.Item>
-              ))}
-            </Dropdown.Menu>
-          </Dropdown>
-        </Menu.Item>
+        {role === 'teamlead' && (
+          <Menu.Item name="targets">
+            <Dropdown item icon="check circle" text="Targets">
+              <Dropdown.Menu>
+                {projects.map(project => (
+                  <Dropdown.Item>
+                    <Link to={`/targets-overview/${project.id}`}>
+                      <Icon name="hashtag" />
+                      {project.name}
+                    </Link>
+                  </Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
+          </Menu.Item>
+        )}
 
-        <Menu.Item name="risks">
-          <Dropdown item icon="rain" text="Risks">
-            <Dropdown.Menu>
-              {projects.map(project => (
-                <Dropdown.Item>
-                  <Link to={`/risks-overview/${project.id}`}>
-                    <Icon name="hashtag" />
-                    {project.name}
-                  </Link>
-                </Dropdown.Item>
-              ))}
-            </Dropdown.Menu>
-          </Dropdown>
-        </Menu.Item>
+        {role === 'teamlead' && (
+          <Menu.Item name="risks">
+            <Dropdown item icon="rain" text="Risks">
+              <Dropdown.Menu>
+                {projects.map(project => (
+                  <Dropdown.Item>
+                    <Link to={`/risks-overview/${project.id}`}>
+                      <Icon name="hashtag" />
+                      {project.name}
+                    </Link>
+                  </Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
+          </Menu.Item>
+        )}
 
         <Menu.Item name="activities">
           <Dropdown item icon="tasks" text="Activities">
@@ -91,20 +95,22 @@ class Sidemenu extends Component {
           </Dropdown>
         </Menu.Item>
 
-        <Menu.Item name="devices">
-          <Dropdown item icon="computer" text="Devices">
-            <Dropdown.Menu>
-              {projects.map(project => (
-                <Dropdown.Item>
-                  <Link to={`/devices-overview/${project.id}`}>
-                    <Icon name="hashtag" />
-                    {project.name}
-                  </Link>
-                </Dropdown.Item>
-              ))}
-            </Dropdown.Menu>
-          </Dropdown>
-        </Menu.Item>
+        {role === 'teamlead' && (
+          <Menu.Item name="devices">
+            <Dropdown item icon="computer" text="Equipments">
+              <Dropdown.Menu>
+                {projects.map(project => (
+                  <Dropdown.Item>
+                    <Link to={`/devices-overview/${project.id}`}>
+                      <Icon name="hashtag" />
+                      {project.name}
+                    </Link>
+                  </Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
+          </Menu.Item>
+        )}
 
         <Menu.Item name="events">
           <Link to="/events">
@@ -135,6 +141,7 @@ const mapStateToProps = state => ({
   projects: getUsersProjects(state.projects),
   user: getUserId(state.user),
   username: getUsername(state.user),
+  role: getRole(state.user),
 });
 export default connect(
   mapStateToProps,
@@ -147,4 +154,5 @@ Sidemenu.propTypes = {
   getUserProjectsAttempt: PropTypes.func.isRequired,
   user: PropTypes.number.isRequired,
   username: PropTypes.string.isRequired,
+  role: PropTypes.string.isRequired,
 };

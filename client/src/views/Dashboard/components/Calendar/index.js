@@ -7,14 +7,14 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import _ from 'lodash';
 
 import { projectPropType } from '../../../../State/Projects/create/reducer';
-import { getAllProjects, isAttempting } from '../../../../State/Projects/get/reducer';
+import {
+  getAllProjects,
+  getUsersProjects,
+} from '../../../../State/Projects/get/reducer';
 import { getProjectsAttempt, getUserProjectsAttempt } from '../../../../State/Projects/get/actions';
 
 import { eventPropType } from '../../../../State/Events/create/reducer';
-import {
-  getItems as getEvents,
-  isAttempting as attemptEvents,
-} from '../../../../State/Events/get/reducer';
+import { getItems as getEvents } from '../../../../State/Events/get/reducer';
 import { getEventsAttempt } from '../../../../State/Events/get/actions';
 
 import { getTeam, getRole, getUserId } from '../../../../State/Users/login/reducers';
@@ -38,8 +38,11 @@ class Calendar extends React.Component {
 
   render() {
     BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
-    const { projects, events } = this.props;
-    const projectEvents = projects.map((project) => {
+    const {
+      projects, userProjects, events, role,
+    } = this.props;
+    const projectsToUse = role === 'teamlead' ? projects : userProjects;
+    const projectEvents = projectsToUse.map((project) => {
       const item = Object.assign({
         id: project.id,
         title: project.name,
@@ -74,13 +77,12 @@ class Calendar extends React.Component {
   }
 }
 const mapStateToProps = state => ({
-  loading: isAttempting(state.projects),
   projects: getAllProjects(state.projects),
+  userProjects: getUsersProjects(state.projects),
   user: getUserId(state.user),
   teamid: getTeam(state.user),
   role: getRole(state.user),
   events: getEvents(state.events),
-  loadEvents: attemptEvents(state.events),
 });
 export default connect(
   mapStateToProps,
@@ -89,6 +91,7 @@ export default connect(
 
 Calendar.propTypes = {
   projects: PropTypes.arrayOf(projectPropType).isRequired,
+  userProjects: PropTypes.arrayOf(projectPropType).isRequired,
   getProjectsAttempt: PropTypes.func.isRequired,
   getUserProjectsAttempt: PropTypes.func.isRequired,
   user: PropTypes.number.isRequired,
