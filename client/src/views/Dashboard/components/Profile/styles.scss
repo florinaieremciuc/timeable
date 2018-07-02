@@ -19,5 +19,10 @@
         margin: 0;
       }
     }
+    .extra-content {
+      .ui.label {
+        margin: $base-spacing-xxs;
+      }
+    }
   }
 }

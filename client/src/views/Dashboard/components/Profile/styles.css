@@ -165,3 +165,5 @@ a {
     padding: 16px 0; }
     .ui.container.profile .ui.card .content .header {
       margin: 0; }
+    .ui.container.profile .ui.card .extra-content .ui.label {
+      margin: 2px; }

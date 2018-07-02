@@ -170,3 +170,5 @@ a {
       color: #c8c8c8 !important; }
       .ui.inverted.segment.tasks-list .ui.list.divided.inverted .item .task-details .content {
         margin: 0 20px; }
+      .ui.inverted.segment.tasks-list .ui.list.divided.inverted .item .task-details .ui.label {
+        margin: 2px; }
