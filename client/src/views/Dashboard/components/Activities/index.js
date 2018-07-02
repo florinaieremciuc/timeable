@@ -33,7 +33,7 @@ class Activities extends React.Component {
     const { tasks, params } = this.props;
     return (
       <Container className="devices-overview">
-        <h1>Tasks overview</h1>
+        <h1>Activities overview</h1>
         <Container>
           <ListTasks
             params={params}

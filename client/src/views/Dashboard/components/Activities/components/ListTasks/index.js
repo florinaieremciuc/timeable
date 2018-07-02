@@ -102,7 +102,7 @@ class ListTasks extends React.Component {
                 <Table.Row key={task.id}>
                   <Table.Cell style={{ textTransform: 'capitalize' }}>{task.name}</Table.Cell>
                   <Table.Cell style={{ textTransform: 'capitalize' }}>
-                    {task.description}
+                    {task.description ? task.description : '-'}
                   </Table.Cell>
                   <Table.Cell>{task.estimate}</Table.Cell>
                   <Table.Cell>{this.updateDuration(task)}</Table.Cell>

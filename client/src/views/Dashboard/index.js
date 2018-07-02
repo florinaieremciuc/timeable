@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import Projects from './components/Home';
 import Teams from './components/Teams';
+import Targets from './components/Targets';
 import Risks from './components/Risks';
 import Activities from './components/Activities';
 import Events from './components/Events';
@@ -29,6 +30,8 @@ class Dashboard extends React.Component {
       return <Profile />;
     case '/teams':
       return <Teams />;
+    case '/targets-overview/:projectid':
+      return <Targets projectid={params.projectid} />;
     case '/risks-overview/:projectid':
       return <Risks projectid={params.projectid} />;
     case '/tasks-overview/:user/:project':

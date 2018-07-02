@@ -13,11 +13,12 @@ import {
   isAttempting as projectLoading,
   projectPropType,
 } from '../../../../State/Projects/create/reducer';
-import { getItems, isAttempting } from '../../../../State/Projects/get/reducer';
 import {
-  getProjectsAttempt,
-  getUsersProjectsAttempt,
-} from '../../../../State/Projects/get/actions';
+  getAllProjects,
+  getUsersProjects,
+  isAttempting,
+} from '../../../../State/Projects/get/reducer';
+import { getProjectsAttempt, getUserProjectsAttempt } from '../../../../State/Projects/get/actions';
 import { getTeam, getRole, getUserId } from '../../../../State/Users/login/reducers';
 
 import './style.css';
@@ -33,7 +34,7 @@ class Projects extends React.Component {
     if (role === 'teamlead') {
       this.props.getProjectsAttempt(teamid);
     } else {
-      this.props.getUsersProjectsAttempt(user);
+      this.props.getUserProjectsAttempt(user);
     }
   }
 
@@ -49,7 +50,8 @@ class Projects extends React.Component {
   }
 
   render() {
-    const { projects, role } = this.props;
+    const { projects, userProjects, role } = this.props;
+    const projectsToUse = role === 'teamlead' ? projects : userProjects;
     return (
       <div className="projects">
         <h1>Projects List</h1>
@@ -61,8 +63,8 @@ class Projects extends React.Component {
           </Link>
         ) : null}
         <Container className="projects-list">
-          {projects.length > 0 &&
-            projects.map((project) => {
+          {projectsToUse.length > 0 &&
+            projectsToUse.map((project) => {
               if (project.id) {
                 return (
                   <Card key={project.id}>
@@ -119,21 +121,23 @@ const mapStateToProps = state => ({
   loadingProject: projectLoading(state.project),
   loadDelete: isAttemptingDelete(state.deleteProject),
   loading: isAttempting(state.projects),
-  projects: getItems(state.projects),
+  projects: getAllProjects(state.projects),
+  userProjects: getUsersProjects(state.projects),
   user: getUserId(state.user),
   teamid: getTeam(state.user),
   role: getRole(state.user),
 });
 export default connect(
   mapStateToProps,
-  { getProjectsAttempt, getUsersProjectsAttempt, deleteProjectAttempt },
+  { getProjectsAttempt, getUserProjectsAttempt, deleteProjectAttempt },
 )(Projects);
 
 Projects.propTypes = {
   project: projectPropType,
   projects: PropTypes.arrayOf(projectPropType).isRequired,
+  userProjects: PropTypes.arrayOf(projectPropType).isRequired,
   getProjectsAttempt: PropTypes.func.isRequired,
-  getUsersProjectsAttempt: PropTypes.func.isRequired,
+  getUserProjectsAttempt: PropTypes.func.isRequired,
   deleteProjectAttempt: PropTypes.func.isRequired,
   loadDelete: PropTypes.number.isRequired,
   user: PropTypes.number.isRequired,

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Header, Container, Reveal, Card, Image, Label } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { getUserData, userPropType } from '../../../../State/Users/login/reducers';
-import { getItems } from '../../../../State/Projects/get/reducer';
+import { getUsersProjects } from '../../../../State/Projects/get/reducer';
 import { getItems as getMembers } from '../../../../State/Users/team/reducer';
 import { newTeamPropType } from '../../../../State/Teams/create/reducer';
 import { getTeam } from '../../../../State/Teams/get/reducer';
@@ -74,7 +74,7 @@ class Profile extends React.Component {
 }
 const mapStateToProps = state => ({
   userData: getUserData(state.user),
-  projects: getItems(state.projects),
+  projects: getUsersProjects(state.projects),
   members: getMembers(state.members),
   team: getTeam(state.team),
 });
