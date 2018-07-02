@@ -1,5 +1,10 @@
 import { put, call } from 'redux-saga/effects';
-import { getProjectsSuccess, getProjectsFailure } from './actions';
+import {
+  getProjectsSuccess,
+  getProjectsFailure,
+  getUserProjectsSuccess,
+  getUserProjectsFailure,
+} from './actions';
 import { getProjects, getUserProjects } from '../../../services/Projects';
 
 /**
@@ -28,13 +33,13 @@ export function* getUserProjectsSaga(user) {
   try {
     const response = yield call(getUserProjects, user.userId);
     if (response && response.error) {
-      yield put(getProjectsFailure(response));
+      yield put(getUserProjectsFailure(response));
     } else if (response && Array(response)) {
-      yield put(getProjectsSuccess(response));
+      yield put(getUserProjectsSuccess(response));
     } else {
-      yield put(getProjectsFailure('Unable to log in, please contact support.'));
+      yield put(getUserProjectsFailure('Unable to log in, please contact support.'));
     }
   } catch (e) {
-    yield put(getProjectsFailure('Unable to connect to the server.'));
+    yield put(getUserProjectsFailure('Unable to connect to the server.'));
   }
 }
