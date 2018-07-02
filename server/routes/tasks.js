@@ -54,6 +54,8 @@ router.post('/add_task', (req, res) => {
       priority: req.body.priority,
       status: req.body.status,
       project: req.body.project,
+      target: req.body.target,
+      risk: req.body.risk,
     })
     .then(task => res.send(task))
     .catch(err => res.send(err));

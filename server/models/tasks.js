@@ -2,7 +2,7 @@ const knex = require('knex')(require('../knexfile'));
 
 module.exports = {
   create({
-    name, description, estimate, priority, status, project,
+    name, description, estimate, priority, status, project, target, risk,
   }) {
     console.log(`Add task ${name}`);
     return knex('tasks').insert({
@@ -12,6 +12,8 @@ module.exports = {
       priority,
       status,
       project,
+      target,
+      risk,
     });
   },
   getAll(projectid) {
@@ -70,7 +72,7 @@ module.exports = {
   getUsersTasksperProject(user, project) {
     console.log(`Get user's ${user} tasks on project ${project}`);
     return knex
-      .select('tasks.id', 'name', 'duration', 'description', 'status', 'priority', 'estimate')
+      .select('tasks.id', 'name', 'duration', 'description', 'status', 'priority', 'estimate', 'target', 'risk')
       .from('tasks')
       .innerJoin('users_tasks', 'users_tasks.task_id', 'tasks.id')
       .where('tasks.project', project)
