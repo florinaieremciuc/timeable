@@ -2,7 +2,7 @@ import Immutable from 'seamless-immutable';
 import * as types from './actions';
 
 export const INITIAL_STATE = Immutable({
-  target: {
+  sync: {
     attempting: 0,
     error: null,
   },
@@ -12,7 +12,7 @@ export const INITIAL_STATE = Immutable({
  * @param {*} state
  * @param {*} action
  */
-const target = (state = INITIAL_STATE.target, action) => {
+const sync = (state = INITIAL_STATE.sync, action) => {
   switch (action.type) {
   case types.UPDATE_TARGET_REQUEST:
     return {
@@ -34,7 +34,7 @@ const target = (state = INITIAL_STATE.target, action) => {
   }
 };
 
-export const getTargetError = state => state.target.error;
-export const isAttemptingTarget = state => state.target.attempting;
+export const isAttemptingTarget = state => state.sync.attempting;
+export const getTargetError = state => state.sync.error;
 
-export default target;
+export default sync;

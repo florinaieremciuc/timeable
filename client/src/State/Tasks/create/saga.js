@@ -13,6 +13,8 @@ export default function* createTaskSaga({
   priority,
   status,
   project,
+  target,
+  risk,
 }) {
   try {
     const response = yield call(
@@ -23,11 +25,23 @@ export default function* createTaskSaga({
       priority,
       status,
       project,
+      target,
+      risk,
     );
     if (response && response.errno) {
       yield put(createTaskFailure(response));
     } else if (response && response[0]) {
-      yield put(createTaskSuccess(response[0], name, description, estimate, priority, status, project));
+      yield put(createTaskSuccess(
+        response[0],
+        name,
+        description,
+        estimate,
+        priority,
+        status,
+        project,
+        target,
+        risk,
+      ));
     } else {
       yield put(createTaskFailure('Unable to create task, please contact support.'));
     }

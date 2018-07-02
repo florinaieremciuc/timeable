@@ -4,7 +4,16 @@ export const CREATE_TASK_SUCCESS = 'CREATE_TASK_SUCCESS';
 export const CREATE_TASK_FAILURE = 'CREATE_TASK_FAILURE';
 
 // ACTION CREATORS ----------------------------------------
-export const createTaskAttempt = (name, description, estimate, priority, status, project) => ({
+export const createTaskAttempt = (
+  name,
+  description,
+  estimate,
+  priority,
+  status,
+  project,
+  target,
+  risk,
+) => ({
   type: CREATE_TASK_REQUEST,
   name,
   description,
@@ -12,8 +21,20 @@ export const createTaskAttempt = (name, description, estimate, priority, status,
   priority,
   status,
   project,
+  target,
+  risk,
 });
-export const createTaskSuccess = (id, name, description, estimate, priority, status, project) => ({
+export const createTaskSuccess = (
+  id,
+  name,
+  description,
+  estimate,
+  priority,
+  status,
+  project,
+  target,
+  risk,
+) => ({
   type: CREATE_TASK_SUCCESS,
   id,
   name,
@@ -22,6 +43,8 @@ export const createTaskSuccess = (id, name, description, estimate, priority, sta
   priority,
   status,
   project,
+  target,
+  risk,
 });
 export const createTaskFailure = error => ({
   type: CREATE_TASK_FAILURE,

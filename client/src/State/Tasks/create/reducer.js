@@ -14,6 +14,8 @@ export const taskPropType = PropTypes.shape({
   project: PropTypes.number.isRequired,
   estimate: PropTypes.string.isRequired,
   assignee: PropTypes.number,
+  target: PropTypes.number,
+  risk: PropTypes.number,
 });
 
 export const INITIAL_STATE = Immutable({
@@ -27,6 +29,8 @@ export const INITIAL_STATE = Immutable({
     project: null,
     estimate: null,
     assignee: null,
+    target: null,
+    risk: null,
   },
   sync: {
     attempting: 0,
@@ -53,6 +57,8 @@ const data = (state = INITIAL_STATE.data, action) => {
       project: action.project,
       duration: null,
       assignee: null,
+      target: null,
+      risk: null,
     };
     if (action.description) {
       newTaskData.description = action.description;
@@ -62,6 +68,12 @@ const data = (state = INITIAL_STATE.data, action) => {
     }
     if (action.assignee) {
       newTaskData.assignee = action.assignee;
+    }
+    if (action.target) {
+      newTaskData.target = action.target;
+    }
+    if (action.risk) {
+      newTaskData.risk = action.risk;
     }
     return newTaskData;
   }
