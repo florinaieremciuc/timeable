@@ -7,7 +7,16 @@ import config from './../config';
  * @param {String} deadline
  * @param {Number} team
  */
-export const createTask = (name, description, estimate, priority, status, project) => {
+export const createTask = (
+  name,
+  description,
+  estimate,
+  priority,
+  status,
+  project,
+  target,
+  risk,
+) => {
   const params = {
     name,
     description,
@@ -15,6 +24,8 @@ export const createTask = (name, description, estimate, priority, status, projec
     priority,
     status,
     project,
+    target,
+    risk,
   };
   return fetch(`${config.API_URL}/tasks/add_task`, {
     method: 'POST',
