@@ -11,6 +11,14 @@ import AddTask from './components/AddTask';
 import { getTasksAttempt } from '../../State/Tasks/get/actions';
 import { getItems as getTasks, isAttempting as loadingTasks } from '../../State/Tasks/get/reducer';
 
+import { getTargetsAttempt } from '../../State/Targets/get/actions';
+import { getItems as getTargets } from '../../State/Targets/get/reducer';
+import { targetPropType } from '../../State/Targets/create/reducer';
+
+import { getRisksAttempt } from '../../State/Risks/get/actions';
+import { getItems as getRisks } from '../../State/Risks/get/reducer';
+import { riskPropType } from '../../State/Risks/create/reducer';
+
 import ListTasks from './components/ListTasks';
 
 import { isAttemptingDeleteTask as loadDelete } from '../../State/Tasks/delete/reducer';
@@ -27,17 +35,32 @@ import './style.css';
 
 class Tasks extends React.Component {
   componentWillMount() {
-    this.props.getTasksAttempt(this.props.match.params.projectid);
+    const { projectid } = this.props.match.params;
+    this.props.getTasksAttempt(projectid);
+    this.props.getTargetsAttempt(projectid);
+    this.props.getRisksAttempt(projectid);
     this.props.getMembersAttempt(this.props.teamid);
   }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.loadCreate === 1 || nextProps.loadDelete === 1) {
-      nextProps.getTasksAttempt(nextProps.match.params.projectid);
+    const { projectid } = nextProps.match.params;
+    if (
+      nextProps.loadCreate === 1 ||
+      nextProps.loadDelete === 1 ||
+      projectid !== this.props.match.params.projectid
+    ) {
+      nextProps.getTasksAttempt(projectid);
     }
   }
   render() {
     const {
-      modalVisible, match, members, loadingMembers, tasks, role,
+      modalVisible,
+      match,
+      members,
+      loadingMembers,
+      tasks,
+      role,
+      targets,
+      risks,
     } = this.props;
     const tasksToList = tasks.filter(task => task.project === Number(match.params.projectid));
 
@@ -61,7 +84,9 @@ class Tasks extends React.Component {
             loadMembers={loadingMembers}
           />
         </Container>
-        {role === 'teamlead' ? <AddTask project={this.props.match.params.projectid} /> : null}
+        {role === 'teamlead' ? (
+          <AddTask project={this.props.match.params.projectid} targets={targets} risks={risks} />
+        ) : null}
       </Container>
     );
   }
@@ -77,6 +102,8 @@ const mapStateToProps = state => ({
   members: getMembers(state.members),
   teamid: getTeam(state.user),
   role: getRole(state.user),
+  targets: getTargets(state.targets),
+  risks: getRisks(state.risks),
 });
 export default connect(
   mapStateToProps,
@@ -84,6 +111,8 @@ export default connect(
     openModal,
     closeModal,
     getTasksAttempt,
+    getTargetsAttempt,
+    getRisksAttempt,
     getMembersAttempt,
   },
 )(Tasks);
@@ -104,4 +133,8 @@ Tasks.propTypes = {
   role: PropTypes.string.isRequired,
   loadingMembers: PropTypes.number.isRequired,
   members: PropTypes.arrayOf(userPropType).isRequired,
+  getTargetsAttempt: PropTypes.func.isRequired,
+  getRisksAttempt: PropTypes.func.isRequired,
+  targets: PropTypes.arrayOf(targetPropType).isRequired,
+  risks: PropTypes.arrayOf(riskPropType).isRequired,
 };

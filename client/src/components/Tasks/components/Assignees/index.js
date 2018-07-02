@@ -8,7 +8,7 @@ import { userPropType } from '../../../../State/Users/login/reducers';
 import './styles.css';
 
 const Assignees = (props) => {
-  const { assignees } = props;
+  const { assignees, role } = props;
   const removeAssignee = (task, assignee) => {
     _.remove(assignees, item => item.id !== assignee);
     props.deleteAssignee(task, assignee);
@@ -20,10 +20,12 @@ const Assignees = (props) => {
           assignee && (
             <Label key={assignee.id}>
               {assignee.first_name + ' ' + assignee.last_name + ' (' + assignee.role + ')'}
-              <Icon
-                name="close"
-                onClick={() => removeAssignee(assignee.task_id, assignee.id)}
-              />
+              {role === 'teamlad' && (
+                <Icon
+                  name="close"
+                  onClick={() => removeAssignee(assignee.task_id, assignee.id)}
+                />
+              )}
             </Label>
           ))
         : null}
@@ -34,4 +36,5 @@ export default Assignees;
 Assignees.propTypes = {
   assignees: PropTypes.arrayOf(userPropType).isRequired,
   deleteAssignee: PropTypes.func.isRequired,
+  role: PropTypes.string.isRequired,
 };

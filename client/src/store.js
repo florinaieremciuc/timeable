@@ -76,14 +76,12 @@ const defaultState = {
     sync: {
       attempting: 0,
       error: null,
-      success: null,
     },
   },
   deleteTarget: {
     sync: {
       attempting: 0,
       error: null,
-      success: null,
     },
   },
   newDevice: {
@@ -203,7 +201,8 @@ const defaultState = {
     },
   },
   projects: {
-    items: [],
+    all: [],
+    user: [],
     sync: {
       attempting: 0,
       error: null,

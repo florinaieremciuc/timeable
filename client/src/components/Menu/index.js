@@ -1,40 +1,27 @@
 import React, { Component } from 'react';
-import { Sidebar, Menu, Icon, Dropdown, List } from 'semantic-ui-react';
+import { Sidebar, Menu, Icon, Dropdown } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import _ from 'lodash';
 
-import { isAttempting as isAttemptingDelete } from '../../State/Projects/delete/reducer';
-import {
-  getData,
-  isAttempting as projectLoading,
-  projectPropType,
-} from '../../State/Projects/create/reducer';
-import { getItems, isAttempting } from '../../State/Projects/get/reducer';
-import { getProjectsAttempt, getUsersProjectsAttempt } from '../../State/Projects/get/actions';
-import { getTeam, getRole, getUserId, getUsername } from '../../State/Users/login/reducers';
+import { projectPropType } from '../../State/Projects/create/reducer';
+import { getUsersProjects } from '../../State/Projects/get/reducer';
+import { getUserProjectsAttempt } from '../../State/Projects/get/actions';
+import { getUserId, getUsername } from '../../State/Users/login/reducers';
 
 import './styles.css';
 
 class Sidemenu extends Component {
   componentWillMount() {
-    const { role, teamid, user } = this.props;
-    if (role === 'teamlead') {
-      this.props.getProjectsAttempt(teamid);
-    } else {
-      this.props.getUsersProjectsAttempt(user);
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if ((!_.isNil(nextProps.project) && _.isNil(nextProps.project.id)) || nextProps.loadDelete) {
-      nextProps.getProjectsAttempt(nextProps.teamid);
-    }
+    const { user } = this.props;
+    this.props.getUserProjectsAttempt(user);
   }
 
   render() {
-    const { username, visible, projects, user } = this.props;
+    const {
+      username, visible, projects, user,
+    } = this.props;
+
     return (
       <Sidebar
         as={Menu}
@@ -145,33 +132,19 @@ class Sidemenu extends Component {
 }
 
 const mapStateToProps = state => ({
-  project: getData(state.project),
-  loadingProject: projectLoading(state.project),
-  loading: isAttempting(state.projects),
-  loadDelete: isAttemptingDelete(state.deleteProject),
-  projects: getItems(state.projects),
+  projects: getUsersProjects(state.projects),
   user: getUserId(state.user),
-  teamid: getTeam(state.user),
-  role: getRole(state.user),
   username: getUsername(state.user),
 });
 export default connect(
   mapStateToProps,
-  { getProjectsAttempt, getUsersProjectsAttempt },
+  { getUserProjectsAttempt },
 )(Sidemenu);
 
 Sidemenu.propTypes = {
   visible: PropTypes.bool.isRequired,
-  project: projectPropType,
   projects: PropTypes.arrayOf(projectPropType).isRequired,
-  loadDelete: PropTypes.number.isRequired,
-  getProjectsAttempt: PropTypes.func.isRequired,
-  getUsersProjectsAttempt: PropTypes.func.isRequired,
+  getUserProjectsAttempt: PropTypes.func.isRequired,
   user: PropTypes.number.isRequired,
-  teamid: PropTypes.number.isRequired,
-  role: PropTypes.string.isRequired,
   username: PropTypes.string.isRequired,
-};
-Sidemenu.defaultProps = {
-  project: null,
 };

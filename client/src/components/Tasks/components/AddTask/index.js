@@ -6,8 +6,31 @@ import { Modal, Button, Icon, Form, Input, Select, Confirm } from 'semantic-ui-r
 import { createTaskAttempt } from '../../../../State/Tasks/create/actions';
 
 import './style.css';
+import { targetPropType } from '../../../../State/Targets/create/reducer';
+import { riskPropType } from '../../../../State/Risks/create/reducer';
 
 class AddTask extends React.Component {
+  static selectComponent(name, placeholder, arr, method) {
+    const options = [];
+    arr.map((item, k) =>
+      options.push(Object.assign({
+        key: k,
+        text: item.description,
+        value: item.id,
+      })));
+    return (
+      <Form.Field
+        control={Select}
+        options={options}
+        name={name}
+        type="text"
+        placeholder={placeholder}
+        onChange={(event, data) => method(event, data)}
+        required
+      />
+    );
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -17,6 +40,8 @@ class AddTask extends React.Component {
       description: null,
       estimate: null,
       priority: null,
+      target: null,
+      risk: null,
     };
     this.openConfirm = this.openConfirm.bind(this);
     this.closeConfirm = this.closeConfirm.bind(this);
@@ -27,6 +52,8 @@ class AddTask extends React.Component {
     this.handleChangeDescription = this.handleChangeDescription.bind(this);
     this.handleChangeEstimate = this.handleChangeEstimate.bind(this);
     this.handleChangePriority = this.handleChangePriority.bind(this);
+    this.handleChangeTarget = this.handleChangeTarget.bind(this);
+    this.handleChangeRisk = this.handleChangeRisk.bind(this);
 
     this.submit = this.submit.bind(this);
   }
@@ -57,6 +84,12 @@ class AddTask extends React.Component {
   handleChangePriority(event, data) {
     this.setState({ priority: data.value });
   }
+  handleChangeTarget(event, data) {
+    this.setState({ target: data.value });
+  }
+  handleChangeRisk(event, data) {
+    this.setState({ risk: data.value });
+  }
 
   async submit() {
     if (this.state && this.state.name && this.state.estimate && this.state.priority) {
@@ -65,8 +98,11 @@ class AddTask extends React.Component {
         this.state.description,
         this.state.estimate,
         this.state.priority,
-        'to_do', // for starters, status will be to do
+        'to_do', // for starters, status will be to_do
         this.props.project, // project
+        this.state.target,
+        this.state.risk,
+
       );
       this.close();
     } else {
@@ -77,6 +113,7 @@ class AddTask extends React.Component {
 
   render() {
     const { open } = this.state;
+    const { targets, risks } = this.props;
 
     if (this.state.confirmVisible) {
       return (
@@ -147,6 +184,8 @@ class AddTask extends React.Component {
               onChange={(event, data) => this.handleChangePriority(event, data)}
               required
             />
+            {AddTask.selectComponent('target', 'Target', targets, this.handleChangeTarget)}
+            {AddTask.selectComponent('risk', 'Risk', risks, this.handleChangeRisk)}
           </Form>
         </Modal.Content>
         <Modal.Actions>
@@ -157,8 +196,13 @@ class AddTask extends React.Component {
   }
 }
 
-export default connect(null, { createTaskAttempt })(AddTask);
+export default connect(
+  null,
+  { createTaskAttempt },
+)(AddTask);
 AddTask.propTypes = {
   project: PropTypes.string.isRequired,
   createTaskAttempt: PropTypes.func.isRequired,
+  targets: PropTypes.arrayOf(targetPropType).isRequired,
+  risks: PropTypes.arrayOf(riskPropType).isRequired,
 };

@@ -117,6 +117,7 @@ class ListTasks extends React.Component {
                     &nbsp;&nbsp;
                     </List.Content>}
                   {assignees.length > 0 && <Assignees
+                    role={role}
                     deleteAssignee={this.props.deleteAssigneeAttempt}
                     assignees={
                       assignees.length > 0 &&
