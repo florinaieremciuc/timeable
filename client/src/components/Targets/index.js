@@ -16,6 +16,9 @@ import {
   isAttempting as loadingTargets,
 } from '../../State/Targets/get/reducer';
 
+import { updateTargetAttempt } from '../../State/Targets/update/actions';
+import { isAttemptingTarget } from '../../State/Targets/update/reducer';
+
 import ListTargets from './components/ListTargets';
 
 import { isAttempting as loadDelete } from '../../State/Targets/delete/reducer';
@@ -28,7 +31,7 @@ class Targets extends React.Component {
     this.props.getTargetsAttempt(this.props.match.params.projectid);
   }
   componentWillReceiveProps(nextProps) {
-    if (nextProps.loadCreate === 1 || nextProps.loadDelete === 1) {
+    if (nextProps.loadCreate === 1 || nextProps.loadDelete === 1 || nextProps.loadUpdate === 1) {
       nextProps.getTargetsAttempt(nextProps.match.params.projectid);
     }
   }
@@ -37,7 +40,7 @@ class Targets extends React.Component {
       modalVisible, match, targets, role,
     } = this.props;
     const targetsToList = targets.filter(target => target.project === Number(match.params.projectid));
-
+    
     return (
       <Container>
         <Header>
@@ -57,6 +60,7 @@ class Targets extends React.Component {
             project={match.params.projectid}
             targets={targetsToList}
             role={role}
+            updateTarget={this.props.updateTargetAttempt}
           />
         </Container>
       </Container>
@@ -70,6 +74,7 @@ const mapStateToProps = state => ({
   loadingTargets: loadingTargets(state.targets),
   loadCreate: loadCreate(state.newTarget),
   loadDelete: loadDelete(state.deleteTarget),
+  loadUpdate: isAttemptingTarget(state.updateTarget),
   role: getRole(state.user),
 });
 export default connect(
@@ -78,6 +83,7 @@ export default connect(
     openModal,
     closeModal,
     getTargetsAttempt,
+    updateTargetAttempt,
   },
 )(Targets);
 
@@ -93,4 +99,6 @@ Targets.propTypes = {
   targets: PropTypes.arrayOf(targetPropType).isRequired,
   loadCreate: PropTypes.number.isRequired,
   loadDelete: PropTypes.number.isRequired,
+  loadUpdate: PropTypes.number.isRequired,
+  updateTargetAttempt: PropTypes.func.isRequired,
 };

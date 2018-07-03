@@ -10,7 +10,7 @@ import { openModal, closeModal } from '../../../../components/Modal/action';
 import { getRole, getUserId } from '../../../../State/Users/login/reducers';
 
 import { updateTargetAttempt } from '../../../../State/Targets/update/actions';
-import { isAttemptingTarget as attemptTargetUpdate } from '../../../../State/Targets/update/reducer';
+import { isAttemptingTarget } from '../../../../State/Targets/update/reducer';
 import { getTargetsAttempt } from '../../../../State/Targets/get/actions';
 import {
   getItems as getTargets,
@@ -83,7 +83,7 @@ const mapStateToProps = state => ({
   targets: getTargets(state.targets),
   loadingTargets: loadingTargets(state.targets),
   loadCreate: loadCreate(state.newTarget),
-  loadUpdate: attemptTargetUpdate(state.updateTarget),
+  loadUpdate: isAttemptingTarget(state.updateTarget),
   loadDelete: loadDelete(state.deleteTarget),
   role: getRole(state.user),
   user: getUserId(state.user),

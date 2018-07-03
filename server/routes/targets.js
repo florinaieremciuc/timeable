@@ -35,7 +35,7 @@ router.post('/add_target', (req, res) => {
 /* UPDATE a target */
 router.post('/update/:id/:data', (req, res) => {
   targetsModel
-    .delete(req.params.id, req.params.data)
+    .updateAchieved(req.params.id, req.params.data)
     .then(() => {
       res.sendStatus(200);
     })

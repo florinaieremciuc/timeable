@@ -34,7 +34,7 @@ const sync = (state = INITIAL_STATE.sync, action) => {
   }
 };
 
-export const isAttemptingTarget = state => state.sync.attempting;
-export const getTargetError = state => state.sync.error;
+export const isAttemptingTarget = state => state.attempting;
+export const getTargetError = state => state.error;
 
 export default sync;
