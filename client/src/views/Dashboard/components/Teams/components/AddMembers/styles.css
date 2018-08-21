@@ -1,0 +1,5 @@
+.ui.form {
+  margin: 10px 0; }
+  .ui.form div.buttons {
+    display: flex;
+    align-items: baseline; }

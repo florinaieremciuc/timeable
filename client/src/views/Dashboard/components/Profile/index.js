@@ -47,7 +47,7 @@ class Profile extends React.Component {
                     {`- ${userData.role} -`}
                     <br />
                     <em style={{ textTransform: 'capitalize' }}>
-                      {`team ${team.team && team.team.name}`}
+                      {`${team.team && team.team.name} team `}
                     </em>
                   </Card.Meta>
                   <Card.Description>
@@ -56,14 +56,16 @@ class Profile extends React.Component {
                       projects.map(project => <Label key={project.id}>{project.name}</Label>)}
                   </Card.Description>
                 </Card.Content>
-                <Card.Content extra>
-                  Your team mates:&nbsp;
-                  {teamMates.map(member => (
-                    <Label style={{ textTransform: 'capitalize' }} key={member.id}>
-                      {`${member.first_name} ${member.last_name}`}
-                    </Label>
-                  ))}
-                </Card.Content>
+                {teamMates.length > 0 && (
+                  <Card.Content extra>
+                    Your team mates:&nbsp;
+                    {teamMates.map(member => (
+                      <Label style={{ textTransform: 'capitalize' }} key={member.id}>
+                        {`${member.first_name} ${member.last_name}`}
+                      </Label>
+                    ))}
+                  </Card.Content>
+                )}
               </Card>
             </Reveal.Content>
           </Reveal>

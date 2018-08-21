@@ -19,8 +19,8 @@ class RegistrationForm extends React.Component {
       confirmpass: null,
       firstname: null,
       lastname: null,
-      email: null,
-      phone: null,
+      email: 'somestring@string',
+      phone: '+74366438',
       redirect: false,
     };
     this.handleChangeUsername = this.handleChangeUsername.bind(this);
@@ -28,8 +28,6 @@ class RegistrationForm extends React.Component {
     this.handleChangeConfirmPassword = this.handleChangeConfirmPassword.bind(this);
     this.handleChangeFirstName = this.handleChangeFirstName.bind(this);
     this.handleChangeLastName = this.handleChangeLastName.bind(this);
-    this.handleChangeEmail = this.handleChangeEmail.bind(this);
-    this.handleChangePhone = this.handleChangePhone.bind(this);
     this.submit = this.submit.bind(this);
   }
 
@@ -47,12 +45,6 @@ class RegistrationForm extends React.Component {
   }
   handleChangeLastName(event) {
     this.setState({ lastname: event.target.value });
-  }
-  handleChangeEmail(event) {
-    this.setState({ email: event.target.value });
-  }
-  handleChangePhone(event) {
-    this.setState({ phone: event.target.value });
   }
   async submit() {
     const {
@@ -126,26 +118,6 @@ class RegistrationForm extends React.Component {
           type="text"
           placeholder="Last name *"
           onChange={event => this.handleChangeLastName(event)}
-          required
-        />
-        {!this.props.params.encryptEmail && (
-          <Form.Field
-            id="email"
-            control={Input}
-            name="email"
-            type="email"
-            placeholder="Email address *"
-            onChange={event => this.handleChangeEmail(event)}
-            required
-          />
-        )}
-        <Form.Field
-          id="phone"
-          control={Input}
-          name="phone"
-          type="text"
-          placeholder="Phone number *"
-          onChange={event => this.handleChangePhone(event)}
           required
         />
         <Form.Field

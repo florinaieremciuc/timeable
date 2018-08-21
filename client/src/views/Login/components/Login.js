@@ -37,7 +37,7 @@ class LoginForm extends React.Component {
   }
   render() {
     if (this.state.redirect) {
-      return <Redirect to="/" />;
+      return <Redirect to="/teams" />;
     }
     return (
       <Form onSubmit={this.submit}>
@@ -86,7 +86,10 @@ class LoginForm extends React.Component {
 const mapStateToProps = state => ({
   success: getSuccess(state.user),
 });
-export default connect(mapStateToProps, { loginAttempt })(LoginForm);
+export default connect(
+  mapStateToProps,
+  { loginAttempt },
+)(LoginForm);
 LoginForm.propTypes = {
   success: PropTypes.bool,
   loginAttempt: PropTypes.func.isRequired,

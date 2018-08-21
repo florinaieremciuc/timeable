@@ -1,17 +1,20 @@
 import React from 'react';
 import { Form, Input, Button, Select } from 'semantic-ui-react';
 import { Redirect } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 import { addMembers } from '../../../../../../services/Teams';
 import { userPropType } from '../../../../../../State/Users/login/reducers';
+
+import './styles.css';
 
 class AddMembers extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       min: 0,
-      max: 5,
+      max: 5 - props.members,
       inputCount: 1,
       members: [],
       redirect: false,
@@ -108,30 +111,31 @@ class AddMembers extends React.Component {
     if (this.state.redirect) {
       return <Redirect to="/" />;
     }
-    console.log('props add members', this.props);
     return (
       <Form onSubmit={this.submit}>
         <Form.Group widths="equal">
-          <Form.Field
-            control={Button}
-            content="Add member"
-            onClick={this.addMoreInputs}
-            disabled={this.state.inputCount >= this.state.max}
-          />
-          <Form.Field
-            control={Button}
-            content="Remove member"
-            onClick={this.removeInputs}
-            disabled={this.state.inputCount <= this.state.min}
-          />
-          <Form.Field
-            control={Button}
-            content="Send"
-            id="submit"
-            type="submit"
-            compact
-            onClick={this.submit}
-          />
+          <div className="buttons">
+            <Form.Field
+              control={Button}
+              content="Add member"
+              onClick={this.addMoreInputs}
+              disabled={this.state.inputCount >= this.state.max}
+            />
+            <Form.Field
+              control={Button}
+              content="Remove member"
+              onClick={this.removeInputs}
+              disabled={this.state.inputCount <= this.state.min}
+            />
+            <Form.Field
+              control={Button}
+              content="Send"
+              id="submit"
+              type="submit"
+              compact
+              onClick={this.submit}
+            />
+          </div>
           {this.inputs()}
         </Form.Group>
       </Form>
@@ -143,4 +147,5 @@ export default AddMembers;
 
 AddMembers.propTypes = {
   user: userPropType.isRequired,
+  members: PropTypes.number.isRequired,
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Segment, List, Icon, Dropdown, Label } from 'semantic-ui-react';
+import { Segment, List, Button, Dropdown, Label } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
@@ -131,13 +131,13 @@ class ListTasks extends React.Component {
                     : this.dropdown(task)}
                 </div>
                 {role === 'teamlead' ? (
-                  <Icon size="large" name="trash" onClick={() => this.deleteTask(task.id)} />
+                  <Button icon="trash" onClick={() => this.deleteTask(task.id)} />
                 ) : null}
               </List.Item>
             ))}
           </List>
         ) : (
-          'No tasks here man'
+          'No tasks  '
         )}
       </Segment>
     );
@@ -149,7 +149,7 @@ const mapStateToProps = state => ({
   assignees: getAssignees(state.assignees),
   loadUpdate: isAttemptingAssignee(state.updateTask),
   loadDeteleTask: isAttemptingDeleteTask(state.deleteFromTask),
-  loadDeleteAssignee: isAttemptingDeleteAssignee(state.deleteFromTask)
+  loadDeleteAssignee: isAttemptingDeleteAssignee(state.deleteFromTask),
 });
 export default connect(
   mapStateToProps,

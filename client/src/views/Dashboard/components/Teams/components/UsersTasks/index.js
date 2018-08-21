@@ -82,7 +82,7 @@ const UsersTasks = (props) => {
               ))}
             </List>
           ) : (
-            'No tasks here man'
+            'No tasks  '
           )}
         </Segment>
       </Card.Content>

@@ -80,7 +80,7 @@ class ListRisks extends React.Component {
             </Table.Body>
           </Table>
         ) : (
-          'No risks here man'
+          'No risks  '
         )}
       </div>
     );

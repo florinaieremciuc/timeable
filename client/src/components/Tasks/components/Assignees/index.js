@@ -20,7 +20,7 @@ const Assignees = (props) => {
           assignee && (
             <Label key={assignee.id}>
               {assignee.first_name + ' ' + assignee.last_name + ' (' + assignee.role + ')'}
-              {role === 'teamlad' && (
+              {role === 'teamlead' && (
                 <Icon
                   name="close"
                   onClick={() => removeAssignee(assignee.task_id, assignee.id)}

@@ -76,7 +76,7 @@ class ListDevices extends React.Component {
             </Table.Body>
           </Table>
         ) : (
-          'No devices here man'
+          'No devices  '
         )}
       </div>
     );

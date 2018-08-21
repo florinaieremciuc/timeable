@@ -69,7 +69,7 @@ class Projects extends React.Component {
                 return (
                   <Card key={project.id}>
                     <Card.Header>
-                      <Header content={project.name} />
+                      <Header style={{ textTransform: 'capitalize' }} content={project.name} />
                       {role === 'teamlead' ? (
                         <Popup
                           trigger={
@@ -91,7 +91,10 @@ class Projects extends React.Component {
                         <Moment format="YYYY-MM-DD">{project.deadline}</Moment>
                       </div>
                     </Card.Content>
-                    <Card.Description content={project.description} />
+                    <Card.Description
+                      style={{ textTransform: 'capitalize' }}
+                      content={project.description}
+                    />
                     <Card.Content>
                       <Link to={`/targets/${project.id}`}>
                         <Popup trigger={<Icon name="target" size="big" />} content="Targets" />

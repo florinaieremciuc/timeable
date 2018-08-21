@@ -159,11 +159,13 @@ a {
     margin: 20px; }
   .projects a {
     width: 12%; }
+    .projects a .button {
+      margin: 10px 0; }
   .projects .ui.container.projects-list {
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
-    justify-content: space-around; }
+    justify-content: space-evenly; }
     .projects .ui.container.projects-list .ui.card .header {
       display: flex;
       justify-content: center;

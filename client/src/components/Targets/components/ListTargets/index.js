@@ -31,7 +31,7 @@ const ListTargets = (props) => {
           </Table.Body>
         </Table>
       ) : (
-        'No targets here man'
+        'No targets  '
       )}
     </div>
   );

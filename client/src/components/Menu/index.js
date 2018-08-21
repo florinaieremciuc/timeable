@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { projectPropType } from '../../State/Projects/create/reducer';
-import { getUsersProjects } from '../../State/Projects/get/reducer';
+import { getAllProjects, getUsersProjects } from '../../State/Projects/get/reducer';
 import { getUserProjectsAttempt } from '../../State/Projects/get/actions';
 import { getUserId, getUsername, getRole } from '../../State/Users/login/reducers';
 
@@ -19,7 +19,7 @@ class Sidemenu extends Component {
 
   render() {
     const {
-      username, visible, projects, user, role,
+      username, visible, allProjects, projects, user, role,
     } = this.props;
 
     return (
@@ -50,7 +50,7 @@ class Sidemenu extends Component {
           <Menu.Item name="targets">
             <Dropdown item icon="check circle" text="Targets">
               <Dropdown.Menu>
-                {projects.map(project => (
+                {allProjects.map(project => (
                   <Dropdown.Item>
                     <Link to={`/targets-overview/${project.id}`}>
                       <Icon name="hashtag" />
@@ -67,7 +67,7 @@ class Sidemenu extends Component {
           <Menu.Item name="risks">
             <Dropdown item icon="rain" text="Risks">
               <Dropdown.Menu>
-                {projects.map(project => (
+                {allProjects.map(project => (
                   <Dropdown.Item>
                     <Link to={`/risks-overview/${project.id}`}>
                       <Icon name="hashtag" />
@@ -81,7 +81,7 @@ class Sidemenu extends Component {
         )}
 
         <Menu.Item name="activities">
-          <Dropdown item icon="tasks" text="Activities">
+          <Dropdown item icon="tasks" text="My activities">
             <Dropdown.Menu>
               {projects.map(project => (
                 <Dropdown.Item>
@@ -99,7 +99,7 @@ class Sidemenu extends Component {
           <Menu.Item name="devices">
             <Dropdown item icon="computer" text="Equipments">
               <Dropdown.Menu>
-                {projects.map(project => (
+                {allProjects.map(project => (
                   <Dropdown.Item>
                     <Link to={`/devices-overview/${project.id}`}>
                       <Icon name="hashtag" />
@@ -138,6 +138,7 @@ class Sidemenu extends Component {
 }
 
 const mapStateToProps = state => ({
+  allProjects: getAllProjects(state.projects),
   projects: getUsersProjects(state.projects),
   user: getUserId(state.user),
   username: getUsername(state.user),
@@ -151,6 +152,7 @@ export default connect(
 Sidemenu.propTypes = {
   visible: PropTypes.bool.isRequired,
   projects: PropTypes.arrayOf(projectPropType).isRequired,
+  allProjects: PropTypes.arrayOf(projectPropType).isRequired,
   getUserProjectsAttempt: PropTypes.func.isRequired,
   user: PropTypes.number.isRequired,
   username: PropTypes.string.isRequired,

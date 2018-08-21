@@ -118,7 +118,7 @@ class ListTasks extends React.Component {
             </Table.Body>
           </Table>
         ) : (
-          'No tasks here man'
+          'No tasks  '
         )}
       </div>
     );

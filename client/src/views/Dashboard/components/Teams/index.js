@@ -51,7 +51,7 @@ class Teams extends React.Component {
           ))}
         </div>
 
-        {user.role === 'teamlead' && <AddMembers user={user} />}
+        {user.role === 'teamlead' && <AddMembers members={teamMembers.length} user={user} />}
       </Container>
     );
   }

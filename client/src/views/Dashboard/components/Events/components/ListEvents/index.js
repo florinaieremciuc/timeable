@@ -60,7 +60,7 @@ class ListEvents extends React.Component {
             </Table.Body>
           </Table>
         ) : (
-          'No events here man'
+          'No events  '
         )}
       </div>
     );
