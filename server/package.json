@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node .",
     "devstart": "nodemon .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "npm run snyk-protect",
+    "snyk-protect": "snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -23,10 +25,11 @@
     "cors": "^2.8.4",
     "crypto-js": "^3.1.9-1",
     "express": "^4.16.2",
-    "express-validator": "^5.0.0",
-    "knex": "^0.14.4",
+    "express-validator": "^6.5.0",
+    "knex": "^0.19.5",
     "mysql": "^2.15.0",
-    "nodemailer": "^4.6.4"
+    "nodemailer": "^6.6.1",
+    "@snyk/protect": "latest"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
@@ -35,5 +38,6 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
     "nodemon": "^1.14.12"
-  }
+  },
+  "snyk": true
 }

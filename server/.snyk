@@ -1,0 +1,13 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.25.0
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:extend:20180424':
+    - knex > liftoff > extend:
+        patched: '2022-10-08T14:07:50.024Z'
+  SNYK-JS-LODASH-567746:
+    - express-validator > lodash:
+        patched: '2022-10-08T14:07:50.024Z'
+    - knex > lodash:
+        patched: '2022-10-08T14:07:50.024Z'
